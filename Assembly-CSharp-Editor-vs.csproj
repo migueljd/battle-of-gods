@@ -68,7 +68,7 @@
      <Compile Include="Assets\TBTK\Scripts\UI\Editor\UIPerkMenuEditor.cs" />
      <None Include="Assets\UVersionControl\README.txt" />
  <Reference Include="Assembly-UnityScript">
- <HintPath>C:/Users/Miguel John/Documents/Devel/battle-of-gods/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
+ <HintPath>C:/Users/Miguel John/Documents/GitHub/battle-of-gods/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
@@ -77,31 +77,31 @@
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="CommandLine">
- <HintPath>C:/Users/Miguel John/Documents/Devel/battle-of-gods/Assets/UVersionControl/Editor/CommandLine.dll</HintPath>
+ <HintPath>C:/Users/Miguel John/Documents/GitHub/battle-of-gods/Assets/UVersionControl/Editor/CommandLine.dll</HintPath>
  </Reference>
  <Reference Include="Common">
- <HintPath>C:/Users/Miguel John/Documents/Devel/battle-of-gods/Assets/UVersionControl/Editor/Common.dll</HintPath>
+ <HintPath>C:/Users/Miguel John/Documents/GitHub/battle-of-gods/Assets/UVersionControl/Editor/Common.dll</HintPath>
  </Reference>
  <Reference Include="NoopBackend">
- <HintPath>C:/Users/Miguel John/Documents/Devel/battle-of-gods/Assets/UVersionControl/Editor/NoopBackend.dll</HintPath>
+ <HintPath>C:/Users/Miguel John/Documents/GitHub/battle-of-gods/Assets/UVersionControl/Editor/NoopBackend.dll</HintPath>
  </Reference>
  <Reference Include="P4Backend">
- <HintPath>C:/Users/Miguel John/Documents/Devel/battle-of-gods/Assets/UVersionControl/Editor/P4Backend.dll</HintPath>
+ <HintPath>C:/Users/Miguel John/Documents/GitHub/battle-of-gods/Assets/UVersionControl/Editor/P4Backend.dll</HintPath>
  </Reference>
  <Reference Include="RendererInspectors">
- <HintPath>C:/Users/Miguel John/Documents/Devel/battle-of-gods/Assets/UVersionControl/Editor/RendererInspectors.dll</HintPath>
+ <HintPath>C:/Users/Miguel John/Documents/GitHub/battle-of-gods/Assets/UVersionControl/Editor/RendererInspectors.dll</HintPath>
  </Reference>
  <Reference Include="SVNBackend">
- <HintPath>C:/Users/Miguel John/Documents/Devel/battle-of-gods/Assets/UVersionControl/Editor/SVNBackend.dll</HintPath>
+ <HintPath>C:/Users/Miguel John/Documents/GitHub/battle-of-gods/Assets/UVersionControl/Editor/SVNBackend.dll</HintPath>
  </Reference>
  <Reference Include="System.Threading">
- <HintPath>C:/Users/Miguel John/Documents/Devel/battle-of-gods/Assets/UVersionControl/Editor/System.Threading.dll</HintPath>
+ <HintPath>C:/Users/Miguel John/Documents/GitHub/battle-of-gods/Assets/UVersionControl/Editor/System.Threading.dll</HintPath>
  </Reference>
  <Reference Include="TeamFeatures">
- <HintPath>C:/Users/Miguel John/Documents/Devel/battle-of-gods/Assets/UVersionControl/Editor/TeamFeatures.dll</HintPath>
+ <HintPath>C:/Users/Miguel John/Documents/GitHub/battle-of-gods/Assets/UVersionControl/Editor/TeamFeatures.dll</HintPath>
  </Reference>
  <Reference Include="UnityVersionControl">
- <HintPath>C:/Users/Miguel John/Documents/Devel/battle-of-gods/Assets/UVersionControl/Editor/UnityVersionControl.dll</HintPath>
+ <HintPath>C:/Users/Miguel John/Documents/GitHub/battle-of-gods/Assets/UVersionControl/Editor/UnityVersionControl.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
