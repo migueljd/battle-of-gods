@@ -35,7 +35,8 @@ namespace TBTK{
 		
 		
 		public static Unit selectedUnit;	//the current selected unit, this is only for player's unit as AI unit dont get selected
-		
+
+		public static Tile selectedTile; //the current selected tile
 		
 		public bool useGlobalSetting=true;
 		
@@ -101,6 +102,8 @@ namespace TBTK{
 		
 		
 		private static GameControl instance;
+
+		//public Objective objective;
 		
 		void Awake(){
 			instance=this;
@@ -209,6 +212,15 @@ namespace TBTK{
 			GridManager.ClearAllTile();
 			selectedUnit=null;
 			Unit.Deselect();
+		}
+
+		public static void SelectTile(Tile tile){
+			selectedTile = tile;
+			GridManager.Select(tile);
+		}
+		public static void ClearSelectedTile(){
+			GridManager.ClearAllTile();
+			selectedTile = null;
 		}
 		
 		

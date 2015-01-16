@@ -71,6 +71,7 @@ namespace TBTK{
 		//active cursor and indicator in used during runtime
 		private Transform indicatorCursor;	
 		private Transform indicatorSelected;
+		private Transform indicatorSelectedConfirmation;
 		private List<Transform> indicatorHostileList=new List<Transform>();
 		
 		
@@ -148,6 +149,7 @@ namespace TBTK{
 			if(tileType==_TileType.Hex){
 				indicatorCursor=(Transform)Instantiate(hexCursor);
 				indicatorSelected=(Transform)Instantiate(hexSelected);
+				indicatorSelectedConfirmation = (Transform)Instantiate(hexSelected);
 				for(int i=0; i<10; i++) indicatorHostileList.Add((Transform)Instantiate(hexHostile));
 			}
 			else if(tileType==_TileType.Square){
@@ -158,6 +160,7 @@ namespace TBTK{
 			
 			indicatorCursor.parent=thisT;
 			indicatorSelected.parent=thisT;
+			indicatorSelectedConfirmation.parent=(Transform)thisT;
 			for(int i=0; i<indicatorHostileList.Count; i++) indicatorHostileList[i].parent=thisT;
 			
 			
@@ -639,16 +642,22 @@ namespace TBTK{
 				}
 				//if the unit in the tile can be attack by current selected unit, attack it
 				else if(attackableTileList.Contains(tile)){
-					GameControl.selectedUnit.Attack(tile.unit);
+					if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
+						GameControl.selectedUnit.Attack(tile.unit);
+					}
+					else GameControl.SelectTile(tile);
 				}
 			}
-			//if the tile is within the move range of current selected unit, move to it
+			//if the tile is within the move range of current selected unit, try to select it, if it is already selected, move
 			else if(walkableTileList.Contains(tile)){
-				if(onExitWalkableTileE!=null) onExitWalkableTileE();	//for clear UI move cost overlay
-				ClearWalkableHostileList();	//in case the unit move into the destination and has insufficient ap to attack
-				GameControl.selectedUnit.Move(tile);
+				if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
+					GameControl.selectedUnit.Move(tile);
+					if(onExitWalkableTileE!=null) onExitWalkableTileE();	//for clear UI move cost overlay
+					ClearWalkableHostileList();	//in case the unit move into the destination and has insufficient ap to attack
+				}
+				else GameControl.SelectTile(tile);
 			}
-			
+
 			ClearHoveredTile();	//clear the hovered tile so all the UI overlay will be cleared
 		}
 		
@@ -682,7 +691,12 @@ namespace TBTK{
 			if(unit.CanAttack()) instance.SetupAttackableTileList(unit);
 			instance.indicatorSelected.position=unit.tile.GetPos();
 		}
-		
+
+		//select a given tile
+		public static void Select(Tile tile){
+			instance.indicatorSelectedConfirmation.position=tile.GetPos();
+		}
+
 		//function to setup and clear walkable tiles in range for current selected unit
 		private void ClearWalkableTileList(){
 			for(int i=0; i<walkableTileList.Count; i++){
@@ -775,9 +789,11 @@ namespace TBTK{
 		//reset all selection, walkablelist and what not
 		public static void ClearAllTile(){
 			if(GameControl.selectedUnit!=null) GameControl.selectedUnit.tile.SetState(_TileState.Default);
+			if(GameControl.selectedTile!=null) GameControl.selectedTile.SetState(_TileState.Default);
 			instance.ClearWalkableTileList();
 			instance.ClearAttackableTileList();
 			instance.indicatorSelected.position=new Vector3(0, 99999, 0);
+			instance.indicatorSelectedConfirmation.position=new Vector3(0, 99999, 0);
 			instance.ClearHostileIndicator();
 			instance.ClearWalkableHostileList();
 		}
@@ -789,6 +805,7 @@ namespace TBTK{
 				indicatorHostileList[i].position=new Vector3(0, 99999, 0);
 		}
 		public void ShowHostileIndicator(List<Tile> list){
+			return;
 			while(indicatorHostileList.Count<list.Count){
 				Transform indicatorHostileT=(Transform)Instantiate(indicatorHostileList[0]);
 				indicatorHostileT.parent=transform;
