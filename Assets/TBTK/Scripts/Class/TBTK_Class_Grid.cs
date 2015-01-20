@@ -174,40 +174,131 @@ namespace TBTK{
 		
 		//get all the tiles within certain distance from a given tile
 		public List<Tile> GetTilesWithinDistance(Tile srcTile, int dist, bool walkableOnly=false, bool setDistance=false){
-			List<Tile> neighbourList=srcTile.GetNeighbourList(walkableOnly);
-			
-			List<Tile> closeList=new List<Tile>();
-			List<Tile> openList=new List<Tile>();
-			List<Tile> newOpenList=new List<Tile>();
-			
-			for(int m=0; m<neighbourList.Count; m++){
-				Tile neighbour=neighbourList[m];
-				if(!newOpenList.Contains(neighbour)) newOpenList.Add(neighbour);
-			}
-			
-			for(int i=0; i<dist; i++){
-				openList=newOpenList;
-				newOpenList=new List<Tile>();
 				
-				for(int n=0; n<openList.Count; n++){
-					neighbourList=openList[n].GetNeighbourList(walkableOnly);
-					for(int m=0; m<neighbourList.Count; m++){
-						Tile neighbour=neighbourList[m];
-						if(!closeList.Contains(neighbour) && !openList.Contains(neighbour) && !newOpenList.Contains(neighbour)){
-							newOpenList.Add(neighbour);
+			List<Tile> closeList=new List<Tile>();
+
+			/*Debug.Log(dist);
+
+				if(setDistance){
+				//use A* logic to find distance to closest tiles
+				List<Tile> openList=new List<Tile>();
+				
+				Tile currentTile=srcTile;
+				if(srcTile==null) Debug.Log("src tile is null!!!");
+				
+				float currentLowestF=Mathf.Infinity;
+				int id=0;
+				int i=0;
+				
+				do{
+
+					//move currentNode to closeList;
+					closeList.Add(currentTile);
+					currentTile.distance = (int)currentTile.aStar.scoreG;
+					currentTile.aStar.listState=TileAStar._AStarListState.Close;
+					/*if(currentTile.aStar.parent != null){
+						string s = "Nome do tile: " + currentTile.name;
+						Tile t = null;
+						do{ 
+							t = currentTile.aStar.parent;
+							if(t != null) s += " ,nome do pai: " + t.name;
+						}
+						while(t != null);
+						Debug.Log(s);
+					}
+					//loop through all neighbours, regardless of status 
+					//currentTile.ProcessAllNeighbours(targetTile);
+					List<Tile> neighbourList = currentTile.aStar.GetNeighbourList(true);
+					for(int a=0; a<neighbourList.Count; a++){
+						TileAStar neighbour=neighbourList[a].aStar;
+						if(neighbour.tile.walkable && neighbour.tile.unit==null){
+							//if the neightbour state is clean (never evaluated so far in the search)
+							if(neighbour.listState==TileAStar._AStarListState.Unassigned){
+								//check the score of G and H and update F, also assign the parent to currentNode
+								neighbour.scoreG= currentTile.aStar.scoreG+(float)neighbour.tile.cost;
+								neighbour.scoreH=Vector3.Distance(neighbour.tile.GetPos(), srcTile.GetPos());
+								neighbour.UpdateScoreF();
+								neighbour.parent=currentTile;
+							}
+							//if the neighbour state is open (it has been evaluated and added to the open list)
+							else if(neighbour.listState==TileAStar._AStarListState.Open){
+								//calculate if the path if using this neighbour node through current node would be shorter compare to previous assigned parent node
+								float tempScoreG=currentTile.aStar.scoreG+(float)neighbour.tile.cost;
+								if(neighbour.scoreG>tempScoreG){
+									//if so, update the corresponding score and and reassigned parent
+									neighbour.parent=currentTile;
+									neighbour.scoreG=tempScoreG;
+									neighbour.UpdateScoreF();
+								}
+							}
 						}
 					}
-				}
-				
-				for(int n=0; n<openList.Count; n++){
-					Tile tile=openList[n];
-					if(tile!=srcTile && !closeList.Contains(tile)){
-						closeList.Add(tile);
-						if(setDistance) tile.distance=i+1;
+					
+					//put all neighbour in openlist
+					foreach(Tile neighbour in currentTile.aStar.GetNeighbourList()){
+						if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned && neighbour.aStar.scoreG <= dist && neighbour.unit == null) {
+							//set the node state to open
+							neighbour.aStar.listState=TileAStar._AStarListState.Open;
+							openList.Add(neighbour);
+						}
+					}
+					
+					currentTile=null;
+					
+					currentLowestF=Mathf.Infinity;
+					id=0;
+					//TODO increase performance
+					for(i=0; i<openList.Count; i++){
+						if(openList[i].aStar.scoreF<currentLowestF){
+							currentLowestF=openList[i].aStar.scoreF;
+							currentTile=openList[i];
+							id=i;
+						}
+					}
+					
+					if(currentTile==null) return null;
+					
+					openList.RemoveAt(id);
+				}while(openList.Count >0);
+				}*/
+
+				List<Tile> neighbourList=srcTile.GetNeighbourList(walkableOnly);
+			
+				List<Tile> openList=new List<Tile>();
+				List<Tile> newOpenList=new List<Tile>();
+			
+				for(int m=0; m<neighbourList.Count; m++){
+					Tile neighbour=neighbourList[m];
+
+					if(!newOpenList.Contains(neighbour) ){
+						newOpenList.Add(neighbour);
 					}
 				}
-			}
 			
+				for(int i=0; i<dist; i++){
+					openList=newOpenList;
+					newOpenList=new List<Tile>();
+				
+					for(int n=0; n<openList.Count; n++){
+						neighbourList=openList[n].GetNeighbourList(walkableOnly);
+						for(int m=0; m<neighbourList.Count; m++){
+							Tile neighbour=neighbourList[m];
+							if(!closeList.Contains(neighbour) && !openList.Contains(neighbour) && !newOpenList.Contains(neighbour)){
+									newOpenList.Add(neighbour);
+							}
+
+						}
+					}
+					for(int n=0; n<openList.Count; n++){
+						Tile tile=openList[n];
+						if(tile!=srcTile && !closeList.Contains(tile)){
+							closeList.Add(tile);
+							if(setDistance) tile.distance= i+1;
+						}
+					}
+			}
+
+			Debug.Log (closeList.Count);
 			return closeList;
 		}
 		

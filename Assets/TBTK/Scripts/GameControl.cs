@@ -15,6 +15,7 @@ namespace TBTK{
 	[RequireComponent (typeof (DamageTable))]
 	[RequireComponent (typeof (TurnControl))]
 	[RequireComponent (typeof (AIManager))]
+	[RequireComponent (typeof (Objective))]
 	public class GameControl : MonoBehaviour {
 		
 		public delegate void GameMessageHandler(string msg);
@@ -103,8 +104,6 @@ namespace TBTK{
 		
 		private static GameControl instance;
 
-		//public Objective objective;
-		
 		void Awake(){
 			instance=this;
 			
@@ -258,6 +257,7 @@ namespace TBTK{
 			
 			if(onIterateTurnE!=null) onIterateTurnE();	//listen by EffectTracker and AbilityManager to iterate effect and cd duration
 																		//listen by tile in for tracking forceVisible(scan)
+
 		}
 		
 		//end the turn, called when EndTurn button are pressed or when a unit has used up all its move(in FactionUnitPerTurn & UnitPerTurn mode)

@@ -163,7 +163,8 @@ namespace TBTK{
 			if(movePerTurn==0) return 0;
 			float apCost=GetMoveAPCost();
 			int apAllowance=apCost==0 ? 999999 : (int)Mathf.Abs(AP/apCost);
-			return Mathf.Min(GetMoveRange(), apAllowance); 
+			return apAllowance;
+			//return Mathf.Min(GetMoveRange(), apAllowance); 
 		}
 		
 		public bool CanAttack(){ 
@@ -467,7 +468,9 @@ namespace TBTK{
 			if(data.APPerTurn>0) APPerTurn=data.APPerTurn;
 		}
 		
-		
+		protected void OnUnitDestroyed(Unit unit){		
+			if(onUnitDestroyedE!=null) onUnitDestroyedE(this);
+		}
 		
 		//********************************************************************************************************************************
 		//these section are related to UnitAbilities
@@ -964,10 +967,10 @@ namespace TBTK{
 				silentCounter.Count(attInstance.silent);
 			}
 		}
-		public void ApplyDamage(float dmg, bool critical=false){
+		public virtual void ApplyDamage(float dmg, bool critical=false){
 			if(!critical) new TextOverlay(GetTargetT().position, dmg.ToString("f0"), Color.white);
 			else new TextOverlay(GetTargetT().position, dmg.ToString("f0")+" Critical!", new Color(1f, .6f, 0, 1f));
-			
+
 			HP-=dmg;
 			if(HP<=0){
 				HP=0;
@@ -980,14 +983,14 @@ namespace TBTK{
 		}
 		
 		public GameObject destroyEffectObj;
-		IEnumerator Dead(){
+		protected virtual IEnumerator Dead(){
 			if(destroyEffectObj!=null) Instantiate(destroyEffectObj, GetTargetT().position, Quaternion.identity);
 			
 			float delay=0;
 			if(unitAudio!=null) delay=unitAudio.Destroy();
 			if(unitAnim!=null) delay=Mathf.Max(delay, unitAnim.Destroy());
 				
-			if(onUnitDestroyedE!=null) onUnitDestroyedE(this);
+			OnUnitDestroyed(this);
 			
 			yield return new WaitForSeconds(delay);
 			Destroy(thisObj);
@@ -1094,12 +1097,11 @@ namespace TBTK{
 		//********************************************************************************************************************************
 		
 		
-		[HideInInspector] private UnitAudio unitAudio;
+		[HideInInspector] protected UnitAudio unitAudio;
 		public void SetAudio(UnitAudio unitAudioInstance){ unitAudio=unitAudioInstance; }
 		
-		[HideInInspector] private UnitAnimation unitAnim;
+		[HideInInspector] protected UnitAnimation unitAnim;
 		public void SetAnimation(UnitAnimation unitAnimInstance){ 
-			Debug.Log("set animation");
 			unitAnim=unitAnimInstance;
 		}
 		public void DisableAnimation(){ unitAnim=null; }

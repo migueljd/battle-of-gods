@@ -219,7 +219,7 @@ namespace TBTK{
 			if(attackableTileList.Contains(tile)) attackableTileList.Remove(tile);	//remove from target tile
 			
 			int dist=GetDistance(tile, GameControl.selectedUnit.tile, true);
-			
+					
 			if(dist>0 && dist<GameControl.selectedUnit.GetMoveRange()){	//if within walkable distance, add to walkable tile since the tile is now open
 				walkableTileList.Add(tile);
 				tile.SetState(_TileState.Walkable);
@@ -708,13 +708,15 @@ namespace TBTK{
 		}
 		private void SetupWalkableTileList(Unit unit){
 			ClearWalkableTileList();
-			List<Tile> newList=GetTilesWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true, true);
+			//List<Tile> newList=GetTilesWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true, true);
+			List<Tile> newList = AStar.GetTileWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true);
 			for(int i=0; i<newList.Count; i++){
 				if(newList[i].unit==null){
 					walkableTileList.Add(newList[i]);
 					newList[i].SetState(_TileState.Walkable);
 				}
 			}
+			AStar.ResetGraph(unit.tile, new List<Tile>(), newList);
 			SetupHostileInRangeforTile(unit, walkableTileList);
 		}
 		

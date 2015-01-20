@@ -151,7 +151,7 @@ namespace TBTK{
 			
 			int counter=0;
 			while(currentTile!=null){
-				counter+=1;
+				counter+= currentTile.cost;
 				currentTile=currentTile.aStar.parent;
 			}
 			
@@ -180,21 +180,126 @@ namespace TBTK{
 		
 		
 		//reset all the tile, called after a search is complete
-		private static void ResetGraph(Tile hTile, List<Tile> oList, List<Tile> cList){
+		public static void ResetGraph(Tile hTile, List<Tile> oList, List<Tile> cList){
 			hTile.aStar.listState=TileAStar._AStarListState.Unassigned;
 			hTile.aStar.parent=null;
 			
 			foreach(Tile tile in oList){
 				tile.aStar.listState=TileAStar._AStarListState.Unassigned;
 				tile.aStar.parent=null;
+				tile.aStar.scoreG = 0; 
 			}
 			foreach(Tile tile in cList){
 				tile.aStar.listState=TileAStar._AStarListState.Unassigned;
 				tile.aStar.parent=null;
+				tile.aStar.scoreG = 0;
 			}
 		}
+
+		public static List<Tile> GetTileWithinDistance(Tile srcTile, int dist, bool walkableOnly=false){
+			
+
+			List<Tile> closeList = new List<Tile>();
+
+			//use A* logic to find distance to closest tiles
+			List<Tile> openList=new List<Tile>();
+			
+			Tile currentTile=srcTile;
+			if(srcTile==null) Debug.Log("src tile is null!!!");
+			
+			float currentLowestG=Mathf.Infinity;
+			int id=0;
+			int i=0;
+			
+			currentTile.aStar.scoreG = 0;
+			do{
+					
+				//move currentNode to closeList;
+				closeList.Add(currentTile);
+				currentTile.distance = (int)currentTile.aStar.scoreG;
+				currentTile.aStar.listState=TileAStar._AStarListState.Close;
+				/*if(currentTile.aStar.parent != null){
+					string s = "Nome do tile: " + currentTile.name;
+					Tile t = null;
+					do{ 
+						t = currentTile.aStar.parent;
+						if(t != null) s += " ,nome do pai: " + t.name;
+					}
+					while(t != null);
+					Debug.Log(s);
+				}*/
+				//loop through all neighbours, regardless of status 
+				//currentTile.ProcessAllNeighbours(targetTile);
+				List<Tile> neighbourList = currentTile.aStar.GetNeighbourList(true);
+				for(int a=0; a<neighbourList.Count; a++){
+					TileAStar neighbour=neighbourList[a].aStar;
+					//if it is possible to go to the neighbour tile
+					if(neighbour.tile.walkable && neighbour.tile.unit==null){
+						//if the neightbour state is clean (never evaluated so far in the search)
+						if(neighbour.listState==TileAStar._AStarListState.Unassigned){
+							//check the score of G and H and update F, also assign the parent to currentNode
+							neighbour.scoreG= currentTile.aStar.scoreG+(float)neighbour.tile.cost;
+							neighbour.parent=currentTile;
+						}
+						//if the neighbour state is open (it has been evaluated and added to the open list)
+						else if(neighbour.listState==TileAStar._AStarListState.Open){
+							//calculate if the path if using this neighbour node through current node would be shorter compare to previous assigned parent node
+							float tempScoreG=currentTile.aStar.scoreG+(float)neighbour.tile.cost;
+							if(neighbour.scoreG>tempScoreG){
+								//if so, update the corresponding score and and reassigned parent
+								neighbour.parent=currentTile;
+								neighbour.scoreG=tempScoreG;
+							}
+						}
+					}
+				}
+				
+				//put all neighbour in openlist
+				foreach(Tile neighbour in currentTile.aStar.GetNeighbourList(true)){
+					if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned && neighbour.aStar.scoreG <= dist) {
+						//set the node state to open
+						neighbour.aStar.listState=TileAStar._AStarListState.Open;
+						openList.Add(neighbour);
+					}
+				}
+				
+				currentTile=null;
+				
+				currentLowestG=Mathf.Infinity;
+				id=-1;
+				//TODO increase performance
+				for(i=0; i<openList.Count; i++){
+					if(openList[i].aStar.scoreG<currentLowestG){
+						currentLowestG=openList[i].aStar.scoreG;
+						currentTile=openList[i];
+						id=i;
+					}
+
+				}
+
+				if(id != -1)openList.RemoveAt(id);
+			}while(currentTile != null);
+	ResetTilesWithinDistance(srcTile, closeList, openList);	
+
+	return closeList;
 	}
+
+		private static void ResetTilesWithinDistance(Tile hTile, List<Tile> cList, List<Tile> oList){
+		hTile.aStar.listState=TileAStar._AStarListState.Unassigned;
+		hTile.aStar.parent=null;
+		
+		foreach(Tile tile in cList){
+				tile.aStar.listState=TileAStar._AStarListState.Unassigned;
+				tile.aStar.parent=null;
+		}
+		foreach(Tile tile in oList){
+			tile.aStar.listState=TileAStar._AStarListState.Unassigned;
+			tile.aStar.parent=null;
+		}
+	}
+}
 	
+
 	public class PathSmoothing{
 		public static List<Tile> SmoothDiagonal(List<Tile> srcPath){
 			for(int i=0; i<srcPath.Count-2; i++){

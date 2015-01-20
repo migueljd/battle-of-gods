@@ -124,7 +124,7 @@ namespace TBTK{
 		//analyse the grid to know where the unit should move to
 		private Tile Analyse(Unit unit){
 			//get all wakable tiles in range first
-			List<Tile> walkableTilesInRange=GridManager.GetTilesWithinDistance(unit.tile, unit.GetMoveRange(), true);
+			List<Tile> walkableTilesInRange=GridManager.GetTilesWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true, true);
 			walkableTilesInRange.Add(unit.tile);
 			
 			//setup all hostile in in those walkableTiles
@@ -137,7 +137,7 @@ namespace TBTK{
 				}
 			}
 			
-			//if cover system is in used
+			//if cover system is in use
 			if(GameControl.EnableCover()){
 				List<Tile> halfCoveredList=new List<Tile>();	//a list for all the tiles with half Cover
 				List<Tile> fullCoveredList=new List<Tile>();	//a list for all the tiles with full Cover

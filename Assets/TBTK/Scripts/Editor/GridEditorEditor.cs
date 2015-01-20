@@ -484,7 +484,9 @@ namespace TBTK{
 				Unit unit=unitObj.GetComponent<Unit>();
 				tile.unit=unit;
 				unit.tile=tile;
-				
+
+				Debug.Log(unit);
+
 				factionManager.factionList[unitFactionID].allUnitList.Add(unit);
 				
 				unit.factionID=factionManager.factionList[unitFactionID].ID;

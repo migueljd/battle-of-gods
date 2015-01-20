@@ -176,7 +176,7 @@ namespace TBTK {
 			
 			cont=new GUIContent("ActionPoint(AP):", "The unit default's HitPoint.\nThis is the base value to be modified by various in game bonus.");
 			EditorGUI.LabelField(new Rect(startX, startY+=spaceY, width, height), cont);
-			unit.defaultHP=EditorGUI.FloatField(new Rect(startX+100, startY, 40, height), unit.defaultHP);
+			unit.defaultAP=EditorGUI.FloatField(new Rect(startX+100, startY, 40, height), unit.defaultAP);
 			unit.AP=unit.defaultAP;
 			
 			
@@ -190,7 +190,6 @@ namespace TBTK {
 			cont=new GUIContent("Regen/Turn:", "ActionPoint (AP) gain/lost per turn");
 			EditorGUI.LabelField(new Rect(startX, startY+=spaceY, width, height), cont);
 			unit.APPerTurn=EditorGUI.FloatField(new Rect(startX+80, startY, 30, height), unit.APPerTurn);
-			
 			
 			startX=cachedX;
 			startY=cachedY+height+35;

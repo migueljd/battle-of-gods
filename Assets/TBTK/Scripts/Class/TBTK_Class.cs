@@ -322,7 +322,7 @@ namespace TBTK{
 					//if the neightbour state is clean (never evaluated so far in the search)
 					if(neighbour.listState==_AStarListState.Unassigned){
 						//check the score of G and H and update F, also assign the parent to currentNode
-						neighbour.scoreG=scoreG+1;
+						neighbour.scoreG=scoreG+(float)neighbour.tile.cost;
 						neighbour.scoreH=Vector3.Distance(neighbour.tile.GetPos(), targetTile.GetPos());
 						neighbour.UpdateScoreF();
 						neighbour.parent=tile;
@@ -330,7 +330,7 @@ namespace TBTK{
 					//if the neighbour state is open (it has been evaluated and added to the open list)
 					else if(neighbour.listState==_AStarListState.Open){
 						//calculate if the path if using this neighbour node through current node would be shorter compare to previous assigned parent node
-						tempScoreG=scoreG+1;
+						tempScoreG=scoreG+(float)tile.cost;
 						if(neighbour.scoreG>tempScoreG){
 							//if so, update the corresponding score and and reassigned parent
 							neighbour.parent=tile;

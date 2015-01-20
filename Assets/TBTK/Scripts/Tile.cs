@@ -14,6 +14,7 @@ namespace TBTK{
 	
 	public enum _TileType{Hex, Square}
 	public enum _TileState{Default, Selected, Walkable, Hostile, Range}
+	public enum _TileCost{Grass1=1, Dirt2=2}
 	
 	[System.Serializable]
 	public class Wall{
@@ -54,7 +55,9 @@ namespace TBTK{
 		
 //		[HideInInspector] 
 		public int distance=0;	//for when the tile is in walkableTileList for the selected unit, indicate the distance from selected unit
-		
+
+		public _TileCost cost = _TileCost.Grass1;
+
 		/*	//path-smoothing, not in used
 		public List<Vector3> path=new List<Vector3>();
 		public void ResetPath(){ path=new List<Vector3>{ GetPos() }; }
