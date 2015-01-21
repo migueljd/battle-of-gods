@@ -124,9 +124,9 @@ namespace TBTK{
 		//analyse the grid to know where the unit should move to
 		private Tile Analyse(Unit unit){
 			//get all wakable tiles in range first
-			List<Tile> walkableTilesInRange=GridManager.GetTilesWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true, true);
+			List<Tile> walkableTilesInRange=AStar.GetTileWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true);
+//			Debug.Log("Walkable tiles: " + walkableTilesInRange.Count);
 			walkableTilesInRange.Add(unit.tile);
-			
 			//setup all hostile in in those walkableTiles
 			List<Unit> allHostileInSight=FactionManager.GetAllHostileUnit(unit.factionID);
 			if(GameControl.EnableFogOfWar()){
@@ -206,11 +206,12 @@ namespace TBTK{
 			
 			
 			//for aggresive mode with FogOfWar disabled, try move towards the nearest unit
-			if(mode==_AIMode.Aggressive && Random.Range(0f, 1f)>0.25f){
+//			if(mode==_AIMode.Aggressive && Random.Range(0f, 1f)>0.25f){
+			if(mode==_AIMode.Aggressive){
 				List<Unit> allHostile=FactionManager.GetAllHostileUnit(unit.factionID);
 				float nearest=Mathf.Infinity;	int nearestIndex=0;
 				for(int i=0; i<allHostile.Count; i++){
-					float dist=GridManager.GetDistance(allHostile[i].tile, unit.tile);
+					float dist=AStar.GetDistance(allHostile[i].tile, unit.tile);
 					if(dist<nearest){
 						nearest=dist;
 						nearestIndex=i;

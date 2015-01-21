@@ -48,7 +48,7 @@ namespace TBTK{
 		public bool enableActionAfterAttack=false;
 		public static bool EnableActionAfterAttack(){ return instance.enableActionAfterAttack; }
 		
-		public bool enableCounter=false;
+		public bool enableCounter=true;
 		public static bool EnableCounter(){ return instance.enableCounter; }
 		public float counterAPMultiplier=1f;
 		public static float GetCounterAPMultiplier(){ return !instance.useAPForAttack ? 0 : instance.counterAPMultiplier; }

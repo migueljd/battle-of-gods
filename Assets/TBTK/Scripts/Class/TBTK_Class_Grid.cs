@@ -298,7 +298,6 @@ namespace TBTK{
 					}
 			}
 
-			Debug.Log (closeList.Count);
 			return closeList;
 		}
 		

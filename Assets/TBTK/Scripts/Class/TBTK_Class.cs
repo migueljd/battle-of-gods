@@ -320,18 +320,21 @@ namespace TBTK{
 				TileAStar neighbour=neighbourList[i].aStar;
 				if((neighbour.tile.walkable && neighbour.tile.unit==null) || neighbour.tile==targetTile){
 					//if the neightbour state is clean (never evaluated so far in the search)
+					if(neighbour.tile.name == "Tile_4x13") Debug.Log ("Tile 4x13 found, it's neighbour is: " + tile.name);
 					if(neighbour.listState==_AStarListState.Unassigned){
 						//check the score of G and H and update F, also assign the parent to currentNode
-						neighbour.scoreG=scoreG+(float)neighbour.tile.cost;
+						neighbour.scoreG=this.scoreG+(float)neighbour.tile.cost;
 						neighbour.scoreH=Vector3.Distance(neighbour.tile.GetPos(), targetTile.GetPos());
 						neighbour.UpdateScoreF();
 						neighbour.parent=tile;
+
 					}
 					//if the neighbour state is open (it has been evaluated and added to the open list)
 					else if(neighbour.listState==_AStarListState.Open){
 						//calculate if the path if using this neighbour node through current node would be shorter compare to previous assigned parent node
-						tempScoreG=scoreG+(float)tile.cost;
-						if(neighbour.scoreG>tempScoreG){
+						float tempScoreG=scoreG+(float)tile.cost;
+						float tempScoreF=tempScoreG + neighbour.scoreH;
+						if(neighbour.scoreF>tempScoreF){
 							//if so, update the corresponding score and and reassigned parent
 							neighbour.parent=tile;
 							neighbour.scoreG=tempScoreG;

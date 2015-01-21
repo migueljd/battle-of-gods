@@ -646,8 +646,6 @@ namespace TBTK{
 			if(moveRemain<=0) return;
 			
 			moveRemain-=1;
-			AP-=GetMoveAPCost()*(int)Mathf.Min(GetMoveRange(), GridManager.GetDistance(tile, targetTile));
-			
 			Debug.Log("moving "+name+" to "+targetTile);
 			GameControl.LockUnitSelect();
 			
@@ -657,16 +655,25 @@ namespace TBTK{
 			tile.unit=null;
 			GridManager.ClearAllTile();
 			
+			int allowedDistance = GetEffectiveMoveRange();
 			List<Tile> path=AStar.SearchWalkableTile(tile, targetTile);
-			
-			while(path.Count>GetMoveRange()) path.RemoveAt(path.Count-1);
-			
+
+			//while(path.Count>GetMoveRange()) path.RemoveAt(path.Count-1);
+//			Debug.Log ("Allowed Distance: " + allowedDistance);
+			for(int a =path.Count - 1; a >= 0; a--){
+//				Debug.Log (path[a].name);
+//				Debug.Log (path[a].distance);
+				if(path[a].distance > allowedDistance || path[a].unit != null) path.RemoveAt(a);
+			}
 			if(GridManager.GetTileType()==_TileType.Square){	//smooth the path so the unit wont zig-zag along a diagonal direction
 				path.Insert(0, tile);
 				path=PathSmoothing.SmoothDiagonal(path);
 				path.RemoveAt(0);
 			}
-			
+
+
+//			AP-=GetMoveAPCost()*(int)Mathf.Min(GetMoveRange(), GridManager.GetDistance(tile, targetTile));
+
 			while(!TurnControl.ClearToProceed()) yield return null;
 			
 			if(GameControl.EnableFogOfWar() && isAIUnit){
@@ -722,8 +729,9 @@ namespace TBTK{
 				
 				while(true){
 					float dist=Vector3.Distance(thisT.position, path[0].GetPos());
-					if(dist<0.05f) break;
-					
+					if(dist<0.05f){
+						break;
+					}
 					Quaternion wantedRot=Quaternion.LookRotation(path[0].GetPos()-thisT.position);
 					thisT.rotation=Quaternion.Slerp(thisT.rotation, wantedRot, Time.deltaTime*moveSpeed*3);
 					

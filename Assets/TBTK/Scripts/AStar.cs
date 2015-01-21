@@ -11,7 +11,7 @@ namespace TBTK{
 		//search for a path, through walkable tile only
 		//for normal movement, return the path in a list of hexTile
 		public static List<Tile> SearchWalkableTile(Tile originTile, Tile destTile){
-			
+
 			List<Tile> closeList=new List<Tile>();
 			List<Tile> openList=new List<Tile>();
 			
@@ -20,9 +20,19 @@ namespace TBTK{
 			float currentLowestF=Mathf.Infinity;
 			int id=0;
 			int i=0;
-			
+
+			originTile.aStar.scoreG = 0;
+
 			while(true){
-				
+
+				currentTile.distance = (int)currentTile.aStar.scoreG;
+//				Debug.Log (string.Format("Tile name: {0}\nTile distance: {1}\nTile scoreG: {2}", currentTile.name, currentTile.distance, currentTile.aStar.scoreG));
+//				if(currentTile.name == "Tile_5x13" || currentTile.name == "Tile_5x14" || currentTile.name == "Tile_5x15") {
+//					Debug.Log(currentTile.name);
+//					Debug.Log (currentTile.aStar.scoreG);
+//					Debug.Log (currentTile.GetNeighbourList().Contains(destTile));
+//					Debug.Log (currentTile.aStar.parent);
+//				}
 				//if we have reach the destination
 				if(currentTile==destTile) break;
 				
@@ -34,9 +44,13 @@ namespace TBTK{
 				currentTile.aStar.ProcessWalkableNeighbour(destTile);
 				
 				//put all neighbour in openlist
-				foreach(Tile neighbour in currentTile.aStar.GetNeighbourList(true)){
-					if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned || neighbour==destTile){
+				foreach(Tile neighbour in currentTile.aStar.GetNeighbourList()){
+//					Debug.Log ("Tile name: " + neighbour.name + " might get in");
+//					Debug.Log ("State: " + neighbour.aStar.listState);
+					if((neighbour.aStar.listState==TileAStar._AStarListState.Unassigned && neighbour.unit == null) || neighbour==destTile){
 						//~ //set the node state to open
+						
+//						Debug.Log ("Tile name: " + neighbour.name + " got in");
 						neighbour.aStar.listState=TileAStar._AStarListState.Open;
 						openList.Add(neighbour);
 					}
@@ -59,6 +73,7 @@ namespace TBTK{
 				
 				//if there's no node left in openlist, path doesnt exist
 				if(currentTile==null) {
+					Debug.Log("jhere");
 					break;
 				}
 
@@ -86,7 +101,7 @@ namespace TBTK{
 			}
 			
 			path=InvertTileArray(path);
-			
+
 			ResetGraph(destTile, openList, closeList);
 			
 			return path;
@@ -105,7 +120,7 @@ namespace TBTK{
 			Tile currentTile=srcTile;
 			if(srcTile==null) Debug.Log("src tile is null!!!");
 			
-			float currentLowestF=Mathf.Infinity;
+			float currentLowestG=Mathf.Infinity;
 			int id=0;
 			int i=0;
 			
@@ -133,11 +148,11 @@ namespace TBTK{
 				
 				currentTile=null;
 				
-				currentLowestF=Mathf.Infinity;
+				currentLowestG=Mathf.Infinity;
 				id=0;
 				for(i=0; i<openList.Count; i++){
-					if(openList[i].aStar.scoreF<currentLowestF){
-						currentLowestF=openList[i].aStar.scoreF;
+					if(openList[i].aStar.scoreF<currentLowestG){
+						currentLowestG=openList[i].aStar.scoreG;
 						currentTile=openList[i];
 						id=i;
 					}
@@ -213,7 +228,9 @@ namespace TBTK{
 			
 			currentTile.aStar.scoreG = 0;
 			do{
-					
+//				string name = currentTile.name;
+//				string[] s = {"Tile_5x14", "Tile_5x16", "Tile_5x17"};
+//				if(name.Equals(s[0]) || name.Equals(s[1]) || name.Equals(s[2])) Debug.Log("AStar used tile: " + name);
 				//move currentNode to closeList;
 				closeList.Add(currentTile);
 				currentTile.distance = (int)currentTile.aStar.scoreG;
