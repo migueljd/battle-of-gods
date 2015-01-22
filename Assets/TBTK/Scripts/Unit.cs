@@ -882,7 +882,8 @@ namespace TBTK{
 		public void Counter(Unit targetUnit){ StartCoroutine(CounterRoutine(targetUnit)); }
 		public IEnumerator CounterRoutine(Unit targetUnit){
 			TurnControl.CounterCommenced();
-			
+			Debug.Log("Trying to counter");
+
 			yield return null;	//wait for shot to be fired first
 									//TurnControl.actionInProgress will be set to >2 when there's shootObject active
 									//thus the next line wont be skipped, refer toTurnControl.ClearToCounter() 
@@ -1030,7 +1031,7 @@ namespace TBTK{
 			
 			float dist=GridManager.GetDistance(unit.tile, tile);
 			if(dist>GetAttackRange()) return false;
-			
+
 			if(GameControl.EnableFogOfWar()){
 				if(requireDirectLOSToAttack && !FogOfWar.InLOS(unit.tile, tile)) return false; 
 				if(!FogOfWar.IsTileVisibleToFaction(unit.tile, factionID)) return false;

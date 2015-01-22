@@ -25,14 +25,14 @@ namespace TBTK {
 		
 		public bool enableActionAfterAttack=false;
 		
-		public bool enableCounter=false;
+		public bool enableCounter=true;
 		public float counterAPMultiplier=1f;
 		public float counterDamageMultiplier=1f;
 		
 		public bool restoreUnitAPOnTurn=true;
 		
 		public bool useAPForMove=true;
-		public bool useAPForAttack=true;
+		public bool useAPForAttack=false;
 		
 		public bool attackThroughObstacle=false;
 		

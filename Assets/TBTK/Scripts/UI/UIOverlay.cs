@@ -29,8 +29,8 @@ namespace TBTK {
 					textOverlayList.Add(obj.GetComponent<Text>());
 					textOverlayList[i].transform.SetParent(textOverlayList[0].transform.parent);
 				}
-				//textOverlayList[i].text="";
-//				textOverlayList[i].gameObject.SetActive(false);
+				textOverlayList[i].text="";
+				textOverlayList[i].gameObject.SetActive(false);
 			}
 			
 			for(int i=0; i<20; i++){
