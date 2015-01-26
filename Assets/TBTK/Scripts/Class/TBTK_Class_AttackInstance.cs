@@ -136,19 +136,16 @@ namespace TBTK{
 			//get the base damage
 			damage=Random.Range(srcUnit.GetDamageMin(), srcUnit.GetDamageMax());
 
-			Debug.Log("Damage: "+damage);
 
 			//modify the damage with damage to armor modifier
 			int armorType=tgtUnit.armorType;
 			int damageType=tgtUnit.damageType;
 			damageTableModifier=DamageTable.GetModifier(armorType, damageType);
 			damage*=damageTableModifier;
-			Debug.Log("Damage after armor: "+damage);
-			
+
 			//if this is a counter attack, modify the damage with counter modifier
 			if(isCounter) damage*=GameControl.GetCounterDamageMultiplier();
 			
-			Debug.Log("Damage after GC multiplier: "+damage);
 			//this the target is flanked, apply the flanking bonus
 			if(!isCounter && flanked){
 				flankingBonus=1+GameControl.GetFlankingBonus()+srcUnit.GetFlankingBonus()-tgtUnit.GetFlankedModifier();

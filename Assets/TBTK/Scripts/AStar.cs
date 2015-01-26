@@ -47,6 +47,7 @@ namespace TBTK{
 				foreach(Tile neighbour in currentTile.aStar.GetNeighbourList()){
 //					Debug.Log ("Tile name: " + neighbour.name + " might get in");
 //					Debug.Log ("State: " + neighbour.aStar.listState);
+					if(!neighbour.walkable) continue;
 					if((neighbour.aStar.listState==TileAStar._AStarListState.Unassigned && neighbour.unit == null) || neighbour==destTile){
 						//~ //set the node state to open
 						
@@ -138,10 +139,10 @@ namespace TBTK{
 				
 				//put all neighbour in openlist
 				foreach(Tile neighbour in currentTile.aStar.GetNeighbourList()){
-					if(neighbour.unit!=null && neighbour!=targetTile) continue;
-					if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned) {
+					if((neighbour.unit!=null && neighbour!=targetTile) || !neighbour.walkable) continue;
+					if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned ) {
 						//set the node state to open
-						neighbour.aStar.listState=TileAStar._AStarListState.Open;
+                        neighbour.aStar.listState=TileAStar._AStarListState.Open;
 						openList.Add(neighbour);
 					}
 				}
