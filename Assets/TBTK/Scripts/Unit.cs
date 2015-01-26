@@ -860,7 +860,6 @@ namespace TBTK{
 			//play animation
 			if(unitAnim!=null) unitAnim.Attack();
 			if(unitAudio!=null) unitAudio.Attack();
-			Debug.Log (unitAnim.anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.UnitsAttack"));
 			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit.CanCounter(this)) targetUnit.Counter(this);
 			
 			//shoot
@@ -869,7 +868,7 @@ namespace TBTK{
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
 
-			TurnControl.ActionCompleted(0, unitAnim.anim, "UnitsAttack");
+			TurnControl.ActionCompleted(0.15f);
 			while(!TurnControl.ClearToProceed()) yield return null;
 
 			FinishAction();
