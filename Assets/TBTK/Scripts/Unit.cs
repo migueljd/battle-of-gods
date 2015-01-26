@@ -860,7 +860,7 @@ namespace TBTK{
 			//play animation
 			if(unitAnim!=null) unitAnim.Attack();
 			if(unitAudio!=null) unitAudio.Attack();
-			
+			Debug.Log (unitAnim.anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.UnitsAttack"));
 			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit.CanCounter(this)) targetUnit.Counter(this);
 			
 			//shoot
@@ -868,10 +868,10 @@ namespace TBTK{
 				Shoot(shootObject, targetTile, shootPointList[i], attInstance, i==shootPointList.Count-1);
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
-			
-			TurnControl.ActionCompleted(0.15f);
+
+			TurnControl.ActionCompleted(0, unitAnim.anim, "UnitsAttack");
 			while(!TurnControl.ClearToProceed()) yield return null;
-			
+
 			FinishAction();
 			
 			if(turretObject!=null && turretObject!=thisT){ while(!RotateTurretToOrigin() && !aiming) yield return null; }
@@ -882,20 +882,22 @@ namespace TBTK{
 		public void Counter(Unit targetUnit){ StartCoroutine(CounterRoutine(targetUnit)); }
 		public IEnumerator CounterRoutine(Unit targetUnit){
 			TurnControl.CounterCommenced();
-			
+			Debug.Log("Trying to counter");
+
 			yield return null;	//wait for shot to be fired first
 									//TurnControl.actionInProgress will be set to >2 when there's shootObject active
 									//thus the next line wont be skipped, refer toTurnControl.ClearToCounter() 
 			
 			while(!TurnControl.ClearToCounter()) yield return null;
-			
+
+			Debug.Log ("Countering");
 			AP-=GetCounterAPCost();
 			Debug.Log(AP+"    "+GetCounterAPCost());
 			counterRemain-=1;
 			
 			while(!Aiming(targetUnit.tile, targetUnit)) yield return null;
 			
-			if(unitAnim!=null) unitAudio.Attack();
+			if(unitAnim!=null) unitAnim.Attack();
 			if(unitAudio!=null) unitAudio.Attack();
 			
 			AttackInstance attInstance=new AttackInstance(this, targetUnit, true);
@@ -1030,7 +1032,7 @@ namespace TBTK{
 			
 			float dist=GridManager.GetDistance(unit.tile, tile);
 			if(dist>GetAttackRange()) return false;
-			
+
 			if(GameControl.EnableFogOfWar()){
 				if(requireDirectLOSToAttack && !FogOfWar.InLOS(unit.tile, tile)) return false; 
 				if(!FogOfWar.IsTileVisibleToFaction(unit.tile, factionID)) return false;

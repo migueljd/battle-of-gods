@@ -135,15 +135,16 @@ namespace TBTK{
 			
 			//get the base damage
 			damage=Random.Range(srcUnit.GetDamageMin(), srcUnit.GetDamageMax());
-			
+
+
 			//modify the damage with damage to armor modifier
 			int armorType=tgtUnit.armorType;
 			int damageType=tgtUnit.damageType;
 			damageTableModifier=DamageTable.GetModifier(armorType, damageType);
 			damage*=damageTableModifier;
-			
+
 			//if this is a counter attack, modify the damage with counter modifier
-			if(isCounter) damage=GameControl.GetCounterDamageMultiplier();
+			if(isCounter) damage*=GameControl.GetCounterDamageMultiplier();
 			
 			//this the target is flanked, apply the flanking bonus
 			if(!isCounter && flanked){
@@ -172,7 +173,6 @@ namespace TBTK{
 			//check if the unit is destroyed in this instance and make the destroyed flag according
 			if(damage>tgtUnit.HP) destroyed=true;
 			
-			//Debug.Log("Damage: "+damage);
 			//new TextOverlay(tgtUnit.GetTargetT().position, damage.ToString("f0"), Color.white);
 		}
 		

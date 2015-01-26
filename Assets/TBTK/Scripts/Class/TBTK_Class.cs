@@ -320,7 +320,6 @@ namespace TBTK{
 				TileAStar neighbour=neighbourList[i].aStar;
 				if((neighbour.tile.walkable && neighbour.tile.unit==null) || neighbour.tile==targetTile){
 					//if the neightbour state is clean (never evaluated so far in the search)
-					if(neighbour.tile.name == "Tile_4x13") Debug.Log ("Tile 4x13 found, it's neighbour is: " + tile.name);
 					if(neighbour.listState==_AStarListState.Unassigned){
 						//check the score of G and H and update F, also assign the parent to currentNode
 						neighbour.scoreG=this.scoreG+(float)neighbour.tile.cost;
