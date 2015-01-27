@@ -624,7 +624,14 @@ namespace TBTK{
 			if(onUnitSelectedE!=null) onUnitSelectedE(this);
 		}
 		public static void Deselect(){ if(onUnitSelectedE!=null) onUnitSelectedE(null); }
-		
+
+
+//		void OnGUI(){
+//			Vector2 targetPos;
+//			targetPos = Camera.main.WorldToScreenPoint (this.transform.position);
+//			
+//			GUI.Box(new Rect(targetPos.x, Screen.height- targetPos.y, 60, 20), HP + "/" + defaultHP);
+//		}
 		
 		private bool rotating=false;
 		private Quaternion facingRotation;

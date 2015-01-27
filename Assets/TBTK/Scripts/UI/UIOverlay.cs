@@ -77,6 +77,9 @@ namespace TBTK {
 				for(int n=0; n<factionList.Count; n++){
 					if(unitList[i].factionID==factionList[n].ID){
 						unitOverlayList[i].icon.color=factionList[n].color;
+						((Image) unitOverlayList[i].barHP.transform.Find("Bar").GetComponent<Image>()).color = factionList[n].color;
+//						Image img = unitOverlayList[i]GetComponentInChildren<Image>();
+//						img.color=factionList[n].color;
 					}
 				}
 			}
