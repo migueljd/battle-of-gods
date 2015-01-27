@@ -728,7 +728,16 @@ namespace TBTK{
 		private void SetupAttackableTileList(Unit unit){
 			ClearAttackableTileList();
 			attackableTileList=unit.tile.SetupHostileInRange();
-			for(int i=0; i<attackableTileList.Count; i++) attackableTileList[i].SetState(_TileState.Hostile);
+			if(unit.RangedAttackOnly){
+				List<Tile> unitNeighbours = unit.tile.GetNeighbourList();
+				foreach(Tile t in unitNeighbours){
+					if(attackableTileList.Contains(t)) attackableTileList.Remove(t);
+				}
+			}
+			for(int i=0; i<attackableTileList.Count; i++){
+				attackableTileList[i].SetState(_TileState.Hostile);
+
+			}
 			
 			ShowHostileIndicator(attackableTileList);
 		}
@@ -748,10 +757,12 @@ namespace TBTK{
 			
 			int range=unit.GetAttackRange();
 			int sight=unit.GetSight();
+
 			
 			for(int i=0; i<tileList.Count; i++){
 				Tile srcTile=tileList[i];
 				List<Tile> hostileInRangeList=new List<Tile>();
+				List<Tile> tileNeighbours = srcTile.GetNeighbourList();
 				
 				for(int j=0; j<allHostileUnitList.Count; j++){
 					Tile targetTile=allHostileUnitList[j].tile;
@@ -779,7 +790,7 @@ namespace TBTK{
 						}
 					}
 					
-					if(inSight) hostileInRangeList.Add(targetTile);
+					if(inSight && (!unit.RangedAttackOnly || !tileNeighbours.Contains(targetTile))) hostileInRangeList.Add(targetTile);
 					
 				}
 				
