@@ -762,7 +762,7 @@ namespace TBTK{
 			tile.unit=this;
 			thisT.position=tile.GetPos();
 			
-			TurnControl.ActionCompleted(0.15f);
+			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			
 			FinishAction();
 		}
@@ -877,7 +877,8 @@ namespace TBTK{
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
 
-			TurnControl.ActionCompleted(0.15f);
+			int hash = Animator.StringToHash("Base Layer.UnitsAttack");
+			TurnControl.ActionCompleted(GameControl.delayPerAction, unitAnim.anim, hash);
 			while(!TurnControl.ClearToProceed()) yield return null;
 
 			FinishAction();
@@ -919,7 +920,8 @@ namespace TBTK{
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
 			
-			TurnControl.ActionCompleted(0.15f);
+			int hash = Animator.StringToHash("Base Layer.UnitsAttack");
+			TurnControl.ActionCompleted(GameControl.delayPerAction, unitAnim.anim, hash);
 			while(!TurnControl.ClearToCounter()) yield return null;
 			TurnControl.CounterCompleted();
 			

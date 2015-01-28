@@ -104,6 +104,8 @@ namespace TBTK{
 		
 		private static GameControl instance;
 
+		public static float delayPerAction = 0.5f;
+
 		void Awake(){
 			instance=this;
 			
