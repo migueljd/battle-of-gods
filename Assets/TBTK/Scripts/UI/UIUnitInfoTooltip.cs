@@ -59,7 +59,8 @@ namespace TBTK{
 		
 		
 		
-		public static void Show(Unit unit){ instance._Show(unit); }
+		public static void Show(Unit unit){ //instance._Show(unit); 
+		}
 		public void _Show(Unit unit){
 			
 			currentUnit=unit;
@@ -92,7 +93,8 @@ namespace TBTK{
 			
 			thisObj.SetActive(true);
 		}
-		public static void Hide(){ instance._Hide(); }
+		public static void Hide(){ //instance._Hide(); 
+		}
 		public void _Hide(){
 			currentUnit=null;
 			thisObj.SetActive(false);

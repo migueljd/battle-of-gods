@@ -80,7 +80,7 @@ namespace TBTK{
 		private bool movingUnit=false;		//set to true when a unit is being moved
 		IEnumerator MoveUnitRoutine(Unit unit){
 			movingUnit=true;
-			
+
 			if(mode!=_AIMode.Aggressive && !unit.trigger){
 				StartCoroutine(EndMoveUnitRoutine());
 				yield break;
@@ -207,16 +207,29 @@ namespace TBTK{
 			
 			//for aggresive mode with FogOfWar disabled, try move towards the nearest unit
 //			if(mode==_AIMode.Aggressive && Random.Range(0f, 1f)>0.25f){
-			if(mode==_AIMode.Aggressive){
+			if(mode==_AIMode.Aggressive || mode==_AIMode.Trigger){
 				List<Unit> allHostile=FactionManager.GetAllHostileUnit(unit.factionID);
 				float nearest=Mathf.Infinity;	int nearestIndex=0;
+
+				List<Tile> attackableEnemies = new List<Tile>();
+
 				for(int i=0; i<allHostile.Count; i++){
 					float dist=AStar.GetDistance(allHostile[i].tile, unit.tile);
+					foreach(Tile t in allHostile[i].tile.GetNeighbourList(true)){
+						Debug.Log ("Trying");
+						if(walkableTilesInRange.Contains(t)){
+							attackableEnemies.Add(allHostile[i].tile);
+							Debug.Log("Going away");
+						}
+					}
 					if(dist<nearest){
 						nearest=dist;
 						nearestIndex=i;
 					}
 				}
+
+				if(attackableEnemies.Count > 0) return attackableEnemies[Random.Range(0, attackableEnemies.Count - 1)];
+
 				return allHostile[nearestIndex].tile;
 			}
 			
