@@ -891,7 +891,6 @@ namespace TBTK{
 		public void Counter(Unit targetUnit){ StartCoroutine(CounterRoutine(targetUnit)); }
 		public IEnumerator CounterRoutine(Unit targetUnit){
 			TurnControl.CounterCommenced();
-			Debug.Log("Trying to counter");
 
 			yield return null;	//wait for shot to be fired first
 									//TurnControl.actionInProgress will be set to >2 when there's shootObject active
