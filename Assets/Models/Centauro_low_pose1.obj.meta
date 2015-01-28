@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5bad24da55287cf46ad87ce7df657600
+guid: 855b5c5ffc6f0a642b9b8135c8b7735f
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -11,11 +11,11 @@ ModelImporter:
     100010: Centauro_body_low_pose1:Group42918_Centauro_pose1 Centauro_body_low_pose1:polySurface1
     100012: Centauro_body_low_pose1:Group43824_Centauro_pose1 Centauro_body_low_pose1:polySurface1
     100014: Centauro_body_low_pose1:Group6253_Centauro_pose1 Centauro_body_low_pose1:polySurface1
-    100016: Centauro_pose1_Centauro_belt
-    100018: Centauro_pose1_Centauro_trap
-    100020: Centauro_pose1_pCylinder1
-    100022: Centauro_support_Centauro_pose1
-    100024: //RootNode
+    100016: //RootNode
+    100018: Centauro_pose1_Centauro_belt
+    100020: Centauro_pose1_Centauro_trap
+    100022: Centauro_pose1_pCylinder1
+    100024: Centauro_support_Centauro_pose1
     400000: Centauro_body_low_pose1:Group11841_Centauro_pose1 Centauro_body_low_pose1:polySurface1
     400002: Centauro_body_low_pose1:Group19851_Centauro_pose1 Centauro_body_low_pose1:polySurface1
     400004: Centauro_body_low_pose1:Group24284_Centauro_pose1 Centauro_body_low_pose1:polySurface1
@@ -24,11 +24,11 @@ ModelImporter:
     400010: Centauro_body_low_pose1:Group42918_Centauro_pose1 Centauro_body_low_pose1:polySurface1
     400012: Centauro_body_low_pose1:Group43824_Centauro_pose1 Centauro_body_low_pose1:polySurface1
     400014: Centauro_body_low_pose1:Group6253_Centauro_pose1 Centauro_body_low_pose1:polySurface1
-    400016: Centauro_pose1_Centauro_belt
-    400018: Centauro_pose1_Centauro_trap
-    400020: Centauro_pose1_pCylinder1
-    400022: Centauro_support_Centauro_pose1
-    400024: //RootNode
+    400016: //RootNode
+    400018: Centauro_pose1_Centauro_belt
+    400020: Centauro_pose1_Centauro_trap
+    400022: Centauro_pose1_pCylinder1
+    400024: Centauro_support_Centauro_pose1
     2300000: Centauro_body_low_pose1:Group11841_Centauro_pose1 Centauro_body_low_pose1:polySurface1
     2300002: Centauro_body_low_pose1:Group19851_Centauro_pose1 Centauro_body_low_pose1:polySurface1
     2300004: Centauro_body_low_pose1:Group24284_Centauro_pose1 Centauro_body_low_pose1:polySurface1
@@ -67,7 +67,7 @@ ModelImporter:
     4300022: Centauro_support_Centauro_pose1
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -85,7 +85,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .0700000003
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
