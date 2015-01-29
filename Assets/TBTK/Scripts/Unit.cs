@@ -987,7 +987,8 @@ namespace TBTK{
 			}
 		}
 		public virtual void ApplyDamage(float dmg, bool critical=false){
-			if(!critical) new TextOverlay(GetTargetT().position, dmg.ToString("f0"), Color.white);
+			//Call unit damage text
+			if(!critical) new TextOverlay(GetTargetT().position + new Vector3(0, 2,0), dmg.ToString("f0"), new Color(.713f,.188f,.188f, 1f));
 			else new TextOverlay(GetTargetT().position, dmg.ToString("f0")+" Critical!", new Color(1f, .6f, 0, 1f));
 
 			HP-=dmg;

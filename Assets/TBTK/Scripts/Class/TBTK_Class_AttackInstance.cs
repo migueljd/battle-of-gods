@@ -173,7 +173,7 @@ namespace TBTK{
 			//check if the unit is destroyed in this instance and make the destroyed flag according
 			if(damage>tgtUnit.HP) destroyed=true;
 			
-			//new TextOverlay(tgtUnit.GetTargetT().position, damage.ToString("f0"), Color.white);
+//			new TextOverlay(tgtUnit.GetTargetT().position, damage.ToString("f0"), Color.white);
 		}
 		
 		
