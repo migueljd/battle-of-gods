@@ -23,7 +23,6 @@ public class Objective : MonoBehaviour {
 	void Awake(){
 		if(instance==null){ 
 			instance=this;
-			if(instance.objective == _ObjectiveType.KillTarget || instance.objective == _ObjectiveType.DestroyTemple) targetId = target.GetInstanceID();
 		}
 	}
 	
@@ -39,6 +38,7 @@ public class Objective : MonoBehaviour {
 
 	public static bool objectiveCompleted(int ID){
 		if(instance.objective == _ObjectiveType.KillTarget || instance.objective == _ObjectiveType.DestroyTemple){
+			instance.targetId = instance.target.GetInstanceID();
 			return ID == instance.targetId;
 		}
 		else {

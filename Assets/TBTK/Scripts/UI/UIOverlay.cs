@@ -72,8 +72,12 @@ namespace TBTK {
 			List<Unit> unitList=FactionManager.GetAllUnit();
 			List<Faction> factionList=FactionManager.GetFactionList();
 			for(int i=0; i<unitList.Count; i++){
-				unitOverlayList[i].unit=unitList[i];
-				
+
+				if(unitOverlayList.Count-1 < i){
+					unitOverlayList.Add(unitOverlayList[0].Clone());
+				}
+ 				unitOverlayList[i].unit=unitList[i];
+			
 				for(int n=0; n<factionList.Count; n++){
 					if(unitList[i].factionID==factionList[n].ID){
 						unitOverlayList[i].icon.color=factionList[n].color;

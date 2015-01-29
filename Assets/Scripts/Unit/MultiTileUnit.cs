@@ -39,7 +39,6 @@ namespace AssemblyCSharp
 					if(unitList == null){
 						GameObject[] objects = GameObject.FindGameObjectsWithTag(thisObj.tag);
 						unitList = new List<MultiTileUnit>(); 
-						Debug.Log(thisObj.tag);
 						foreach (GameObject ob in objects){
 							unitList.Add(ob.GetComponent<MultiTileUnit>());	
 						}

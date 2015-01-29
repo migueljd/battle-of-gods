@@ -36,7 +36,7 @@ namespace TBTK{
 		// Update is called once per frame
 		void Update () {
 			if(tgtUnit!=null && attackTooltipObj.activeInHierarchy){
-				UpdateAttackTooltipPos();
+				//UpdateAttackTooltipPos();
 			}
 		}
 		
@@ -112,7 +112,7 @@ namespace TBTK{
 			if(GameControl.EnableFlanking() && attInstance.flanked) lbCover.text+="Flanking Attack";
 			
 			
-			UpdateAttackTooltipPos();
+			//UpdateAttackTooltipPos();
 			
 			attackTooltipObj.SetActive(true);
 		}
