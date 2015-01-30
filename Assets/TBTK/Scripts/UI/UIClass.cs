@@ -71,6 +71,9 @@ namespace TBTK {
 		public Slider barAP;
 		
 		public Image iconCover;
+
+		public Image iconMove;
+		public Image iconAttack;
 		
 		public void Init(){
 			rootT=rootObj.transform;
@@ -96,6 +99,12 @@ namespace TBTK {
 				}
 				else if(child.name=="IconCover"){
 					iconCover=child.GetComponent<Image>();
+				}
+				else if(child.name=="IconMove"){
+					iconMove=child.GetComponent<Image>();
+				}
+				else if(child.name=="IconAttack"){
+					iconAttack=child.GetComponent<Image>();
 				}
 			}
 			
