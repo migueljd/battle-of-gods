@@ -12,7 +12,7 @@ public class ObjectiveRandomizer : MonoBehaviour {
 	public Text text;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 	
 		Objective obj = Objective.instance;
 		int a = Random.Range(0,3);

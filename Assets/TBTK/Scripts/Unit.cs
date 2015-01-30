@@ -42,7 +42,7 @@ namespace TBTK{
 		
 		public float hitThreshold=0.25f;
 		public Transform targetPoint;
-		public Transform GetTargetT(){ return targetPoint==null ? thisT : targetPoint; }
+		public Transform GetTargetT(){ return targetPoint==null ? this.transform : targetPoint; }
 		
 		public bool requireDirectLOSToAttack=true;
 		
@@ -878,7 +878,7 @@ namespace TBTK{
 			}
 
 			int hash = Animator.StringToHash("Base Layer.UnitsAttack");
-			TurnControl.ActionCompleted(GameControl.delayPerAction, unitAnim.anim, hash);
+			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			while(!TurnControl.ClearToProceed()) yield return null;
 
 			FinishAction();
@@ -920,7 +920,7 @@ namespace TBTK{
 			}
 			
 			int hash = Animator.StringToHash("Base Layer.UnitsAttack");
-			TurnControl.ActionCompleted(GameControl.delayPerAction, unitAnim.anim, hash);
+			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			while(!TurnControl.ClearToCounter()) yield return null;
 			TurnControl.CounterCompleted();
 			

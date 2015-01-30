@@ -110,18 +110,18 @@ namespace TBTK{
 		}
 		
 		//called to indicate that an action has been completed
-		public static void ActionCompleted(float delay=0, Animator anim = null, int hash = 0){ 
-			instance.StartCoroutine(instance._ActionCompleted(delay, anim, hash));
+		public static void ActionCompleted(float delay=0){ 
+			instance.StartCoroutine(instance._ActionCompleted(delay));
 		}
-		IEnumerator _ActionCompleted(float delay=0, Animator anim = null, int hash = 0){
+		IEnumerator _ActionCompleted(float delay=0){
 			if(delay>0) yield return new WaitForSeconds(delay);
-			else if(anim != null) {
-				Debug.Log(anim.GetCurrentAnimatorStateInfo(0).nameHash);
-				Debug.Log(Animator.StringToHash("Base Layer.Idle"));
-				while(anim.GetCurrentAnimatorStateInfo(0).nameHash == hash){
-					yield return null;
-				}
-			}
+//			else if(anim != null) {
+//				Debug.Log(anim.GetCurrentAnimatorStateInfo(0).nameHash);
+//				Debug.Log(Animator.StringToHash("Base Layer.Idle"));
+//				while(anim.GetCurrentAnimatorStateInfo(0).nameHash == hash){
+//					yield return null;
+//				}
+//			}
 
 			actionInProgress=Mathf.Max(0, actionInProgress-=1);
 			yield return null;
