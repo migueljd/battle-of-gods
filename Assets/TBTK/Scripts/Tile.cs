@@ -14,8 +14,9 @@ namespace TBTK{
 	
 	public enum _TileType{Hex, Square}
 	public enum _TileState{Default, Selected, Walkable, Hostile, Range}
-	public enum _TileCost{Grass1=1, Dirt2=2}
-	
+	public enum _TileCost{Grass=1, DenseGrass=2}
+
+
 	[System.Serializable]
 	public class Wall{
 		public bool init=false;
@@ -29,7 +30,10 @@ namespace TBTK{
 	
 	
 	public class Tile : MonoBehaviour {
-		
+
+		public float tileDefense;
+		public float tileAttack;
+
 		public _TileType type;
 		public bool walkable=true;
 		private bool visible=true;
@@ -56,7 +60,7 @@ namespace TBTK{
 //		[HideInInspector] 
 		public int distance=0;	//for when the tile is in walkableTileList for the selected unit, indicate the distance from selected unit
 
-		public _TileCost cost = _TileCost.Grass1;
+		public _TileCost cost = _TileCost.Grass;
 
 		/*	//path-smoothing, not in used
 		public List<Vector3> path=new List<Vector3>();
@@ -75,7 +79,23 @@ namespace TBTK{
 		public void Init(){
 			thisT=transform;
 		}
-		
+
+
+		public void setTileAttributes(){
+			if (this.tileAttack == 0){
+				switch(this.cost){
+					case _TileCost.Grass:
+						this.tileAttack = 1f;
+						this.tileDefense = 1f;
+						break;
+					case _TileCost.DenseGrass:
+						this.tileAttack = .6f;
+						this.tileDefense = 1.3f;
+						break;
+				}
+			}
+		}
+
 		
 		
 		

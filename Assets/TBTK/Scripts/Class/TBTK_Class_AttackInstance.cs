@@ -134,7 +134,16 @@ namespace TBTK{
 			}
 			
 			//get the base damage
+			srcUnit.tile.setTileAttributes();
+			tgtUnit.tile.setTileAttributes();
+			Debug.Log ("attack and defense:");
+			Debug.Log (srcUnit.tile.tileAttack);
+			Debug.Log(tgtUnit.tile.tileDefense);
 			damage=Random.Range(srcUnit.GetDamageMin(), srcUnit.GetDamageMax());
+			Debug.Log("Damage before modifier: " + damage);
+			damage*=srcUnit.tile.tileAttack/tgtUnit.tile.tileDefense;
+			Debug.Log("Damage after modifier: " + damage);
+
 
 
 			//modify the damage with damage to armor modifier
