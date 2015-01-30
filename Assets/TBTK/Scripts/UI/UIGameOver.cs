@@ -53,7 +53,7 @@ namespace TBTK{
 		public static void Show(int factionID){ instance._Show(factionID); }
 		public void _Show(int factionID){
 			UpdateDisplay(factionID);
-			
+			GameObject.FindGameObjectWithTag("ObjectiveText").GetComponent<Text>().enabled = false;
 			isOn=true;
 			thisObj.SetActive(isOn);
 		}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using AssemblyCSharp;
@@ -8,9 +9,10 @@ public class ObjectiveRandomizer : MonoBehaviour {
 
 	public Unit target;
 	public string templeTag = "Temple";
+	public Text text;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 	
 		Objective obj = Objective.instance;
 		int a = Random.Range(0,3);
@@ -30,6 +32,9 @@ public class ObjectiveRandomizer : MonoBehaviour {
 			obj.objective =Objective._ObjectiveType.KillTarget;
 			destroyTemple();
 		}
+
+		text.text = Objective.objectiveText();
+
 	}
 
 	void destroyTemple(){

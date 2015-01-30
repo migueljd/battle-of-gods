@@ -588,7 +588,7 @@ namespace TBTK{
 		[HideInInspector] public GameObject thisObj;
 		
 		void Awake(){
-			thisT=transform;
+			thisT=this.transform;
 			thisObj=gameObject;
 			
 			for(int i=0; i<shootPointList.Count; i++){
