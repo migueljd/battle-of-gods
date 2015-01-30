@@ -25,7 +25,7 @@ public class Tutorial : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKey(KeyCode.Space) || Input.GetMouseButtonDown(0)){
+		if(Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonDown(0)){
 			switch(a){
 			case 1:
 				img.sprite = sprite2;
