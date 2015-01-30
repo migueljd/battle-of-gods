@@ -39,8 +39,7 @@ public class Tutorial : MonoBehaviour {
 				img.sprite = sprite6;
 				break;
 			case 6:
-				Debug.Log ("ASIUHDBASOIGASGD");
-				Application.LoadLevel(1);
+				Application.LoadLevel(0);
 				break;
 			}
 			a++;
