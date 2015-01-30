@@ -158,6 +158,7 @@ namespace TBTK {
 		
 		void Update(){
 			if(GameControl.GetGamePhase()==_GamePhase.Play){
+				bool templeLifeInstantiated = false;
 				for(int i=0; i<unitOverlayList.Count; i++){
 					UnitOverlay overlay=unitOverlayList[i];
 					if(overlay.unit==null){
@@ -165,14 +166,24 @@ namespace TBTK {
 						continue;
 					}
 					
-					Vector3 screenPos = mainCam.WorldToScreenPoint(overlay.unit.thisT.position+new Vector3(0, 0, 0));
-					overlay.rootT.localPosition=(screenPos+new Vector3(0, -20, 0))/UI.GetScaleFactor();
+					if(overlay.unit.tag == "Temple"){
+						if(templeLifeInstantiated)continue;
+						else{
+							Vector3 screenPos = mainCam.WorldToScreenPoint(new Vector3(8f,0f,-11.8f)); 
+							overlay.rootT.localPosition=(screenPos+new Vector3(0, -20, 0))/UI.GetScaleFactor();
+						}
+						templeLifeInstantiated = true;
+					}
+					else{
+						Vector3 screenPos = mainCam.WorldToScreenPoint(overlay.unit.thisT.position+new Vector3(0, 0, 0));
+						overlay.rootT.localPosition=(screenPos+new Vector3(0, -20, 0))/UI.GetScaleFactor();
+					}
 					
 					overlay.barHP.value=overlay.unit.GetHPRatio();
 					overlay.barAP.value=overlay.unit.GetAPRatio();
 
-					overlay.iconAttack.enabled = overlay.unit.attackRemain > 0;
-					overlay.iconMove.enabled = overlay.unit.moveRemain > 0;
+					overlay.iconAttack.enabled = overlay.unit.attackRemain > 0 && overlay.unit.factionID !=1;
+					overlay.iconMove.enabled = overlay.unit.moveRemain > 0 && overlay.unit.factionID !=1;
 					
 					//overlay.lbText.text=overlay.unit.GetEffectList().Count.ToString();
 					//overlay.lbTextShadow.text=overlay.unit.GetEffectList().Count.ToString();
