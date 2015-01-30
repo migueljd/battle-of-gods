@@ -15,8 +15,8 @@ public class ObjectiveRandomizer : MonoBehaviour {
 	void Awake () {
 	
 		Objective obj = Objective.instance;
-//		int a = Random.Range(0,3);
-		int a = 1;
+		int a = Random.Range(0,3);
+//		int a = 1;
 		if(a == 0){
 			obj.objective = Objective._ObjectiveType.KillAllEnemies;
 			destroyTemple();
@@ -41,11 +41,11 @@ public class ObjectiveRandomizer : MonoBehaviour {
 	void destroyTemple(){
 		GameObject[] list = GameObject.FindGameObjectsWithTag(templeTag);
 		for(int a = 0; a < list.Length; a++){
-			list[a].GetComponent<MultiTileUnit>().ApplyDamage(100000);
+			list[a].GetComponent<MultiTileUnit>().ApplyDamage(100000, false, false);
 		}
 	}
 
 	void destroyTarget(){
-		target.ApplyDamage(100000);
+		target.ApplyDamage(100000, false, false);
 	}
 }

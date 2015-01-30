@@ -46,16 +46,16 @@ namespace AssemblyCSharp
 				}
 			}
 			
-			public override void ApplyDamage(float dmg, bool critical=false){
+			public override void ApplyDamage(float dmg, bool critical=false, bool showOverlay = true){
 
 				foreach (MultiTileUnit t in unitList){
-					t.baseApplyDamage(dmg, critical);
+					t.baseApplyDamage(dmg, critical, showOverlay);
 				}
 			}
 
-			public void baseApplyDamage(float dmg, bool critical){
+			public void baseApplyDamage(float dmg, bool critical, bool showOverlay = true){
 
-				base.ApplyDamage(dmg, critical);
+				base.ApplyDamage(dmg, critical, showOverlay);
 			}
 
 			protected override IEnumerator Dead(){
