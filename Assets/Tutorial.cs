@@ -11,6 +11,9 @@ public class Tutorial : MonoBehaviour {
 	public Sprite sprite4;
 	public Sprite sprite5;
 	public Sprite sprite6;
+	public Sprite sprite7;
+	public Sprite sprite8;
+	public Sprite sprite9;
 
 	private int a = 1;
 
@@ -39,6 +42,15 @@ public class Tutorial : MonoBehaviour {
 				img.sprite = sprite6;
 				break;
 			case 6:
+				img.sprite = sprite7;
+				break;
+			case 7:
+				img.sprite = sprite8;
+				break;
+			case 8:
+				img.sprite = sprite9;
+				break;
+			default:
 				Application.LoadLevel(0);
 				break;
 			}
