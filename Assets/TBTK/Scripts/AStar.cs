@@ -75,6 +75,8 @@ namespace TBTK{
 				//if there's no node left in openlist, path doesnt exist
 				if(currentTile==null) {
 					Debug.Log("jhere");
+					Debug.Log(originTile.unit);
+					Debug.Log(originTile.unit.name);
 					break;
 				}
 
