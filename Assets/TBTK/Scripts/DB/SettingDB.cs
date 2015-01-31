@@ -23,7 +23,7 @@ namespace TBTK {
 		
 		public bool enableManualUnitDeployment=true;
 		
-		public bool enableActionAfterAttack=false;
+		public bool enableActionAfterAttack=true;
 		
 		public bool enableCounter=true;
 		public float counterAPMultiplier=1f;
