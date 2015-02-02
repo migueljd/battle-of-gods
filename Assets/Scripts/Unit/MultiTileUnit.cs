@@ -16,12 +16,16 @@ namespace AssemblyCSharp
 {
 		public class MultiTileUnit: Unit
 		{
-			public static List<MultiTileUnit> unitList = null;
+			public static List<MultiTileUnit> unitList;
 			private static Object lockDeath = new Object();
-			private static bool dead = false;
+			private static bool dead;
+
+
 
 			void Awake(){
+				unitList = null;
 				thisT=transform;
+				dead = false;
 				thisObj=gameObject;
 				for(int i=0; i<shootPointList.Count; i++){
 					if(shootPointList[i]==null){
@@ -34,13 +38,17 @@ namespace AssemblyCSharp
 				if(shootPointList.Count==0) shootPointList.Add(thisT);
 			
 				if(turretObject==null) turretObject=thisT;
+			}
 
+			void Start(){
 				lock(lockDeath){
 					if(unitList == null){
 						GameObject[] objects = GameObject.FindGameObjectsWithTag(thisObj.tag);
 						unitList = new List<MultiTileUnit>(); 
 						foreach (GameObject ob in objects){
-							unitList.Add(ob.GetComponent<MultiTileUnit>());	
+						MultiTileUnit mtu = ob.GetComponent<MultiTileUnit>();
+							Debug.Log(mtu);
+							unitList.Add(mtu);	
 						}
 					}
 				}
@@ -48,7 +56,9 @@ namespace AssemblyCSharp
 			
 			public override void ApplyDamage(float dmg, bool critical=false, bool showOverlay = true){
 
+
 				foreach (MultiTileUnit t in unitList){
+					Debug.Log("MultiTile: " + t);
 					t.baseApplyDamage(dmg, critical, showOverlay);
 				}
 			}
@@ -76,7 +86,11 @@ namespace AssemblyCSharp
 				Destroy(thisObj);
 			}
 
+		void OnDestroy(){
+			Debug.Log("being destroyed");
 		}
+	}
+
 
 
 }
