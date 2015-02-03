@@ -15,8 +15,8 @@ public class ObjectiveRandomizer : MonoBehaviour {
 	void Start () {
 	
 		Objective obj = Objective.instance;
-		int a = Random.Range(0,3);
-//		int a = 0;
+//		int a = Random.Range(0,3);
+		int a = 0;
 		if(a == 0){
 			obj.objective = Objective._ObjectiveType.KillAllEnemies;
 			destroyTemple();

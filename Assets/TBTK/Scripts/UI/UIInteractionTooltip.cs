@@ -12,6 +12,8 @@ namespace TBTK{
 
 		public Transform anchorLeft;
 		public Transform anchorRight;
+
+		public Transform actionOutcome;
 		
 		public Text lbMoveAPCost;
 		
@@ -22,6 +24,14 @@ namespace TBTK{
 		public Text lbStats;
 		public Text lbSpecial;
 		public Text lbCover;
+
+		private Text sourceHP;
+		private Text targetHP;
+		private Image sourceImg;
+		private Image targetImg;
+		private Text sourceName;
+		private Text targetName;
+		
 		
 		// Use this for initialization
 		void Start () {
@@ -31,6 +41,16 @@ namespace TBTK{
 			
 			anchorLeft.position=Vector3.zero;
 			anchorRight.position=Vector3.zero;
+
+			this.sourceName = actionOutcome.Find("SourceName").GetComponent<Text>();
+			this.targetName = actionOutcome.Find("TargetName").GetComponent<Text>();
+
+			this.sourceHP = actionOutcome.Find("SourceHPResult").GetComponent<Text>();
+			this.targetHP = actionOutcome.Find("TargetHPResult").GetComponent<Text>();
+
+			this.sourceImg = actionOutcome.Find("SourceImage").GetComponent<Image>();
+			this.targetImg = actionOutcome.Find("TargetImage").GetComponent<Image>();
+
 		}
 		
 		// Update is called once per frame
@@ -41,16 +61,22 @@ namespace TBTK{
 		}
 		
 		void OnEnable(){
-			GridManager.onHoverAttackableTileE += OnHoverAttackableTile;
-			GridManager.onExitAttackableTileE += OnExitAttackableTile;
-			
+//			GridManager.onHoverAttackableTileE += OnHoverAttackableTile;
+//			GridManager.onExitAttackableTileE += OnExitAttackableTile;
+
+			GridManager.onHostileSelectE += OnSelectHostileUnit;
+			GridManager.onHostileDeselectE += OnDeselectHostileUnit;
+
 			GridManager.onHoverWalkableTileE += OnHoverWalkableTile;
 			GridManager.onExitWalkableTileE += OnExitWalkableTile;
 		}
 		void OnDisable(){
-			GridManager.onHoverAttackableTileE -= OnHoverAttackableTile;
-			GridManager.onExitAttackableTileE -= OnExitAttackableTile;
-			
+//			GridManager.onHoverAttackableTileE -= OnHoverAttackableTile;
+//			GridManager.onExitAttackableTileE -= OnExitAttackableTile;
+
+			GridManager.onHostileSelectE -= OnSelectHostileUnit;
+			GridManager.onHostileDeselectE -= OnDeselectHostileUnit;
+
 			GridManager.onHoverWalkableTileE -= OnHoverWalkableTile;
 			GridManager.onExitWalkableTileE -= OnExitWalkableTile;
 		}
@@ -120,7 +146,48 @@ namespace TBTK{
 			tgtUnit=null;
 			attackTooltipObj.SetActive(false);
 		}
-		
+
+		void OnSelectHostileUnit(Tile sourceTile, Tile tile){
+			this.tgtUnit = tile.unit;
+
+			sourceName.text = sourceTile.unit.name;
+			targetName.text = tile.unit.name;
+
+			sourceImg.sprite = sourceTile.unit.iconSprite;
+			targetImg.sprite = tile.unit.iconSprite;
+
+			int srcDamage = AttackInstance.calculateDamage(sourceTile, tile);
+			int tgtDamage = sourceTile.GetNeighbourList().Contains(tile)? AttackInstance.calculateDamage(tile, sourceTile, false, true) : 0;
+
+
+
+			int sourceUnitHp = Mathf.RoundToInt(sourceTile.unit.HP);
+			int targetUnitHp = Mathf.RoundToInt(tile.unit.HP);
+
+			sourceHP.text = string.Format("HP: {0}->{1}", sourceUnitHp, sourceUnitHp - tgtDamage);
+			targetHP.text = string.Format("HP: {0}->{1}", targetUnitHp, targetUnitHp - srcDamage);
+
+			//UpdateActionOutcomePos();
+			actionOutcome.gameObject.SetActive(true);
+		}
+
+		void OnDeselectHostileUnit(){
+			actionOutcome.gameObject.SetActive(false);
+		}
+
+		void UpdateActionOutcomePos(){
+			Vector3 screenPos = Camera.main.WorldToScreenPoint(tgtUnit.thisT.position)/UI.GetScaleFactor();
+
+			float posX=0;
+			if(screenPos.x>(Screen.width/UI.GetScaleFactor())/2) posX=screenPos.x-230/2-60;
+			else posX=screenPos.x+230/2+60;
+			
+			float posY=screenPos.y;
+			if(screenPos.y<(Screen.height/UI.GetScaleFactor())/2) posY=screenPos.y+190;
+			
+			actionOutcome.localPosition=new Vector3(posX, posY, 0);
+		}
+
 		void UpdateAttackTooltipPos(){
 			Vector3 screenPos = Camera.main.WorldToScreenPoint(tgtUnit.thisT.position)/UI.GetScaleFactor();
 			
