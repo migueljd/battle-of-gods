@@ -298,7 +298,8 @@ namespace TBTK{
 					#else
 						//command has been issue on the specific tile, either left or right mouse click on the tile
 						if(Input.GetMouseButtonDown(0)){
-							if(hoveredTile!=null) _OnTileCursorDown(hoveredTile);
+
+							if(hoveredTile!=null ) _OnTileCursorDown(hoveredTile);
 						}
 						if(Input.GetMouseButtonDown(1)){
 							if(!targetMode && hoveredTile!=null) hoveredTile.OnTouchMouseDownAlt();
@@ -328,7 +329,8 @@ namespace TBTK{
 		
 		public static void OnTileCursorDown(Tile tile){ instance._OnTileCursorDown(tile); }
 		public void _OnTileCursorDown(Tile tile){
-			if(targetMode) targetModeTargetSelected(tile);
+			if(targetMode && tile.Equals(GameControl.selectedTile)) targetModeTargetSelected(tile);
+			else if(targetMode && this.targetModeTileList.Contains(tile)) GameControl.SelectTile(tile);
 			else tile.OnTouchMouseDown();
 		}
 		
@@ -469,6 +471,23 @@ namespace TBTK{
 			if(tile!=null){
 				targetModeAbilityType=_AbilityType.Unit;
 				targetModeTileList=GetTilesWithinDistance(tile, range);
+				List<int> tilesToRemove = new List<int>(); 
+				Debug.Log ("Count: " + targetModeTileList.Count);
+				for(int a=0; a < targetModeTileList.Count; a++){
+					if(type == _TargetType.FriendlyUnit && (targetModeTileList[a].unit == null 
+					                                        || !FactionManager.IsPlayerFaction(targetModeTileList[a].unit.factionID))){
+						tilesToRemove.Add(a);
+					}
+					else if(type == _TargetType.HostileUnit && (targetModeTileList[a].unit == null 
+					                                            || FactionManager.IsPlayerFaction(targetModeTileList[a].unit.factionID))){
+						tilesToRemove.Add(a);
+					}
+				}
+				Debug.Log ("Remove count: " + tilesToRemove.Count);
+				tilesToRemove.Reverse();
+				foreach(int a in tilesToRemove){
+					targetModeTileList.RemoveAt(a);
+				}
 				for(int i=0; i<targetModeTileList.Count; i++) targetModeTileList[i].SetState(_TileState.Range);
 			}
 			else targetModeAbilityType=_AbilityType.Command;
@@ -502,6 +521,7 @@ namespace TBTK{
 			targetMode=false;
 			
 			ClearTargetModeHoveredTile();
+			ClearSelectedTile();
 			
 			if(targetModeAbilityType==_AbilityType.Unit){
 				for(int i=0; i<targetModeTileList.Count; i++) targetModeTileList[i].SetState(_TileState.Default);

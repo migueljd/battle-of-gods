@@ -42,6 +42,8 @@ namespace TBTK{
 			anchorLeft.position=Vector3.zero;
 			anchorRight.position=Vector3.zero;
 
+
+
 			this.sourceName = actionOutcome.Find("SourceName").GetComponent<Text>();
 			this.targetName = actionOutcome.Find("TargetName").GetComponent<Text>();
 
@@ -51,6 +53,7 @@ namespace TBTK{
 			this.sourceImg = actionOutcome.Find("SourceImage").GetComponent<Image>();
 			this.targetImg = actionOutcome.Find("TargetImage").GetComponent<Image>();
 
+			actionOutcome.gameObject.SetActive(false);
 		}
 		
 		// Update is called once per frame

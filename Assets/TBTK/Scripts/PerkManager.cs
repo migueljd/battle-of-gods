@@ -28,14 +28,36 @@ namespace TBTK {
 		
 		public int perkCurrency=0;
 		public int currencyGainOnWin=3;
+
+		public int experience = 0;
+		public int lvl = 1;
+
+		public static Dictionary<int, int> experienceRequirement;
+
+
 		public static int GetPerkCurrency(){ return instance.perkCurrency; }
+
+		public static int GetExperience(){return instance.perkCurrency;}
 		public static void SpendCurrency(int val){ 
 			instance.perkCurrency-=val; 
 			if(onPerkCurrencyE!=null) onPerkCurrencyE(instance.perkCurrency);
 		}
+
+		public static void receiveExperience(int exp){
+			int resultExp = instance.experience + exp;
+			int requiredExp = getExperienceRequirement(instance.lvl); 
+			if(requiredExp <= resultExp){
+				resultExp = resultExp - requiredExp ;
+				instance.lvl++;
+				receiveExperience(resultExp); 
+			}
+			else instance.experience += exp;
+			
+		}
+
 		public static void GainPerkCurrencyOnVictory(){ SpendCurrency(instance!=null ? -instance.currencyGainOnWin : 0); }
-		
-		
+
+
 		
 		public int perkPoint;
 		public static int GetPerkPoint(){ return instance.perkPoint; }
@@ -88,7 +110,21 @@ namespace TBTK {
 			}
 		}
 		
+		public static int getExperienceRequirement(int lvl){
+			if(experienceRequirement == null){
+				experienceRequirement = new Dictionary<int, int>();
 
+				experienceRequirement.Add(1, 100);
+				experienceRequirement.Add(2, 300);
+				experienceRequirement.Add(3, 700);
+				experienceRequirement.Add(4, 1100);
+				experienceRequirement.Add(5, 1500);
+				experienceRequirement.Add(6, 2000);
+				experienceRequirement.Add(7, 3000);
+			}
+
+			return experienceRequirement[lvl];
+		}
 		
 		
 		void OnLevelWasLoaded(){
@@ -578,6 +614,7 @@ namespace TBTK {
 		public static void SavePerkProgress(){ instance._SavePerkProgress(); }
 		public void _SavePerkProgress(){
 			PlayerPrefs.SetInt("TBTK_PerkCurrency", perkCurrency);
+			PlayerPrefs.SetInt ("TBTK_Experience", experience);
 			for(int i=0; i<perkList.Count; i++){
 				PlayerPrefs.SetInt("TBTK_Perk_"+perkList[i].name, perkList[i].purchased ? 1 : 0);
 			}
