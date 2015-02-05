@@ -19,8 +19,13 @@ namespace TBTK{
 		
 		public delegate void ExitWalkableHandler();
 		public static event ExitWalkableHandler onExitWalkableTileE;			//listen by UI only
+
+		public delegate void SelectHostileUnit(Tile sourceTile, Tile tile);
+		public static event SelectHostileUnit onHostileSelectE;
 		
-		
+		public delegate void DeselectHostileUnit();
+		public static event DeselectHostileUnit onHostileDeselectE;
+
 		public bool generateGridOnStart=false;
 		
 		public _TileType tileType=_TileType.Hex;
@@ -639,33 +644,41 @@ namespace TBTK{
 					if(GameControl.selectedUnit.tile==tile) return;
 					
 					GameControl.SelectUnit(tile);
+					onHostileDeselectE();
 				}
 				//if the unit in the tile can be attack by current selected unit, attack it
 				else if(attackableTileList.Contains(tile)){
-					#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+					//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 					if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
-					#endif
+					//endif
 						GameControl.selectedUnit.Attack(tile.unit);
-					
-					#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+						onHostileDeselectE();
+					//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 					}
-					else GameControl.SelectTile(tile);
-					#endif
+					else {
+						GameControl.SelectTile(tile);
+						onHostileSelectE(GameControl.selectedUnit.tile, tile);
+					}
+					//endif
 				}
 			}
 			//if the tile is within the move range of current selected unit, try to select it, if it is already selected, move
 			else if(walkableTileList.Contains(tile)){
-				#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+
+				//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
                 if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
-				#endif
+				//endif
 					GameControl.selectedUnit.Move(tile);
 					if(onExitWalkableTileE!=null) onExitWalkableTileE();	//for clear UI move cost overlay
 					ClearWalkableHostileList();	//in case the unit move into the destination and has insufficient ap to attack
-				#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+				//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
                     
                 }
-				else GameControl.SelectTile(tile);
-				#endif
+				else {
+					onHostileDeselectE();
+					GameControl.SelectTile(tile);
+				}
+				//endif
 			}
 
 			ClearHoveredTile();	//clear the hovered tile so all the UI overlay will be cleared
@@ -819,6 +832,11 @@ namespace TBTK{
 			instance.indicatorSelectedConfirmation.position=new Vector3(0, 99999, 0);
 			instance.ClearHostileIndicator();
 			instance.ClearWalkableHostileList();
+		}
+
+		public static void ClearSelectedTile(){
+			instance.indicatorSelectedConfirmation.position=new Vector3(0, 99999, 0);
+
 		}
 		
 		

@@ -110,6 +110,48 @@ namespace TBTK{
 				if(Quaternion.Angle(attackRotation, tgtUnit.thisT.rotation)<angleTH) flanked=true;
 			}
 		}
+
+		public static int calculateDamage(Tile sourceTile, Tile targetTile, bool flanked = false, bool counter = false, AttackInstance instance = null){
+			float damage = 0;
+
+			sourceTile.setTileAttributes();
+			targetTile.setTileAttributes();
+			//			Debug.Log ("attack and defense:");
+			//			Debug.Log (srcUnit.tile.tileAttack);
+			//			Debug.Log(tgtUnit.tile.tileDefense);
+			damage=Random.Range(sourceTile.unit.GetDamageMin(), sourceTile.unit.GetDamageMax());
+			//			Debug.Log("Damage before modifier: " + damage);
+			damage*=sourceTile.tileAttack/targetTile.tileDefense;
+			//			Debug.Log("Damage after modifier: " + damage);
+			
+			
+			
+			//modify the damage with damage to armor modifier
+			int armorType=targetTile.unit.armorType;
+			int damageType=sourceTile.unit.damageType;
+			float damageTableModifier=DamageTable.GetModifier(armorType, damageType);
+			damage*=damageTableModifier;
+
+		
+			//if this is a counter attack, modify the damage with counter modifier
+			if(counter) damage*=GameControl.GetCounterDamageMultiplier();
+
+			float flankingBonus = 1;
+
+			//this the target is flanked, apply the flanking bonus
+			if(!counter && flanked){
+				flankingBonus=1+GameControl.GetFlankingBonus()+sourceTile.unit.GetFlankingBonus()-targetTile.unit.GetFlankedModifier();
+				damage*=flankingBonus;
+			}
+
+			if(instance != null){
+				instance.damageTableModifier = damageTableModifier;
+				instance.flankingBonus = flankingBonus;
+			}
+
+
+			return Mathf.RoundToInt(damage);
+		}
 		
 		//do the stats processing
 		public void Process(){
@@ -132,34 +174,9 @@ namespace TBTK{
 				missed=true;
 				return;
 			}
-			
 			//get the base damage
-			srcUnit.tile.setTileAttributes();
-			tgtUnit.tile.setTileAttributes();
-			Debug.Log ("attack and defense:");
-			Debug.Log (srcUnit.tile.tileAttack);
-			Debug.Log(tgtUnit.tile.tileDefense);
-			damage=Random.Range(srcUnit.GetDamageMin(), srcUnit.GetDamageMax());
-			Debug.Log("Damage before modifier: " + damage);
-			damage*=srcUnit.tile.tileAttack/tgtUnit.tile.tileDefense;
-			Debug.Log("Damage after modifier: " + damage);
+			damage = calculateDamage(srcUnit.tile, tgtUnit.tile, this.flanked, this.isCounter, this);
 
-
-
-			//modify the damage with damage to armor modifier
-			int armorType=tgtUnit.armorType;
-			int damageType=tgtUnit.damageType;
-			damageTableModifier=DamageTable.GetModifier(armorType, damageType);
-			damage*=damageTableModifier;
-
-			//if this is a counter attack, modify the damage with counter modifier
-			if(isCounter) damage*=GameControl.GetCounterDamageMultiplier();
-			
-			//this the target is flanked, apply the flanking bonus
-			if(!isCounter && flanked){
-				flankingBonus=1+GameControl.GetFlankingBonus()+srcUnit.GetFlankingBonus()-tgtUnit.GetFlankedModifier();
-				damage*=flankingBonus;
-			}
 			
 			//if the attack crits, add the critical multiplier
 			if(Random.Range(0f, 1f)<critChance){

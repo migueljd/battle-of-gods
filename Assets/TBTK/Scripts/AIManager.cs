@@ -104,7 +104,7 @@ namespace TBTK{
 					while(!TurnControl.ClearToProceed()) yield return null;
 				}
 				
-				int rand=Random.Range(0, targetTile.hostileInRangeList.Count);
+				int rand=Random.Range(0, targetTile.hostileInRangeList.Count - 1);
 				unit.Attack(targetTile.hostileInRangeList[rand].unit);
 			}
 			
@@ -216,10 +216,8 @@ namespace TBTK{
 				for(int i=0; i<allHostile.Count; i++){
 					float dist=AStar.GetDistance(allHostile[i].tile, unit.tile);
 					foreach(Tile t in allHostile[i].tile.GetNeighbourList(true)){
-						Debug.Log ("Trying");
 						if(walkableTilesInRange.Contains(t)){
 							attackableEnemies.Add(allHostile[i].tile);
-							Debug.Log("Going away");
 						}
 					}
 					if(dist<nearest){

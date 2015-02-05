@@ -220,7 +220,7 @@ namespace TBTK{
 			GridManager.Select(tile);
 		}
 		public static void ClearSelectedTile(){
-			GridManager.ClearAllTile();
+			GridManager.ClearSelectedTile();
 			selectedTile = null;
 		}
 		
@@ -246,9 +246,11 @@ namespace TBTK{
 		
 		void OnEnable(){
 			Unit.onUnitDestroyedE += OnUnitDestroyed;
+			GridManager.onHostileDeselectE += ClearSelectedTile;
 		}
 		void OnDisable(){
 			Unit.onUnitDestroyedE -= OnUnitDestroyed;
+			GridManager.onHostileDeselectE -= ClearSelectedTile;
 		}
 		
 		void OnUnitDestroyed(Unit unit){
