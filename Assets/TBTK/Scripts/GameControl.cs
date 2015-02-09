@@ -106,6 +106,10 @@ namespace TBTK{
 
 		public static float delayPerAction = 0.5f;
 
+		public static void fastFowardTo(float speed){
+			Time.timeScale = speed;
+		}
+
 		void Awake(){
 			instance=this;
 			

@@ -312,11 +312,11 @@ namespace TBTK{
 			else{															//if it's a AI's faction, execute AI move
 				Debug.Log("AIManager.MoveFaction ------------------------" );
 				if(TurnControl.GetMoveOrder()==_MoveOrder.Free){
-					GameControl.DisplayMessage("AI's Turn");
+					GameControl.DisplayMessage("Enemy's Turn");
 					AIManager.MoveFaction(factionList[selectedFactionID]);
 				}
 				else{
-					GameControl.DisplayMessage("AI's Turn");
+					GameControl.DisplayMessage("Enemy's Turn");
 					SelectNextUnitInFaction();	//when an AI unit pass to GameControl.Select(), AI routine will be called
 				}
 			}
