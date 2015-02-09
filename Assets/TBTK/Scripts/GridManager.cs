@@ -286,13 +286,14 @@ namespace TBTK{
 					#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 						if(currentSelectTile==hoveredTile){
 							OnTileTouchDown();
-						}
+                    	}
 						else{
 							if(targetMode || hoveredTile.unit==null || attackableTileList.Contains(hoveredTile)){
 								currentSelectTile=hoveredTile;
-							}
-							else{
-								OnTileTouchDown();
+							if(attackableTileList.Contains(hoveredTile)) onHostileSelectE(GameControl.selectedUnit.tile, hoveredTile);
+                        }
+                        else{
+                            OnTileTouchDown();
 							}
 						}
 					#else
@@ -323,14 +324,16 @@ namespace TBTK{
 			private void OnTileTouchDown(){
 				_OnTileCursorDown(hoveredTile);
 				currentSelectTile=null;
-				_ClearHoveredTile();
+				onHostileDeselectE();
+            
+            	
+			_ClearHoveredTile();
 			}
 		#endif
 		
 		public static void OnTileCursorDown(Tile tile){ instance._OnTileCursorDown(tile); }
 		public void _OnTileCursorDown(Tile tile){
-			if(targetMode && tile.Equals(GameControl.selectedTile)) targetModeTargetSelected(tile);
-			else if(targetMode && this.targetModeTileList.Contains(tile)) GameControl.SelectTile(tile);
+			if(targetMode && this.targetModeTileList.Contains(tile)) GameControl.SelectTile(tile);
 			else tile.OnTouchMouseDown();
 		}
 		
