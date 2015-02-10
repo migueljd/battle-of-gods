@@ -1,15 +1,13 @@
 fileFormatVersion: 2
-guid: 5d9bac3b781233144b9da4d03a24fdde
+guid: 3c0fedadf90d9e449b85724d66bc0610
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
     100000: //RootNode
-    100002: polySurface5
     400000: //RootNode
-    400002: polySurface5
-    2300000: polySurface5
-    3300000: polySurface5
-    4300000: polySurface5
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Mountain
     9500000: //RootNode
   materials:
     importMaterials: 1
