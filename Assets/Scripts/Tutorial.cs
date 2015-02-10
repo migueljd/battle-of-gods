@@ -16,8 +16,13 @@ public class Tutorial : MonoBehaviour {
 	public Sprite sprite8;
 	public Sprite sprite9;
 	public Sprite sprite10;
-
-	private int a = 1;
+	public Sprite sprite11;
+	public Sprite sprite12;
+	public Sprite sprite13;
+	public Sprite sprite14;
+    
+    
+    private int a = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -94,9 +99,21 @@ public class Tutorial : MonoBehaviour {
 			break;
 		case 10:
 			img.sprite = sprite9;
+            break;
+		case 11:
+			img.sprite = sprite10;
+            break;
+		case 12:
+			img.sprite = sprite11;
+            break;
+		case 13:
+			img.sprite = sprite12;
 			break;
-		}
-		a = img.sprite == temp? a : a -1;
+		case 14:
+			img.sprite = sprite13;
+			break;
+        }
+        a = img.sprite == temp? a : a -1;
 	}
 
 	public void nextImage(){
@@ -129,9 +146,24 @@ public class Tutorial : MonoBehaviour {
 			case 9:
 				img.sprite = sprite10;
 				break;
-		}
-		Debug.Log (a);
-		a = img.sprite == temp ? a : a + 1;
+			case 10:
+				img.sprite = sprite11;
+				break;
+			case 11:
+				img.sprite = sprite12;
+				break;
+			case 12:
+				img.sprite = sprite13;
+				break;
+			case 13:
+                img.sprite = sprite14;
+                break;
+			case 14:
+				close ();
+				break;
+	        }
+        Debug.Log (a);
+        a = img.sprite == temp ? a : a + 1;
 		
 		Debug.Log (a);
 	}
