@@ -375,10 +375,10 @@ namespace TBTK{
 			
 			if(attackableTileList.Contains(tile)){
 				if(TurnControl.ClearToProceed()){	//if the some unit is in action, dont show the overlay, the unit cant attack while someone is in action anyway
-					if(onHoverAttackableTileE!=null) onHoverAttackableTileE(tile);	//show attack info on UI
+					if(onHostileSelectE!=null) onHostileSelectE(GameControl.selectedUnit.tile, tile);	//show attack info on UI
 				}
 			}
-			else if(onExitAttackableTileE!=null) onExitAttackableTileE();	//hide attack info on UI
+			else if(onHostileDeselectE!=null) onHostileDeselectE();	//hide attack info on UI
 			
 			if(walkableTileList.Contains(tile)){
 				if(onHoverWalkableTileE!=null) onHoverWalkableTileE(tile);
