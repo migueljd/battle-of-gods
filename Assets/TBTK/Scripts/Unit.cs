@@ -705,8 +705,8 @@ namespace TBTK{
 			//path.Insert(0, tile);
 			//PathSmoothing.Smooth(path);
 			//path.RemoveAt(0);
-			
 			TurnControl.ActionCommenced();
+			Debug.Log ("AOISND OIUAJSJN AISUOD NASUIOBN ASFUH BASOFUBNASOI A");
 			
 			if(unitAnim!=null) unitAnim.Move();
 			if(unitAudio!=null) unitAudio.Move();
@@ -763,7 +763,7 @@ namespace TBTK{
 			thisT.position=tile.GetPos();
 			
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
-			
+			Debug.Log ("AOISND OIUAJSJN AISUOD NASUIOBN ASFUH BASOFUBNASOI A");
 			FinishAction();
 		}
 		
@@ -869,8 +869,7 @@ namespace TBTK{
 			//play animation
 			if(unitAnim!=null) unitAnim.Attack();
 			if(unitAudio!=null) unitAudio.Attack();
-			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit.CanCounter(this)) targetUnit.Counter(this);
-			
+
 			//shoot
 			for(int i=0; i<shootPointList.Count; i++){
 				Shoot(shootObject, targetTile, shootPointList[i], attInstance, i==shootPointList.Count-1);
@@ -880,9 +879,10 @@ namespace TBTK{
 			int hash = Animator.StringToHash("Base Layer.UnitsAttack");
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			while(!TurnControl.ClearToProceed()) yield return null;
-
+			Debug.Log ("Finished attacking");
 			FinishAction();
-			
+			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit.CanCounter(this)) targetUnit.Counter(this);
+
 			if(turretObject!=null && turretObject!=thisT){ while(!RotateTurretToOrigin() && !aiming) yield return null; }
 		}
 		
@@ -891,6 +891,7 @@ namespace TBTK{
 		public void Counter(Unit targetUnit){ StartCoroutine(CounterRoutine(targetUnit)); }
 		public IEnumerator CounterRoutine(Unit targetUnit){
 			TurnControl.CounterCommenced();
+			Debug.Log ("Counter commenced");
 
 			yield return null;	//wait for shot to be fired first
 									//TurnControl.actionInProgress will be set to >2 when there's shootObject active
@@ -923,6 +924,8 @@ namespace TBTK{
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			while(!TurnControl.ClearToCounter()) yield return null;
 			TurnControl.CounterCompleted();
+			
+			Debug.Log ("Counter completed");
 			
 			if(turretObject!=null && turretObject!=thisT){ while(!RotateTurretToOrigin() && !aiming) yield return null; }
 		}

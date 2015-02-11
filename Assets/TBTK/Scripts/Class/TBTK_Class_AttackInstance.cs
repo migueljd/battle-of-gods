@@ -119,6 +119,7 @@ namespace TBTK{
 			//			Debug.Log ("attack and defense:");
 			//			Debug.Log (srcUnit.tile.tileAttack);
 			//			Debug.Log(tgtUnit.tile.tileDefense);
+			Debug.Log (sourceTile);
 			damage=Random.Range(sourceTile.unit.GetDamageMin(), sourceTile.unit.GetDamageMax());
 			//			Debug.Log("Damage before modifier: " + damage);
 			damage*=sourceTile.tileAttack/targetTile.tileDefense;

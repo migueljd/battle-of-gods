@@ -64,6 +64,8 @@ namespace TBTK{
 		//private AbilityHitCallBack abilityHitCallBack;
 		//private bool isAbility=false;
 		public void Shoot(Vector3 pos, AttackInstance attInst){//AbilityHitCallBack callback){
+			Debug.Log ("shooting 1");
+
 			TurnControl.ActionCommenced();
 			
 			//isAbility=true;
@@ -82,6 +84,7 @@ namespace TBTK{
 		}
 		
 		public void Shoot(AttackInstance attInst){
+			Debug.Log ("shooting 2");
 			TurnControl.ActionCommenced();
 			
 			//isAbility=false;

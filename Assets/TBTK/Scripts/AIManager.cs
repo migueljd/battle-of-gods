@@ -45,7 +45,9 @@ namespace TBTK{
 				if(faction.allUnitList[i].IsStunned()) continue;
 				
 				StartCoroutine(MoveUnitRoutine(faction.allUnitList[i]));
-				while(movingUnit) yield return null;
+				while(movingUnit) {
+					yield return null;
+				}
 				yield return new WaitForSeconds(0.25f);
 				
 				if(GameControl.GetGamePhase()==_GamePhase.Over) yield break;
@@ -70,7 +72,9 @@ namespace TBTK{
 		
 		IEnumerator DelayEndTurn(){
 			yield return new WaitForSeconds(1f);
-			while(!TurnControl.ClearToProceed()) yield return null;
+			while(!TurnControl.ClearToProceed()){
+				yield return null;
+			}
 			GameControl.EndTurn();
 		}
 		
@@ -101,10 +105,15 @@ namespace TBTK{
 			if(targetTile.hostileInRangeList.Count>0){
 				if(targetTile!=unit.tile){	//wait until the unit has moved into the targetTile
 					yield return new WaitForSeconds(.25f);
-					while(!TurnControl.ClearToProceed()) yield return null;
+					while(!TurnControl.ClearToProceed()){
+						Debug.Log("Still moving unit");
+						yield return null;
+					
+					}
 				}
 				
 				int rand=Random.Range(0, targetTile.hostileInRangeList.Count - 1);
+				Debug.Log(unit.tile);
 				unit.Attack(targetTile.hostileInRangeList[rand].unit);
 			}
 			
@@ -115,9 +124,11 @@ namespace TBTK{
 		
 		//clear movingUnit flag so the next unit can be moved
 		IEnumerator EndMoveUnitRoutine(){
-			while(!TurnControl.ClearToProceed()) yield return null;
-			yield return null;
+			while(!TurnControl.ClearToProceed()){
+				yield return null;
+			}
 			movingUnit=false;
+			yield return null;
 		}
 		
 		
