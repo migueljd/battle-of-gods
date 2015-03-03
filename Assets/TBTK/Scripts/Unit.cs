@@ -706,8 +706,7 @@ namespace TBTK{
 			//PathSmoothing.Smooth(path);
 			//path.RemoveAt(0);
 			TurnControl.ActionCommenced();
-			Debug.Log ("AOISND OIUAJSJN AISUOD NASUIOBN ASFUH BASOFUBNASOI A");
-			
+
 			if(unitAnim!=null) unitAnim.Move();
 			if(unitAudio!=null) unitAudio.Move();
 			
@@ -763,7 +762,6 @@ namespace TBTK{
 			thisT.position=tile.GetPos();
 			
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
-			Debug.Log ("AOISND OIUAJSJN AISUOD NASUIOBN ASFUH BASOFUBNASOI A");
 			FinishAction();
 		}
 		
