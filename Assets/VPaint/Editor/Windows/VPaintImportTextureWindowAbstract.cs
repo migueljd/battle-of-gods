@@ -408,22 +408,22 @@ public abstract class VPaintImportTextureWindowAbstract : VPaintWindowBase
 				var colorsToApply = new Dictionary<VPaintVertexData, Color[]>();
 				foreach(var vc in VPaint.Instance.maskedVPaintObjects())
 				{
-					if(!vc.renderer) continue;
+					if(!vc.GetComponent<Renderer>()) continue;
 					var data = layer.Get(vc);
 					if(data == null) continue;
 					
 					var colors = new Color[data.colors.Length];
 					var verts = vc.GetMeshInstance().vertices;
 					
-					var checkBounds = vc.renderer.bounds;
+					var checkBounds = vc.GetComponent<Renderer>().bounds;
 					checkBounds.Expand(Settings.blurRadius);
 					
 					var checkColorers = new List<VPaintVertexData>();
 					foreach(var vc2 in VPaint.Instance.maskedVPaintObjects())
 					{
-						if(!vc2.renderer) continue;
+						if(!vc2.GetComponent<Renderer>()) continue;
 						
-						var b = vc2.renderer.bounds;
+						var b = vc2.GetComponent<Renderer>().bounds;
 						b.Expand(Settings.blurRadius);
 						if(!checkBounds.Intersects(b)) continue;
 						

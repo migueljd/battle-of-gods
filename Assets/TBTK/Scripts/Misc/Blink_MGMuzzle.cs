@@ -14,7 +14,7 @@ namespace TBTK{
 		// Use this for initialization
 		void Start () {
 			thisT=transform;
-			ren=transform.renderer;
+			ren=transform.GetComponent<Renderer>();
 		}
 		
 		void OnEnable(){

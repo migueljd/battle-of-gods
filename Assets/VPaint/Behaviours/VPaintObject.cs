@@ -33,7 +33,7 @@ public class VPaintObject : MonoBehaviour, IVPaintIdentifier //, IVertexPaintabl
 		{
 			if(!vc) continue;
 
-			if(vc.renderer.bounds.SqrDistance(position) < sqrRadius)
+			if(vc.GetComponent<Renderer>().bounds.SqrDistance(position) < sqrRadius)
 				selected.Add(vc);
 		}
 		return selected;
@@ -184,7 +184,7 @@ public class VPaintObject : MonoBehaviour, IVPaintIdentifier //, IVertexPaintabl
 	public Bounds GetBounds ()
 	{
 		if(editorCollider) return editorCollider.bounds;
-		return renderer.bounds;
+		return GetComponent<Renderer>().bounds;
 	}
 	
 	public void ApplyColorsBuilder ()
@@ -363,17 +363,17 @@ public class VPaintObject : MonoBehaviour, IVPaintIdentifier //, IVertexPaintabl
 	Material instancedMaterial;
 	public void SetInstanceMaterial (Material m)
 	{
-		if(!renderer) return;
-		if(!originalMaterial) originalMaterial = renderer.sharedMaterial;
-		renderer.sharedMaterial = m;
+		if(!GetComponent<Renderer>()) return;
+		if(!originalMaterial) originalMaterial = GetComponent<Renderer>().sharedMaterial;
+		GetComponent<Renderer>().sharedMaterial = m;
 		instancedMaterial = m;
 	}
 	public void ResetMaterial ()
 	{
-		if(!renderer) return;
+		if(!GetComponent<Renderer>()) return;
 		
-		if(renderer.sharedMaterial != instancedMaterial) originalMaterial = renderer.sharedMaterial;
-		else if(originalMaterial) renderer.sharedMaterial = originalMaterial;
+		if(GetComponent<Renderer>().sharedMaterial != instancedMaterial) originalMaterial = GetComponent<Renderer>().sharedMaterial;
+		else if(originalMaterial) GetComponent<Renderer>().sharedMaterial = originalMaterial;
 	}
 	
 }

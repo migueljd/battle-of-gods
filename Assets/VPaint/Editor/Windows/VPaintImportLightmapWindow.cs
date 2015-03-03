@@ -48,7 +48,7 @@ public class VPaintImportLightmapWindow : VPaintImportTextureWindowAbstract
 	}
 	public override Texture2D GetTexture (VPaintObject vc)
 	{
-		Renderer renderer = vc.renderer;
+		Renderer renderer = vc.GetComponent<Renderer>();
 		
 		LightmapData lmData = LightmapSettings.lightmaps[renderer.lightmapIndex];
 		return lmData.lightmapFar;
@@ -57,8 +57,8 @@ public class VPaintImportLightmapWindow : VPaintImportTextureWindowAbstract
 	}
 	public override Func<Vector2, Vector2> GetUVTransformation (VPaintObject vc)
 	{
-		Renderer renderer = vc.renderer;
-		var offset = renderer.lightmapTilingOffset;
+		Renderer renderer = vc.GetComponent<Renderer>();
+		var offset = renderer.lightmapScaleOffset;
 		return (uv)=>{
 			return new Vector2((offset.x * uv.x) + offset.z, (offset.y * uv.y) + offset.w);
 		};

@@ -628,7 +628,7 @@ public class VPaint : EditorWindow
 	Bounds GetBounds (VPaintObject vc)
 	{
 		if(vc.editorCollider) return vc.editorCollider.bounds;
-		return vc.renderer.bounds;
+		return vc.GetComponent<Renderer>().bounds;
 	}
 	public MeshCollider GetCollider (VPaintObject vc)
 	{

@@ -163,7 +163,7 @@ namespace TBTK{
 			if(obstacleT!=null) return;
 			
 			if(!walkable){
-				renderer.material=GridManager.GetMatUnwalkable();
+				GetComponent<Renderer>().material=GridManager.GetMatUnwalkable();
 				gameObject.SetActive(false);
 				return;
 			}
@@ -172,13 +172,13 @@ namespace TBTK{
 			}
 			
 			if(state==_TileState.Default){ 
-				if(visible) renderer.material=GridManager.GetMatNormal();
+				if(visible) GetComponent<Renderer>().material=GridManager.GetMatNormal();
 				else SetVisible(visible);
 			}
-			else if(state==_TileState.Selected) renderer.material=GridManager.GetMatSelected();
-			else if(state==_TileState.Walkable) renderer.material=GridManager.GetMatWalkable();
-			else if(state==_TileState.Hostile) renderer.material=GridManager.GetMatHostile();
-			else if(state==_TileState.Range) renderer.material=GridManager.GetMatRange();
+			else if(state==_TileState.Selected) GetComponent<Renderer>().material=GridManager.GetMatSelected();
+			else if(state==_TileState.Walkable) GetComponent<Renderer>().material=GridManager.GetMatWalkable();
+			else if(state==_TileState.Hostile) GetComponent<Renderer>().material=GridManager.GetMatHostile();
+			else if(state==_TileState.Range) GetComponent<Renderer>().material=GridManager.GetMatRange();
 			
 			//if(Application.isPlaying){
 				//if(state==_TileState.Default) renderer.enabled=false;
@@ -189,8 +189,8 @@ namespace TBTK{
 		
 		//used in ability target mode to assign a material directly without changing state
 		public void SetMaterial(Material mat){
-			renderer.material=mat;
-			renderer.enabled=true;
+			GetComponent<Renderer>().material=mat;
+			GetComponent<Renderer>().enabled=true;
 		}
 		
 		
@@ -222,7 +222,7 @@ namespace TBTK{
 			
 			visible=flag;
 			if(!flag){
-				renderer.material=GridManager.GetMatInvisible();
+				GetComponent<Renderer>().material=GridManager.GetMatInvisible();
 				if(unit!=null){
 					unit.gameObject.layer=LayerManager.GetLayerUnitInvisible();
 					Utilities.SetLayerRecursively(unit.transform, LayerManager.GetLayerUnitInvisible());
@@ -336,7 +336,7 @@ namespace TBTK{
 			obstacleT=obsT;
 			walkable=false;
 			
-			renderer.enabled=false;
+			GetComponent<Renderer>().enabled=false;
 			
 			//SetState(_TileState.Default);
 		}
@@ -346,7 +346,7 @@ namespace TBTK{
 			walkable=true;
 			SetState(_TileState.Default);
 			
-			renderer.enabled=true;
+			GetComponent<Renderer>().enabled=true;
 		}
 		
 		

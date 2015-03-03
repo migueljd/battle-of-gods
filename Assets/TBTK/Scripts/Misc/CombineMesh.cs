@@ -23,11 +23,11 @@ public class CombineMesh : MonoBehaviour {
 			if (meshFilters[i].sharedMesh == null) continue;
 			combine[index].mesh = meshFilters[i].sharedMesh;
 			combine[index++].transform = meshFilters[i].transform.localToWorldMatrix;
-			meshFilters[i].renderer.enabled = false;
+			meshFilters[i].GetComponent<Renderer>().enabled = false;
 		}
 		GetComponent<MeshFilter>().mesh = new Mesh();
 		GetComponent<MeshFilter>().mesh.CombineMeshes (combine);
-		renderer.material = meshFilters[1].renderer.sharedMaterial;
+		GetComponent<Renderer>().material = meshFilters[1].GetComponent<Renderer>().sharedMaterial;
 		
 		transform.localRotation=startRotation;
 	}

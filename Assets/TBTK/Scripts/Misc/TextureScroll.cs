@@ -15,7 +15,7 @@ namespace TBTK{
 		void Awake(){
 			//~ lineR=gameObject.GetComponent<LineRenderer>();
 			//~ width=lineR.width;
-			mat=transform.renderer.material;
+			mat=transform.GetComponent<Renderer>().material;
 		}
 		
 		void OnEnable(){
