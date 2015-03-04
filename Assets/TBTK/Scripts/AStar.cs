@@ -285,7 +285,6 @@ namespace TBTK{
 				currentLowestG=Mathf.Infinity;
 				id=-1;
 				//TODO increase performance
-				Debug.Log ("OpenList size: " + openList.Count);
 				for(i=0; i<openList.Count; i++){
 					if(openList[i].aStar.scoreG<currentLowestG){
 						currentLowestG=openList[i].aStar.scoreG;
