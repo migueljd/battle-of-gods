@@ -218,7 +218,7 @@ namespace TBTK{
 			
 			//for aggresive mode with FogOfWar disabled, try move towards the nearest unit
 //			if(mode==_AIMode.Aggressive && Random.Range(0f, 1f)>0.25f){
-			if(mode==_AIMode.Aggressive || mode==_AIMode.Trigger){
+			if((mode==_AIMode.Aggressive || mode==_AIMode.Trigger) && !unit.isStatic){
 				List<Unit> allHostile=FactionManager.GetAllHostileUnit(unit.factionID);
 				float nearest=Mathf.Infinity;	int nearestIndex=0;
 

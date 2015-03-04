@@ -41,6 +41,7 @@ namespace AssemblyCSharp
 			}
 
 			void Start(){
+				this.isStatic = true;
 				lock(lockDeath){
 					if(unitList == null){
 						GameObject[] objects = GameObject.FindGameObjectsWithTag(thisObj.tag);

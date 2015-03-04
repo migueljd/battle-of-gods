@@ -110,7 +110,7 @@ namespace TBTK{
 
 		public bool RangedAttackOnly = false;
 		
-		
+		public bool isStatic = false;
 		
 		//********************************************************************************************************************************
 		//these section are functions that get active stats of unit
