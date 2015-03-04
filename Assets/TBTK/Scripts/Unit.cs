@@ -109,6 +109,8 @@ namespace TBTK{
 		public float APPerTurn=0;
 
 		public bool RangedAttackOnly = false;
+
+		public bool isStatic = false;
 		
 		
 		

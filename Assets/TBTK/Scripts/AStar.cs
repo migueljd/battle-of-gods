@@ -114,6 +114,9 @@ namespace TBTK{
 		//this is used to accurately calculate the distance between 2 tiles in term of tile
 		//distance calculated applies for line traverse thru walkable tiles only, otherwise it can be calculated using the coordinate
 		public static int GetDistance(Tile srcTile, Tile targetTile){
+			
+			Debug.Log ("The method to change values was called");
+
 			List<Tile> closeList=new List<Tile>();
 			List<Tile> openList=new List<Tile>();
 			
@@ -127,7 +130,6 @@ namespace TBTK{
 			while(true){
 				//if we have reach the destination
 				if(currentTile==targetTile) break;
-				
 				//move currentNode to closeList;
 				closeList.Add(currentTile);
 				currentTile.aStar.listState=TileAStar._AStarListState.Close;
@@ -138,6 +140,7 @@ namespace TBTK{
 				
 				//put all neighbour in openlist
 				foreach(Tile neighbour in currentTile.aStar.GetNeighbourList()){
+					Debug.Log ("Problem found");
 					if((neighbour.unit!=null && neighbour!=targetTile) || !neighbour.walkable) continue;
 					if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned ) {
 						//set the node state to open
@@ -151,6 +154,7 @@ namespace TBTK{
 				currentLowestG=Mathf.Infinity;
 				id=0;
 				for(i=0; i<openList.Count; i++){
+					Debug.Log ("Problem found 2");
 					if(openList[i].aStar.scoreF<currentLowestG){
 						currentLowestG=openList[i].aStar.scoreG;
 						currentTile=openList[i];
@@ -169,8 +173,8 @@ namespace TBTK{
 				counter+= currentTile.cost;
 				currentTile=currentTile.aStar.parent;
 			}
-			
 			ResetGraph(targetTile, openList, closeList);
+			Debug.Log ("The method to call reset graph was called and ended");
 			
 			return counter-1;
 		}
@@ -212,7 +216,7 @@ namespace TBTK{
 		}
 
 		public static List<Tile> GetTileWithinDistance(Tile srcTile, int dist, bool walkableOnly=false){
-			
+			Debug.Log ("The method to change values was called");
 
 			List<Tile> closeList = new List<Tile>();
 
@@ -273,6 +277,8 @@ namespace TBTK{
 				
 				//put all neighbour in openlist
 				foreach(Tile neighbour in currentTile.aStar.GetNeighbourList(true)){
+					Debug.Log (string.Format("When at node {0}, checking node {1} had status {2} ",currentTile, neighbour, neighbour.aStar.listState));
+			
 					if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned && neighbour.aStar.scoreG <= dist) {
 						//set the node state to open
 						neighbour.aStar.listState=TileAStar._AStarListState.Open;
@@ -297,7 +303,9 @@ namespace TBTK{
 
 				if(id != -1)openList.RemoveAt(id);
 			}while(currentTile != null);
-	ResetTilesWithinDistance(srcTile, closeList, openList);	
+			ResetTilesWithinDistance(srcTile, closeList, openList);	
+			
+			Debug.Log ("The method to call reset graph was called and ended");
 
 	return closeList;
 	}
