@@ -30,6 +30,7 @@ namespace TBTK {
 					textOverlayList[i].transform.SetParent(textOverlayList[0].transform.parent);
 				}
 				textOverlayList[i].text="";
+				textOverlayList[i].transform.localScale = new Vector3(1,1,1);
 				textOverlayList[i].gameObject.SetActive(false);
 			}
 			
@@ -122,7 +123,7 @@ namespace TBTK {
 		
 		void OnTextOverlay(TextOverlay overlayInstance){
 			//if(UI.DisableTextOverlay()) return;
-			
+			Debug.Log ("Calling textOverlay");
 			Text txt=GetUnusedTextOverlay();
 			
 			txt.text=overlayInstance.msg;
@@ -133,7 +134,6 @@ namespace TBTK {
 			txt.transform.localPosition=screenPos/UI.GetScaleFactor();
 			
 			txt.gameObject.SetActive(true);
-			
 			StartCoroutine(TextOverlayRoutine(txt));
 		}
 		IEnumerator TextOverlayRoutine(Text txt){
@@ -232,8 +232,10 @@ namespace TBTK {
 		
 		Text GetUnusedTextOverlay(){
 			for(int i=0; i<textOverlayList.Count; i++){
+				Debug.Log ("returning a clone");
 				if(textOverlayList[i].text=="") return textOverlayList[i];
 			}
+			Debug.Log ("returning a new overlay");
 			
 			GameObject obj=(GameObject)Instantiate(textOverlayList[0].gameObject);
 			obj.transform.SetParent(textOverlayList[0].transform.parent);
