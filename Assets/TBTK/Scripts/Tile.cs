@@ -154,16 +154,17 @@ namespace TBTK{
 		
 		//code execution for when a left mouse click happen on a tile
 		public void OnTouchMouseDown(){
+			Debug.Log (string.Format("is it clear to proceed? {0}", TurnControl.ClearToProceed()));
 			if(!TurnControl.ClearToProceed()) return;
-			
+			Debug.Log (string.Format("is it clear to proceed? {0}", TurnControl.ClearToProceed()));
 			if(GameControl.GetGamePhase()==_GamePhase.Over) return;
-			
+			Debug.Log (string.Format("is it clear to proceed? {0}", TurnControl.ClearToProceed()));
 			if(GameControl.GetGamePhase()==_GamePhase.UnitDeployment){
 				if(unit==null) FactionManager.DeployUnitOnTile(this);
 				else if(unit!=null) FactionManager.UndeployUnit(unit);
 				return;
 			}
-			
+			Debug.Log (string.Format("is it clear to proceed? {0}", TurnControl.ClearToProceed()));
 			GridManager.OnTile(this);
 		}
 		public void OnTouchMouseDownAlt(){

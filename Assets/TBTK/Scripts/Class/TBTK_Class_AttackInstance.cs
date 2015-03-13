@@ -120,7 +120,10 @@ namespace TBTK{
 			//			Debug.Log (srcUnit.tile.tileAttack);
 			//			Debug.Log(tgtUnit.tile.tileDefense);
 			Debug.Log (sourceTile);
-			damage=Random.Range(sourceTile.unit.GetDamageMin(), sourceTile.unit.GetDamageMax());
+			if (FactionManager.IsPlayerTurn())
+				damage = sourceTile.unit.GetDamageMin () + sourceTile.unit.getStack ().getDamage ();
+			else 
+				damage=Random.Range(sourceTile.unit.GetDamageMin(), sourceTile.unit.GetDamageMax());
 			//			Debug.Log("Damage before modifier: " + damage);
 			damage*=sourceTile.tileAttack/targetTile.tileDefense;
 			//			Debug.Log("Damage after modifier: " + damage);

@@ -4,7 +4,7 @@ using System.Collections;
 using Cards;
 
 namespace Cards{
-	public class Cards : MonoBehaviour{
+	public class Card : MonoBehaviour{
 
 		public Sprite cardImage;
 
@@ -15,6 +15,8 @@ namespace Cards{
 		public int damage;
 		public int movement;
 		public int guard;
+
+		public int turnCount;
 
 		public bool isDamageCard(){
 			return damageCard;
