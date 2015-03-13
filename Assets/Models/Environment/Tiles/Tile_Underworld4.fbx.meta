@@ -1,0 +1,115 @@
+fileFormatVersion: 2
+guid: 739b48e44bc10cb489fb803defde80f3
+timeCreated: 1426281999
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: desertTile1
+    100002: Gravestone1
+    100004: Mountain1
+    100006: Mountain7
+    100008: Mountain8
+    100010: pCylinder14
+    100012: pCylinder23
+    100014: pCylinder24
+    100016: pCylinder25
+    100018: //RootNode
+    100020: Underworld4
+    400000: desertTile1
+    400002: Gravestone1
+    400004: Mountain1
+    400006: Mountain7
+    400008: Mountain8
+    400010: pCylinder14
+    400012: pCylinder23
+    400014: pCylinder24
+    400016: pCylinder25
+    400018: //RootNode
+    400020: Underworld4
+    2300000: desertTile1
+    2300002: Gravestone1
+    2300004: Mountain1
+    2300006: Mountain7
+    2300008: Mountain8
+    2300010: pCylinder14
+    2300012: pCylinder23
+    2300014: pCylinder24
+    2300016: pCylinder25
+    3300000: desertTile1
+    3300002: Gravestone1
+    3300004: Mountain1
+    3300006: Mountain7
+    3300008: Mountain8
+    3300010: pCylinder14
+    3300012: pCylinder23
+    3300014: pCylinder24
+    3300016: pCylinder25
+    4300000: desertTile1
+    4300002: Mountain1
+    4300004: pCylinder14
+    4300006: Gravestone1
+    4300008: Mountain7
+    4300010: Mountain8
+    4300012: pCylinder23
+    4300014: pCylinder24
+    4300016: pCylinder25
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
