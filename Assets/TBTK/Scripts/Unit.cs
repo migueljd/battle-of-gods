@@ -763,6 +763,8 @@ namespace TBTK{
 			
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			FinishAction();
+			if (tile.revealed != 3)
+				MapController.RevealArea (tile);
 		}
 		
 		

@@ -30,9 +30,27 @@ namespace TBTK{
 	
 	
 	public class Tile : MonoBehaviour {
+		//-------------------------------------------------These are non TBTK attributes that will be used by the map generator
+		public int tileNumber;
+
+		public Transform enemyType;
+
+
+		//0 means none have been revealed
+		//1 means the first, on a clockwise notion, has been revealed
+		//2 means the second, on a clockwise notion, has been revealed
+		//3 means all adjacent tiles have been revealed
+		public int revealed = 0;
+
+		public Tile tile0;
+
+
+		//-------------------------------------------------End of non TBTK variables
+
 
 		public float tileDefense;
 		public float tileAttack;
+
 
 		public _TileType type;
 		public bool walkable=true;

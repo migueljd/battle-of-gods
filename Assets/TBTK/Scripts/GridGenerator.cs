@@ -122,7 +122,7 @@ namespace TBTK{
 					pos=new Vector3(i*spaceX, 0, n*spaceZ+offsetZ);
 					Transform tileT=(Transform)Instantiate(tilePrefab, pos, rot);
 					tileTransformList.Add(tileT);
-					
+					Debug.Log (i*spaceX);
 					tileT.localScale*=gridSize;
 					tileT.parent=parentT;
 					

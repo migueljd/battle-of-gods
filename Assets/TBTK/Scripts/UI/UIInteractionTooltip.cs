@@ -44,16 +44,16 @@ namespace TBTK{
 
 
 
-			this.sourceName = actionOutcome.Find("SourceName").GetComponent<Text>();
-			this.targetName = actionOutcome.Find("TargetName").GetComponent<Text>();
-
-			this.sourceHP = actionOutcome.Find("SourceHPResult").GetComponent<Text>();
-			this.targetHP = actionOutcome.Find("TargetHPResult").GetComponent<Text>();
-
-			this.sourceImg = actionOutcome.Find("SourceImage").GetComponent<Image>();
-			this.targetImg = actionOutcome.Find("TargetImage").GetComponent<Image>();
-
-			actionOutcome.gameObject.SetActive(false);
+//			this.sourceName = actionOutcome.Find("SourceName").GetComponent<Text>();
+//			this.targetName = actionOutcome.Find("TargetName").GetComponent<Text>();
+//
+//			this.sourceHP = actionOutcome.Find("SourceHPResult").GetComponent<Text>();
+//			this.targetHP = actionOutcome.Find("TargetHPResult").GetComponent<Text>();
+//
+//			this.sourceImg = actionOutcome.Find("SourceImage").GetComponent<Image>();
+//			this.targetImg = actionOutcome.Find("TargetImage").GetComponent<Image>();
+//
+//			actionOutcome.gameObject.SetActive(false);
 		}
 		
 		// Update is called once per frame
@@ -175,7 +175,7 @@ namespace TBTK{
 		}
 
 		void OnDeselectHostileUnit(){
-			actionOutcome.gameObject.SetActive(false);
+//			actionOutcome.gameObject.SetActive(false);
 		}
 
 		void UpdateActionOutcomePos(){

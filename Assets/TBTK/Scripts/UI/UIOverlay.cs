@@ -182,8 +182,8 @@ namespace TBTK {
 					overlay.barHP.value=overlay.unit.GetHPRatio();
 					overlay.barAP.value=overlay.unit.GetAPRatio();
 
-					overlay.iconAttack.enabled = overlay.unit.attackRemain > 0 && overlay.unit.factionID !=1;
-					overlay.iconMove.enabled = overlay.unit.moveRemain > 0 && overlay.unit.factionID !=1;
+//					overlay.iconAttack.enabled = overlay.unit.attackRemain > 0 && overlay.unit.factionID !=1;
+//					overlay.iconMove.enabled = overlay.unit.moveRemain > 0 && overlay.unit.factionID !=1;
 					
 					//overlay.lbText.text=overlay.unit.GetEffectList().Count.ToString();
 					//overlay.lbTextShadow.text=overlay.unit.GetEffectList().Count.ToString();
