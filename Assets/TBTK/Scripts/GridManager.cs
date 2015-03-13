@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using TBTK;
+using Cards;
 
 namespace TBTK{
 
@@ -333,6 +334,7 @@ namespace TBTK{
 		
 		public static void OnTileCursorDown(Tile tile){ instance._OnTileCursorDown(tile); }
 		public void _OnTileCursorDown(Tile tile){
+			Debug.Log ("Aknowledged my mouse press");
 			if(targetMode && this.targetModeTileList.Contains(tile)) GameControl.SelectTile(tile);
 			else tile.OnTouchMouseDown();
 		}
@@ -657,9 +659,9 @@ namespace TBTK{
 		public static void OnTile(Tile tile){ instance._OnTile(tile); }
 		public void _OnTile(Tile tile){
 			if(!FactionManager.IsPlayerTurn()) return;
-			
 			if(tile.unit!=null){
 				//select the unit if the unit belong's to current player in turn
+				Debug.Log (attackableTileList.Contains(tile));
 				if(FactionManager.GetSelectedFactionID()==tile.unit.factionID){
 					if(TurnControl.GetMoveOrder()!=_MoveOrder.Free) return;
 					if(TurnControl.GetTurnMode()==_TurnMode.UnitPerTurn) return;
@@ -669,11 +671,13 @@ namespace TBTK{
 					GameControl.SelectUnit(tile);
 					onHostileDeselectE();
 				}
+
 				//if the unit in the tile can be attack by current selected unit, attack it
 				else if(attackableTileList.Contains(tile)){
 					//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 					//if(GameControl.selectedTile != null /*&& GameControl.selectedTile.Equals(tile)*/ ){
 					//endif
+					Debug.Log("Here");
 						GameControl.selectedUnit.Attack(tile.unit);
 						//onHostileDeselectE();
 					//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
@@ -692,6 +696,8 @@ namespace TBTK{
                 //if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
 				//endif
 					GameControl.selectedUnit.Move(tile);
+				Debug.Log(string.Format("Distance is {0}",AStar.GetDistance(tile, GameControl.selectedUnit.tile)));
+					CardsStackManager.decreaseMovement(AStar.GetDistance(tile, GameControl.selectedUnit.tile));
 					if(onExitWalkableTileE!=null) onExitWalkableTileE();	//for clear UI move cost overlay
 					ClearWalkableHostileList();	//in case the unit move into the destination and has insufficient ap to attack
 				//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY

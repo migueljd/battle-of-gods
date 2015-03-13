@@ -4,10 +4,13 @@ using System.Collections.Generic;
 
 using TBTK;
 
-namespace TBTK{
+using Cards;
 
+namespace TBTK{
+	
 	public class Unit : MonoBehaviour {
-		
+
+
 		
 		public delegate void UnitDestroyedHandler(Unit unit);
 		public static event UnitDestroyedHandler onUnitDestroyedE;		//fire when the unit is destroyed
@@ -164,7 +167,16 @@ namespace TBTK{
 		public int GetEffectiveMoveRange(){ 
 			if(movePerTurn==0) return 0;
 			float apCost=GetMoveAPCost();
-			int apAllowance=apCost==0 ? 999999 : (int)Mathf.Abs(AP/apCost);
+
+			int apAllowance = 0;
+
+			Debug.Log (FactionManager.IsPlayerTurn());
+			if (FactionManager.IsPlayerTurn ()) {
+				AP = CardsStackManager.getMovement ();
+				apAllowance = (int)Mathf.Abs (AP / apCost);
+			} else {
+				apAllowance = apCost == 0 ? 999999 : (int)Mathf.Abs (AP / apCost);
+			}
 			return apAllowance;
 			//return Mathf.Min(GetMoveRange(), apAllowance); 
 		}
@@ -761,19 +773,22 @@ namespace TBTK{
 			tile.unit=this;
 			thisT.position=tile.GetPos();
 			
-			TurnControl.ActionCompleted(GameControl.delayPerAction);
-			FinishAction();
 			if (tile.revealed != 3)
 				MapController.RevealArea (tile);
+			TurnControl.ActionCompleted(GameControl.delayPerAction);
+			FinishAction();
 		}
 		
 		
 		
 		
 		public void Attack(Unit targetUnit){
+			Debug.Log ("Not even...");
+
 			if(attackRemain==0) return;
+			Debug.Log ("At least it is trying to, or is it?");
 			if(AP<GetAttackAPCost()) return;
-			
+			Debug.Log ("At least it is trying to ");
 			attackRemain-=1;
 			AP-=GetAttackAPCost();
 			
@@ -993,14 +1008,26 @@ namespace TBTK{
 				if(!critical) new TextOverlay(GetTargetT().position + new Vector3(0, 2,0), dmg.ToString("f0"), new Color(.713f,.188f,.188f, 1f));
 				else new TextOverlay(GetTargetT().position, dmg.ToString("f0")+" Critical!", new Color(1f, .6f, 0, 1f));
 			}
-			HP-=dmg;
+//			HP-=dmg;
+
+
+			if (dmg >= HP)
+				HP -= dmg;
+			//It's important to do some sort of animation in case the unit didn't die
 			if(HP<=0){
-				HP=0;
+				if(this.factionID == FactionManager.GetPlayerFactionID()[0]){
+					//this will be used to decrease the total life of the player
 				
-				StartCoroutine(Dead());
+				}
+				//if its an enemy unit, the enemy should just disappear and give exp/money/etc
+				else{
+					HP=0;
 				
-				ClearVisibleTile();
-				tile.unit=null;
+					StartCoroutine(Dead());
+				
+					ClearVisibleTile();
+					tile.unit=null;
+				}
 			}
 		}
 		
@@ -1117,7 +1144,12 @@ namespace TBTK{
 		
 		//end FogOfWar section
 		//********************************************************************************************************************************
-		
+
+		//This method is necessary to get the stack of this unit card
+		public CardsStackManager getStack(){
+			return (CardsStackManager)transform.GetComponent<CardsStackManager> ();
+		}
+
 		
 		[HideInInspector] protected UnitAudio unitAudio;
 		public void SetAudio(UnitAudio unitAudioInstance){ unitAudio=unitAudioInstance; }
