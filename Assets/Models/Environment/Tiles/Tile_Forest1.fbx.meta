@@ -1,13 +1,44 @@
 fileFormatVersion: 2
-guid: 3c0fedadf90d9e449b85724d66bc0610
+guid: 83350b6864e21c74b82e9a3b923f3362
+timeCreated: 1426266036
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Mountain
+    100000: Forest_Tile1
+    100002: tile1
+    100004: //RootNode
+    100006: tree01
+    100008: tree02
+    100010: tree05
+    100012: tree07
+    100014: tree08
+    400000: Forest_Tile1
+    400002: tile1
+    400004: //RootNode
+    400006: tree01
+    400008: tree02
+    400010: tree05
+    400012: tree07
+    400014: tree08
+    2300000: tile1
+    2300002: tree01
+    2300004: tree02
+    2300006: tree05
+    2300008: tree07
+    2300010: tree08
+    3300000: tile1
+    3300002: tree01
+    3300004: tree02
+    3300006: tree05
+    3300008: tree07
+    3300010: tree08
+    4300000: tile1
+    4300002: tree01
+    4300004: tree02
+    4300006: tree05
+    4300008: tree07
+    4300010: tree08
     9500000: //RootNode
   materials:
     importMaterials: 0
@@ -42,7 +73,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1

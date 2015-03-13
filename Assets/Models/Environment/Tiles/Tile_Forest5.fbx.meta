@@ -1,13 +1,69 @@
 fileFormatVersion: 2
-guid: 3c0fedadf90d9e449b85724d66bc0610
+guid: ed281a3a8d36afb4997e09a3defe0549
+timeCreated: 1426266037
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Mountain
+    100000: Forest_Tile5
+    100002: mountain10
+    100004: mountain11
+    100006: mountain12
+    100008: mountain8
+    100010: tile1
+    100012: //RootNode
+    100014: tree014
+    100016: tree016
+    100018: tree017
+    100020: tree018
+    100022: tree019
+    100024: tree020
+    400000: Forest_Tile5
+    400002: mountain10
+    400004: mountain11
+    400006: mountain12
+    400008: mountain8
+    400010: tile1
+    400012: //RootNode
+    400014: tree014
+    400016: tree016
+    400018: tree017
+    400020: tree018
+    400022: tree019
+    400024: tree020
+    2300000: mountain10
+    2300002: mountain11
+    2300004: mountain12
+    2300006: mountain8
+    2300008: tile1
+    2300010: tree014
+    2300012: tree016
+    2300014: tree017
+    2300016: tree018
+    2300018: tree019
+    2300020: tree020
+    3300000: mountain10
+    3300002: mountain11
+    3300004: mountain12
+    3300006: mountain8
+    3300008: tile1
+    3300010: tree014
+    3300012: tree016
+    3300014: tree017
+    3300016: tree018
+    3300018: tree019
+    3300020: tree020
+    4300000: tile1
+    4300002: tree014
+    4300004: tree016
+    4300006: tree017
+    4300008: mountain8
+    4300010: mountain10
+    4300012: mountain11
+    4300014: mountain12
+    4300016: tree018
+    4300018: tree019
+    4300020: tree020
     9500000: //RootNode
   materials:
     importMaterials: 0
@@ -42,7 +98,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1

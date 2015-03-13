@@ -1,13 +1,39 @@
 fileFormatVersion: 2
-guid: 3c0fedadf90d9e449b85724d66bc0610
+guid: 5b61ebe728813764fb59dc9afdc46bf7
+timeCreated: 1426266036
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Mountain
+    100000: Desert_Tile1
+    100002: desertTile1
+    100004: mountain2
+    100006: mountain3
+    100008: mountain4
+    100010: mountain5
+    100012: //RootNode
+    400000: Desert_Tile1
+    400002: desertTile1
+    400004: mountain2
+    400006: mountain3
+    400008: mountain4
+    400010: mountain5
+    400012: //RootNode
+    2300000: desertTile1
+    2300002: mountain2
+    2300004: mountain3
+    2300006: mountain4
+    2300008: mountain5
+    3300000: desertTile1
+    3300002: mountain2
+    3300004: mountain3
+    3300006: mountain4
+    3300008: mountain5
+    4300000: desertTile1
+    4300002: mountain2
+    4300004: mountain3
+    4300006: mountain4
+    4300008: mountain5
     9500000: //RootNode
   materials:
     importMaterials: 0
@@ -42,7 +68,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1

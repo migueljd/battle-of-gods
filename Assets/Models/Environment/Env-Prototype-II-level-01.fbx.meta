@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 80bddb12433df4543a5d65531b7052bd
 ModelImporter:
-  serializedVersion: 16
+  serializedVersion: 18
   fileIDToRecycleName:
     100000: Ba__
     100002: //RootNode
@@ -103,6 +103,7 @@ ModelImporter:
     100194: tree060
     100196: tree08
     100198: tree09
+    100200: "Ba\xFA"
     400000: Ba__
     400002: //RootNode
     400004: Forest
@@ -203,6 +204,7 @@ ModelImporter:
     400194: tree060
     400196: tree08
     400198: tree09
+    400200: "Ba\xFA"
     2300000: groundPlane
     2300002: hexGrid1
     2300004: Mountain_016
@@ -493,7 +495,7 @@ ModelImporter:
     4300190: pCube7
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -519,11 +521,13 @@ ModelImporter:
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
+    keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
@@ -546,3 +550,5 @@ ModelImporter:
   animationType: 2
   additionalBone: 0
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 
