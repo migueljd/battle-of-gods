@@ -43,7 +43,7 @@ namespace TBTK{
 			
 			for(int i=0; i<faction.allUnitList.Count; i++){
 				if(faction.allUnitList[i].IsStunned()) continue;
-				
+				Debug.Log (faction.allUnitList[i]);
 				StartCoroutine(MoveUnitRoutine(faction.allUnitList[i]));
 				while(movingUnit) {
 					yield return null;
@@ -85,13 +85,13 @@ namespace TBTK{
 		IEnumerator MoveUnitRoutine(Unit unit){
 			movingUnit=true;
 
+			Debug.Log (mode != _AIMode.Aggressive && !unit.trigger);
 			if(mode!=_AIMode.Aggressive && !unit.trigger){
 				StartCoroutine(EndMoveUnitRoutine());
 				yield break;
 			}
 			
 			Tile targetTile=Analyse(unit);
-			
 			//first move to the targetTile
 			if(targetTile!=unit.tile) unit.Move(targetTile);
 			
@@ -106,7 +106,6 @@ namespace TBTK{
 				if(targetTile!=unit.tile){	//wait until the unit has moved into the targetTile
 					yield return new WaitForSeconds(.25f);
 					while(!TurnControl.ClearToProceed()){
-						Debug.Log("Still moving unit");
 						yield return null;
 					
 					}
@@ -114,6 +113,7 @@ namespace TBTK{
 				
 				int rand=Random.Range(0, targetTile.hostileInRangeList.Count - 1);
 				Debug.Log(unit.tile);
+				Debug.Log (unit.tile.GetNeighbourList().Count);
 				unit.Attack(targetTile.hostileInRangeList[rand].unit);
 			}
 			

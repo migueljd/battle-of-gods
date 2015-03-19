@@ -7,6 +7,8 @@ public class MapController : MonoBehaviour {
 
 	public Transform tilesPrefab;
 
+	public List<Transform> enemyPrefabs;
+
 
 	public static MapController instance;
 
@@ -16,6 +18,12 @@ public class MapController : MonoBehaviour {
 
 	private float height;
 	private float line;
+
+	public static float rotation =-60;
+
+	public int levelType  = 0;
+
+	public static int enemyFactionID;
 
 	void Awake(){
 		if (instance == null) {
@@ -30,7 +38,27 @@ public class MapController : MonoBehaviour {
 
 		line = GridGenerator.spaceXHex * GridManager.GetInstance().tileSize * GridManager.GetInstance().gridToTileRatio/1.5f;
 		height = line * Mathf.Sin (Mathf.PI / 3);
-		
+
+		instance.enemyPrefabs = new List<Transform> ();
+
+
+		switch (instance.levelType) {
+			case 0:
+				instance.enemyPrefabs.Add(Resources.Load("Units/Centaur", typeof(Transform)) as Transform);
+				instance.enemyPrefabs.Add(Resources.Load("Units/minotaur", typeof(Transform)) as Transform);
+				instance.enemyPrefabs.Add(Resources.Load("Units/Cyclop", typeof(Transform)) as Transform);
+				break;
+		}
+
+	}
+
+	void Start(){
+		foreach (Faction f in FactionManager.GetFactionList()) {
+			Debug.Log (f.ID);
+			if (!FactionManager.IsPlayerFaction (f.ID)){
+				enemyFactionID = f.ID;
+			}
+		}
 	}
 
 
@@ -60,16 +88,21 @@ public class MapController : MonoBehaviour {
 
 		Transform first = null;
 		Transform second = null;
+		int firstRotation = 2;Random.Range(0,5);
+		Debug.Log ("First rotation: " + firstRotation*rotation);
+		int secondRotation = Random.Range(0,5);
+		Debug.Log ("Second rotation: " + secondRotation);
+
 		switch (tile.revealed) {
 			case 0:
-				first = (Transform) Instantiate(tilesPrefab, sourcePosition + firstVector, new Quaternion(0,0,0,0));
-				second = (Transform) Instantiate(tilesPrefab, sourcePosition + secondVector, new Quaternion(0,0,0,0));
+				first = (Transform) Instantiate(tilesPrefab, sourcePosition + firstVector, Quaternion.Euler(new Vector3(0,firstRotation*rotation,0)));
+			    second = (Transform) Instantiate(tilesPrefab, sourcePosition + secondVector, Quaternion.Euler(new Vector3(0,secondRotation*rotation,0)));
 				break;
 			case 1:
-				second = (Transform) Instantiate(tilesPrefab, sourcePosition + secondVector, new Quaternion(0,0,0,0));
+				second = (Transform) Instantiate(tilesPrefab, sourcePosition + secondVector, Quaternion.Euler(new Vector3(0,secondRotation*rotation,0)));
 				break;
 			case 2:
-				first = (Transform) Instantiate(tilesPrefab, sourcePosition + firstVector, new Quaternion(0,0,0,0));
+			    first = (Transform) Instantiate(tilesPrefab, sourcePosition + firstVector, Quaternion.Euler(new Vector3(0,firstRotation*rotation,0)));
 				break;
 		}
 
@@ -81,13 +114,13 @@ public class MapController : MonoBehaviour {
 
 		//add all new tiles to the gameObject hierarchy as well as add all of them to the existing tiles logic
 		if (first != null) {
-			initTiles (first, gridInstance, addedTiles, (line*2) + rangeTunel);
+			initTiles (first, gridInstance, addedTiles, (line*2) + rangeTunel, firstRotation);
 			addTiles (tile, addedTiles,(line*2) + rangeTunel);
 			addedTiles = new List<Tile>();
 		}
 
 		if (second != null) {
-			initTiles (second, gridInstance, addedTiles, (line*2) + rangeTunel);
+			initTiles (second, gridInstance, addedTiles, (line*2) + rangeTunel, secondRotation);
 			addTiles (tile, addedTiles,(line*2) + rangeTunel);
 		}
 
@@ -98,12 +131,29 @@ public class MapController : MonoBehaviour {
 	}
 
 	//Initialize all new tiles, so all their logic is ready to be appended to the existing tiles
-	private void initTiles(Transform tilesT, GridManager instance, List<Tile> added, float range){
+	private void initTiles(Transform tilesT, GridManager instance, List<Tile> added, float range, int rotation){
 		List<Tile> tileList = new List<Tile> ();
 
+		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount);
+
 		for (int a = tilesT.childCount - 1; a >=0; a--) {
+
+		
+
 			Tile tile = (Tile)tilesT.GetChild (a).GetComponent<Tile> ();
 			tileList.Add(tile);
+			int tileNumber = tile.tileNumber + rotation;
+			if(tileNumber > 6) tileNumber = tileNumber%7 + 1;
+			tile.tileNumber = tile.name != "Tile_0" ? tileNumber : 0;
+
+			//it's necessary that an enemy is instantiated here
+			if(a - (enemyCount + 1) == 0 && tile.walkable){
+				MapController.instance.createNewEnemy(tile);
+			}
+			//it it's possible that this tile has no enemy, toss a coin
+			else if(Random.Range(0,1) >0.5f && tile.walkable){
+				MapController.instance.createNewEnemy(tile);
+			}
 		}
 		foreach(Tile tile in tileList){
 
@@ -122,6 +172,7 @@ public class MapController : MonoBehaviour {
 			added.Add(tile);
 			if(neighbourList.Count == 6) tile.revealed = 3;
 		}
+
 	}
 	
 	//logically add all new tiles to the  existing tiles
@@ -148,7 +199,6 @@ public class MapController : MonoBehaviour {
 
 			foreach(Tile t in tileList){
 //				if(t.Equals(currentTile)){Debug.Log(string.Format("T is {0} and currenTile is {1} and their respective positions are {2} and {3}", t, currentTile, t.transform.position, currentTile.transform.position));}
-				Debug.Log (string.Format ("Tile {0} is being analyzed by tile {1}, and their distance is {2}, and the accepted range is {3}, and current tile position is {4}", t, currentTile, Vector3.Distance(currentTile.transform.position, t.transform.position), range, currentTile.transform.position)); 
 				if(Vector3.Distance(currentTile.transform.position, t.transform.position) <=range && !newNeighbourList.Contains(t) ){
 					List<Tile> newList = t.GetNeighbourList();
 					newList.Add(currentTile);
@@ -239,4 +289,19 @@ public class MapController : MonoBehaviour {
 		
 		return secondVector;
 	}
+
+	private void createNewEnemy(Tile tile){
+		int enemyID = Random.Range (0, MapController.instance.enemyPrefabs.Count - 1);
+		Debug.Log (tile);
+		foreach(Transform t in MapController.instance.enemyPrefabs) Debug.Log (t);
+		Transform newEnemy = (Transform) Instantiate ( MapController.instance.enemyPrefabs [enemyID], tile.GetPos(), Quaternion.identity);
+
+		Unit unit = newEnemy.GetComponent<Unit>();
+		unit.tile = tile;
+		tile.unit = unit;
+		Debug.Log (enemyFactionID);
+		FactionManager.InsertUnit (unit, enemyFactionID);
+	}
+
 }
+		                          

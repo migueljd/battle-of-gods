@@ -307,6 +307,8 @@ namespace TBTK{
 				float x=Mathf.Abs(tile1.x-tile2.x);
 				float y=Mathf.Abs(tile1.y-tile2.y);
 				float z=Mathf.Abs(tile1.z-tile2.z);
+
+
 				return (int)((x + y + z)/2);
 			}
 			else{

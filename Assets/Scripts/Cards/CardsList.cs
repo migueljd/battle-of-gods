@@ -65,10 +65,10 @@ namespace Cards
 		public void updateList(){
 			CardListNode next = first;
 			bool done = false;
-			while (this.first != null || done) {
+			while (this.first != null && !done) {
 				next.card.turnCount -= 1;
-				if(next.card.turnCount == 0){
-					this.first = next;
+				if(next.card.turnCount <= 0){
+					this.first = next.next;
 				}
 				else done = true;
 			}

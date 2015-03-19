@@ -42,8 +42,7 @@ namespace TBTK{
 		public static FactionManager GetInstance(){ return instance; }
 		public static Transform GetTransform(){ return instance!=null ? instance.transform : null ; }
 		
-		
-		
+
 		void Awake(){
 			if(instance==null) instance=this;
 		}
@@ -304,12 +303,17 @@ namespace TBTK{
 			factionList[selectedFactionID].ResetFactionTurnData();
 			
 			if(factionList[selectedFactionID].isPlayerFaction){	//if it's a player's faction, select a unit
+				factionList[selectedFactionID].allUnitList[0].getStack().updateMove();
+				foreach(Unit u in factionList[selectedFactionID].allUnitList){
+					u.getStack().updateDamageAndGuard();
+				}
 				if(TurnControl.GetMoveOrder()==_MoveOrder.Free){
 					factionList[selectedFactionID].SelectFirstAvailableUnit();
 				}
 				else factionList[selectedFactionID].SelectNextUnitInQueue(true);
 			}
-			else{															//if it's a AI's faction, execute AI move
+			else{
+				Debug.Log (factionList[selectedFactionID].allUnitList.Count);//if it's a AI's faction, execute AI move
 				Debug.Log("AIManager.MoveFaction ------------------------" );
 				if(TurnControl.GetMoveOrder()==_MoveOrder.Free){
 					GameControl.DisplayMessage("Enemy's Turn");

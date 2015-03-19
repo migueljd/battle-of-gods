@@ -84,7 +84,6 @@ namespace TBTK{
 		}
 		
 		public void Shoot(AttackInstance attInst){
-			Debug.Log ("shooting 2");
 			TurnControl.ActionCommenced();
 			
 			//isAbility=false;

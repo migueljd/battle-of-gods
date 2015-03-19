@@ -18,6 +18,11 @@ namespace TBTK{
 		public int ID=0;
 		public string name="Faction";
 		public Color color=Color.white;
+
+
+		//This HP will be used mostly for players, for when they take damage, this is where they'll lose HP
+		public int factionHp = 10;
+
 		
 		
 		public List<Unit> startingUnitList=new List<Unit>();	//unit to be deployed at the start
@@ -64,7 +69,9 @@ namespace TBTK{
 					index=i;		break;
 				}
 			}
-			
+
+			Debug.Log ("index: " + index);
+
 			if(index>=0){
 				selectedUnitID=index;
 				GameControl.SelectUnit(allUnitList[selectedUnitID]);

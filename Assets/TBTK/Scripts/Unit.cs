@@ -89,6 +89,8 @@ namespace TBTK{
 		
 		public float damageMin=3;
 		public float damageMax=6;
+
+		public int HPDamage = 1;
 		
 		public float hitChance=.8f;
 		public float dodgeChance=.15f;
@@ -170,7 +172,6 @@ namespace TBTK{
 
 			int apAllowance = 0;
 
-			Debug.Log (FactionManager.IsPlayerTurn());
 			if (FactionManager.IsPlayerTurn ()) {
 				AP = CardsStackManager.getMovement ();
 				apAllowance = (int)Mathf.Abs (AP / apCost);
@@ -773,7 +774,7 @@ namespace TBTK{
 			tile.unit=this;
 			thisT.position=tile.GetPos();
 			
-			if (tile.revealed != 3)
+			if (tile.revealed != 3 && this.factionID == FactionManager.GetPlayerFactionID()[0])
 				MapController.RevealArea (tile);
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			FinishAction();
@@ -783,12 +784,9 @@ namespace TBTK{
 		
 		
 		public void Attack(Unit targetUnit){
-			Debug.Log ("Not even...");
 
 			if(attackRemain==0) return;
-			Debug.Log ("At least it is trying to, or is it?");
 			if(AP<GetAttackAPCost()) return;
-			Debug.Log ("At least it is trying to ");
 			attackRemain-=1;
 			AP-=GetAttackAPCost();
 			
@@ -986,7 +984,7 @@ namespace TBTK{
 			if(unitAudio!=null) unitAudio.Hit();
 			if(unitAnim!=null) unitAudio.Hit();
 			
-			ApplyDamage(attInstance.damage, attInstance.critical);
+			ApplyDamage(attInstance.damage, attInstance.critical, false, attInstance.srcUnit);
 			
 			if(attInstance.stunned && stunned<attInstance.stun){
 				AddUnitToEffectTracker();
@@ -1001,25 +999,32 @@ namespace TBTK{
 				silentCounter.Count(attInstance.silent);
 			}
 		}
-		public virtual void ApplyDamage(float dmg, bool critical=false, bool showOverlay = true){
+		public virtual void ApplyDamage(float dmg, bool critical=false, bool showOverlay = false, Unit source = null){
 			//Call unit damage text
-			Debug.Log("Unit:"  + this);
 			if(showOverlay){
 				if(!critical) new TextOverlay(GetTargetT().position + new Vector3(0, 2,0), dmg.ToString("f0"), new Color(.713f,.188f,.188f, 1f));
 				else new TextOverlay(GetTargetT().position, dmg.ToString("f0")+" Critical!", new Color(1f, .6f, 0, 1f));
 			}
 //			HP-=dmg;
 
+			bool playerUnit = this.factionID == FactionManager.GetPlayerFactionID () [0];
 
-			if (dmg >= HP)
-				HP -= dmg;
+			float totalHP = this.HP;
+
+			if (playerUnit)
+				totalHP += this.getStack ().getGuard ();
+
+			if (dmg >= totalHP)
 			//It's important to do some sort of animation in case the unit didn't die
-			if(HP<=0){
-				if(this.factionID == FactionManager.GetPlayerFactionID()[0]){
+				if(playerUnit){
 					//this will be used to decrease the total life of the player
-				
+					if(source != null){
+						FactionManager.GetFaction(this.factionID).factionHp -= source.HPDamage;
+						if(FactionManager.GetFaction(this.factionID).factionHp <= 0){//GameOver
+						}
+					}
 				}
-				//if its an enemy unit, the enemy should just disappear and give exp/money/etc
+					//if its an enemy unit, the enemy should just disappear and give exp/money/etc
 				else{
 					HP=0;
 				
@@ -1027,7 +1032,6 @@ namespace TBTK{
 				
 					ClearVisibleTile();
 					tile.unit=null;
-				}
 			}
 		}
 		
@@ -1082,6 +1086,7 @@ namespace TBTK{
 		
 		public bool IsAllActionCompleted(){
 			if(stunned>0) return true;
+			if (FactionManager.IsPlayerTurn ()) return false;
 			if(attackRemain>0 && AP>=GetAttackAPCost()) return false;
 			if(moveRemain>0 && AP>=GetMoveAPCost()) return false;
 			return true;

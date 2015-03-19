@@ -55,7 +55,7 @@ namespace AssemblyCSharp
 				}
 			}
 			
-			public override void ApplyDamage(float dmg, bool critical=false, bool showOverlay = true){
+			public override void ApplyDamage(float dmg, bool critical=false, bool showOverlay = true, Unit sourceUnit = null){
 
 
 				foreach (MultiTileUnit t in unitList){

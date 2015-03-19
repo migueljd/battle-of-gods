@@ -45,6 +45,11 @@ namespace TBTK{
 		public Tile tile0;
 
 
+		//This variable will be the max number of enemies the given Tile can have. Note that only Tile_0 will have this number
+		public int minEnemyCount;
+		public int maxEnemyCount;
+
+
 		//-------------------------------------------------End of non TBTK variables
 
 

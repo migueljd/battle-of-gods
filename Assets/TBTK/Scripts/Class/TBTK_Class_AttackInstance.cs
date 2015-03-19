@@ -119,7 +119,6 @@ namespace TBTK{
 			//			Debug.Log ("attack and defense:");
 			//			Debug.Log (srcUnit.tile.tileAttack);
 			//			Debug.Log(tgtUnit.tile.tileDefense);
-			Debug.Log (sourceTile);
 			if (FactionManager.IsPlayerTurn())
 				damage = sourceTile.unit.GetDamageMin () + sourceTile.unit.getStack ().getDamage ();
 			else 
