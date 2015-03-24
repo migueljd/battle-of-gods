@@ -54,7 +54,6 @@ public class MapController : MonoBehaviour {
 
 	void Start(){
 		foreach (Faction f in FactionManager.GetFactionList()) {
-			Debug.Log (f.ID);
 			if (!FactionManager.IsPlayerFaction (f.ID)){
 				enemyFactionID = f.ID;
 			}
@@ -138,8 +137,10 @@ public class MapController : MonoBehaviour {
 
 		for (int a = tilesT.childCount - 1; a >=0; a--) {
 
-		
-
+			if(!tilesT.GetChild(a).name.Contains("Tile")){
+				tilesT.GetChild(a).transform.SetParent(GameObject.FindGameObjectWithTag ("MainGrid").transform);
+				continue;
+			}
 			Tile tile = (Tile)tilesT.GetChild (a).GetComponent<Tile> ();
 			tileList.Add(tile);
 			int tileNumber = tile.tileNumber + rotation;
