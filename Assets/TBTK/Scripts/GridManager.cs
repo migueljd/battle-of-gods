@@ -347,7 +347,7 @@ namespace TBTK{
 			
 			_ClearHoveredTile();
 			ShowIndicator(tile.GetPos());
-			
+			hoveredTile = tile;
 			if(targetMode){
 				SetTargetModeHoveredTile(tile);
 				return;
@@ -875,7 +875,6 @@ namespace TBTK{
 				indicatorHostileList[i].position=new Vector3(0, 99999, 0);
 		}
 		public void ShowHostileIndicator(List<Tile> list){
-			return;
 			while(indicatorHostileList.Count<list.Count){
 				Transform indicatorHostileT=(Transform)Instantiate(indicatorHostileList[0]);
 				indicatorHostileT.parent=transform;

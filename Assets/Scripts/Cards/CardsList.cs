@@ -28,10 +28,21 @@ namespace Cards
 	{
 
 		public CardListNode first;
+		public CardListNode next;
 		public CardsList ()
 		{
 			first = null;
 		}
+
+		//this method should be called when the card position doesn't matter for the list
+		public void addFreeCard(Card card){
+		}
+
+		public void removeCardAt(Card card){
+			//remember to deal with the next variable in this method
+		}
+
+
 
 		//each time a card is added, it should be added in the right list, so we don't really need to check their type
 		//however, we need to check if the cards turn counts is lower or higher than the ones in the existing list
@@ -60,6 +71,7 @@ namespace Cards
 					}
 				}
 			}
+
 		}
 
 		public void updateList(){
@@ -106,6 +118,12 @@ namespace Cards
 					next = next.next;
 			}
 			first = next;
+		}
+
+		public Card getNextCard(){
+			next = next != null? (next.next != null ? next.next : first) : first;
+			CardListNode n = next;
+			return n.card;
 		}
 	}
 }

@@ -963,7 +963,7 @@ namespace TBTK{
 		void FinishAction(){
 			if(isAIUnit) return;
 			
-			if(!IsAllActionCompleted()) GameControl.SelectUnit(this);
+			if(!IsAllActionCompleted() || FactionManager.IsPlayerTurn()) GameControl.SelectUnit(this);
 			else{
 				FactionManager.UnitMoveDepleted(this);
 				TurnControl.NextUnit();

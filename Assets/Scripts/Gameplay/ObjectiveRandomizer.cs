@@ -49,6 +49,6 @@ public class ObjectiveRandomizer : MonoBehaviour {
 	}
 
 	void destroyTarget(){
-		target.ApplyDamage(100000, false, false);
+//		target.ApplyDamage(100000, false, false);
 	}
 }

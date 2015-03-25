@@ -15,39 +15,146 @@ namespace Cards
 {
 	public class CardsHandManager : MonoBehaviour
 	{
+
+		public enum modes {_DeckBuild = 1, _GameOn = 2};
+
 		public static CardsHandManager instance;
-		public int handSize;
+		public static int handSize = 5;
 		public Transform deck;
 
 		public CardTransform selectedCard;
-
-		public Transform cardPrefab;
 
 		public CardsList cardsInDeck;
 
 		public CardsList cardsInDiscard;
 
+		public CardsList cardsInHand;
+
+		private float distanceFromCenter =10f;
+		private float distanceFromOtherCard;
+
+		//this variable is used to store in what mode the game is on, so the card activations will have different effects
+		public modes mode;
+
+		public CardPrefabInstatiator instantiator;
+
+		//this position is used to store the cards that won't be used
+		private Vector3 cardsLimbo = new Vector3(9999,9999,9999);
+
+
 		void Awake ()
 		{
-			if (instance == null)
+			if (instance == null) {
+				Debug.Log ("is null");
 				instance = this;
+				instance.cardsInDeck = new CardsList ();
+				instance.cardsInHand = new CardsList ();
+				instantiator = new CardPrefabInstatiator ();
+				instance.mode = modes._DeckBuild;
+			} else {
+				Destroy (this);
+			}
 
-			cardsInDeck = new CardsList ();
+			DontDestroyOnLoad (this.gameObject);
+
+		}
+
+		void OnLevelWasLoaded(int level){
+			Debug.Log (mode);
+			if (instance.mode == modes._GameOn) {
+				Debug.Log ("instanti");
+				CreateDeck();
+				updateCardsPosition ();
+				
+			} else {
+				
+			}
+
+		}
+
+		public static void changeModeToDeckBuild(){
+			instance.mode = modes._DeckBuild;
+		}
+
+		public static void changeModeToGameOn(){
+			Debug.Log ("mode changed");
+			instance.mode = modes._GameOn;
 		}
 
 		public static CardsHandManager getInstance(){
 			return instance;
 		}
 
+		private void instantiateDeck(){
+			Card next = cardsInDeck.getNextCard ();
+			Card first = cardsInDeck.first.card;
+			bool firstTime = true;
+			while((next != null && !next.Equals(first)) || firstTime){
+				firstTime = false;
+
+//				Instantiate(next.prefab, new Vector3(9999,9999,9999), Quaternion.identity);
+
+
+
+
+
+
+//				next = cardsInDeck.next();
+			}
+		}
+
+		public void updateCardsPosition(){
+			int initialAngle = -15;
+			float range = 7.5f*5;
+			float increment = range/handSize;
+
+			int cardCount = 0;
+
+			Card first = cardsInHand.first.card;
+			bool firstTime = true;
+			Card next = cardsInHand.getNextCard();
+
+			while(!first.Equals(next) || firstTime) {
+				firstTime = false;
+
+				float angle = initialAngle + increment*cardCount;
+
+
+				Vector3 finalPosition = transform.position;
+
+				finalPosition.x += distanceFromCenter*Mathf.Sin(Mathf.Deg2Rad*angle);
+				finalPosition.y += 0.2f*cardCount;
+				finalPosition.z += distanceFromCenter*Mathf.Cos(Mathf.Deg2Rad*angle);
+
+		
+				next.updateTransform(finalPosition, Quaternion.Euler(0,  angle, 0));
+				
+				next = cardsInHand.getNextCard();
+				cardCount++;
+			}
+
+		}
+
 		public void updateHand(){
 			if (instance.transform.childCount < handSize) {
 				for(int a = handSize - instance.transform.childCount; a != handSize; a++){
-					Transform newCardT = (Transform) Instantiate(cardPrefab);
+					Transform newCardT = (Transform) Instantiate(cardsInDeck.getNextCard().transform);
 					Card pop = cardsInDeck.popFirstCard();
 				}
 			}
 		}
 
+		public static void CreateDeck(){
+			instance._CreateDeck ();
+		}
+
+		private void _CreateDeck(){
+			Debug.Log (instantiator.cardsToInstantiate.Count);
+			foreach (GameObject t in instantiator.cardsToInstantiate) {
+				GameObject card = (GameObject) Instantiate(t, cardsLimbo, Quaternion.identity);
+				instance.cardsInDeck.addCard((Card) card.GetComponent<Card>());
+			}
+		}
 
 	}
 }

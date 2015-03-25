@@ -37,7 +37,10 @@ namespace Cards
 		}
 
 		void OnMouseDown(){
-			if (CardsHandManager.instance.selectedCard == this && GameControl.selectedUnit.factionID == FactionManager.GetPlayerFactionID()[0])
+			if (CardsHandManager.getInstance () != null && CardsHandManager.getInstance ().mode == CardsHandManager.modes._DeckBuild) {
+				CardsHandManager.getInstance().instantiator.addPrefab(this.gameObject);
+			}
+			else if (CardsHandManager.instance.selectedCard == this && GameControl.selectedUnit.factionID == FactionManager.GetPlayerFactionID()[0])
 				activateCard ((CardsStackManager) GameControl.selectedUnit.GetComponent<CardsStackManager>());
 			else 
 				CardsHandManager.instance.selectedCard = this;
