@@ -84,9 +84,6 @@ namespace Cards{
 				float angleDifference = Quaternion.Angle (this.transform.rotation, finalRotation);
 				float vectorDistance = Vector3.Distance(this.transform.position, finalPosition);
 
-				Debug.Log ("Distance: " + vectorDistance);
-				Debug.Log ("Angle difference: " + angleDifference);
-
 				if(vectorDistance <= acceptableDistanceVectors && angleDifference <= acceptableAngleDifference) shouldUpdate = false;
 
 			}

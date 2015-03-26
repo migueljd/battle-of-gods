@@ -39,20 +39,22 @@ namespace Cards
 		public CardPrefabInstatiator instantiator;
 
 		//this position is used to store the cards that won't be used
-		private Vector3 cardsLimbo = new Vector3(9999,9999,9999);
+		public Vector3 cardsLimbo = new Vector3(9999,9999,9999);
+
+		public Vector3 managerPosition;
+		public Vector3 managerRotation;
 
 
 		void Awake ()
 		{
 			if (instance == null) {
-				Debug.Log ("is null");
 				instance = this;
 				instance.cardsInDeck = new CardsList ();
 				instance.cardsInHand = new CardsList ();
 				instantiator = new CardPrefabInstatiator ();
 				instance.mode = modes._DeckBuild;
 			} else {
-				Destroy (this);
+				Destroy (this.gameObject);
 			}
 
 			DontDestroyOnLoad (this.gameObject);
@@ -60,10 +62,19 @@ namespace Cards
 		}
 
 		void OnLevelWasLoaded(int level){
-			Debug.Log (mode);
+
+			transform.SetParent (Camera.allCameras [0].transform);
+
+			transform.localPosition = instance.managerPosition;
+			transform.localRotation = Quaternion.Euler (instance.managerRotation);
+
+			Debug.Log ("Position is " + transform.position);
+			Debug.Log ("Rotation is " + transform.rotation);
+
 			if (instance.mode == modes._GameOn) {
 				Debug.Log ("instanti");
 				CreateDeck();
+				updateHand();
 				updateCardsPosition ();
 				
 			} else {
@@ -71,6 +82,7 @@ namespace Cards
 			}
 
 		}
+
 
 		public static void changeModeToDeckBuild(){
 			instance.mode = modes._DeckBuild;
@@ -105,20 +117,20 @@ namespace Cards
 
 		public void updateCardsPosition(){
 			int initialAngle = -15;
-			float range = 7.5f*5;
+			float range = 7.5f*handSize;
 			float increment = range/handSize;
 
 			int cardCount = 0;
 
-			Card first = cardsInHand.first.card;
+			Card first = instance.cardsInHand.first.card;
 			bool firstTime = true;
-			Card next = cardsInHand.getNextCard();
+			Card next = instance.cardsInHand.getNextCard();
 
 			while(!first.Equals(next) || firstTime) {
 				firstTime = false;
 
 				float angle = initialAngle + increment*cardCount;
-
+				Debug.Log (string.Format("The angle is {0}, and the increment is {1}, the cardCount is {2}", angle, increment, cardCount));
 
 				Vector3 finalPosition = transform.position;
 
@@ -127,21 +139,31 @@ namespace Cards
 				finalPosition.z += distanceFromCenter*Mathf.Cos(Mathf.Deg2Rad*angle);
 
 		
-				next.updateTransform(finalPosition, Quaternion.Euler(0,  angle, 0));
+				next.updateTransform(finalPosition, Quaternion.Euler(90,  angle, 0));
 				
-				next = cardsInHand.getNextCard();
+				next = instance.cardsInHand.getNextCard();
 				cardCount++;
+			}
+//0.8, -10.4, 12
+		}
+
+		public void updateHand(){
+			Debug.Log ("Child Count: " + instance.transform.childCount);
+			Debug.Log ("Hand Size: " + handSize);
+			if (instance.transform.childCount < handSize) {
+				for(int a = handSize - instance.transform.childCount; a != 0; a--){
+					if(instance.cardsInDeck.Count == 0) ShuffleDeck();
+					Card pop = instance.cardsInDeck.popFirstCard();
+					pop.transform.SetParent(this.transform);
+					instance.cardsInHand.addCard(pop);
+
+				}
 			}
 
 		}
 
-		public void updateHand(){
-			if (instance.transform.childCount < handSize) {
-				for(int a = handSize - instance.transform.childCount; a != handSize; a++){
-					Transform newCardT = (Transform) Instantiate(cardsInDeck.getNextCard().transform);
-					Card pop = cardsInDeck.popFirstCard();
-				}
-			}
+		public void ShuffleDeck(){
+			
 		}
 
 		public static void CreateDeck(){
@@ -150,6 +172,7 @@ namespace Cards
 
 		private void _CreateDeck(){
 			Debug.Log (instantiator.cardsToInstantiate.Count);
+//			GameObject deck = GameObject.FindGameObjectWithTag ("");
 			foreach (GameObject t in instantiator.cardsToInstantiate) {
 				GameObject card = (GameObject) Instantiate(t, cardsLimbo, Quaternion.identity);
 				instance.cardsInDeck.addCard((Card) card.GetComponent<Card>());

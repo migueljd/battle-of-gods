@@ -29,6 +29,8 @@ namespace Cards
 
 		public CardListNode first;
 		public CardListNode next;
+		public int Count;
+
 		public CardsList ()
 		{
 			first = null;
@@ -48,6 +50,7 @@ namespace Cards
 		//however, we need to check if the cards turn counts is lower or higher than the ones in the existing list
 		//if it is lower, it should appear before them
 		public void addCard(Card card){
+			Count++;
 			if (first == null)
 				this.first = new CardListNode (card);
 			else {
@@ -102,6 +105,7 @@ namespace Cards
 		}
 
 		public Card popFirstCard(){
+			Count--;
 			Card pop = first.card;
 			first = first.next;
 

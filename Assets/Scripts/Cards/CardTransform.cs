@@ -32,13 +32,15 @@ namespace Cards
 			GameControl.SelectUnit (GameControl.selectedUnit);
 
 			//Do some sort of animation then destroy this card
-
-			GameObject.Destroy (this.gameObject);
+			this.transform.SetParent (null);
+			this.transform.position = CardsHandManager.getInstance ().cardsLimbo;
+			CardsHandManager.getInstance ().cardsInDiscard.addCard (transformCard);
 		}
 
 		void OnMouseDown(){
 			if (CardsHandManager.getInstance () != null && CardsHandManager.getInstance ().mode == CardsHandManager.modes._DeckBuild) {
-				CardsHandManager.getInstance().instantiator.addPrefab(this.gameObject);
+				GameObject o = (GameObject) Resources.Load("Prefabs/Cards/" + this.transform.name);
+				CardsHandManager.getInstance().instantiator.addPrefab(o);
 			}
 			else if (CardsHandManager.instance.selectedCard == this && GameControl.selectedUnit.factionID == FactionManager.GetPlayerFactionID()[0])
 				activateCard ((CardsStackManager) GameControl.selectedUnit.GetComponent<CardsStackManager>());

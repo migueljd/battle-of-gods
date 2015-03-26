@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using TBTK;
+using Cards;
 
 namespace TBTK{
 
@@ -303,10 +304,15 @@ namespace TBTK{
 			factionList[selectedFactionID].ResetFactionTurnData();
 			
 			if(factionList[selectedFactionID].isPlayerFaction){	//if it's a player's faction, select a unit
+
+				//Update the card count for all cards in stack. 
 				factionList[selectedFactionID].allUnitList[0].getStack().updateMove();
 				foreach(Unit u in factionList[selectedFactionID].allUnitList){
 					u.getStack().updateDamageAndGuard();
 				}
+
+				CardsHandManager.getInstance().updateHand();
+
 				if(TurnControl.GetMoveOrder()==_MoveOrder.Free){
 					factionList[selectedFactionID].SelectFirstAvailableUnit();
 				}
