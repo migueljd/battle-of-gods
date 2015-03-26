@@ -53,6 +53,7 @@ namespace Cards{
 		}
 
 		public void updateTransform(Vector3 position, Quaternion rotationAroundY){
+			Debug.Log (position);
 			this.initialPosition = this.transform.position;
 			this.finalPosition = position;
 			this.initialRotation = this.transform.rotation;

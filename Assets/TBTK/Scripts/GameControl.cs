@@ -2,6 +2,7 @@
 using System.Collections;
 
 using TBTK;
+using Cards;
 
 namespace TBTK{
 
@@ -175,7 +176,9 @@ namespace TBTK{
 			if(onGameStartE!=null) onGameStartE();
 			
 			gamePhase=_GamePhase.Play;
+			CardsHandManager.instance.GameStarted ();
 			TurnControl.EndTurn();	//this will initiate unit selection and start the game
+
 			yield return null;
 		}
 		

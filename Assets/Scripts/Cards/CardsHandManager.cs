@@ -30,7 +30,7 @@ namespace Cards
 
 		public CardsList cardsInHand;
 
-		private float distanceFromCenter =8f;
+		private float distanceFromCenter =10f;
 		private float distanceFromOtherCard;
 
 		//this variable is used to store in what mode the game is on, so the card activations will have different effects
@@ -61,7 +61,7 @@ namespace Cards
 
 		}
 
-		void OnLevelWasLoaded(int level){
+		public void GameStarted (){
 
 			transform.SetParent (Camera.allCameras [0].transform);
 
@@ -137,7 +137,7 @@ namespace Cards
 				finalPosition.x += distanceFromCenter*Mathf.Sin(Mathf.Deg2Rad*angle);
 				finalPosition.y += 0.2f*cardCount;
 				finalPosition.z += distanceFromCenter*Mathf.Cos(Mathf.Deg2Rad*angle);
-
+				Debug.Log (finalPosition);
 		
 				next.updateTransform(finalPosition, Quaternion.Euler(90,  angle, 0));
 				

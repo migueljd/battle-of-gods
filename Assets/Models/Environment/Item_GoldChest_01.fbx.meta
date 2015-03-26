@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: f70cf7875af6d274293b1717d6f6b6a3
 ModelImporter:
-  serializedVersion: 16
+  serializedVersion: 18
   fileIDToRecycleName:
     100000: ba__1
     100002: //RootNode
@@ -13,6 +13,7 @@ ModelImporter:
     100014: pCylinder7
     100016: pCylinder8
     100018: pCylinder9
+    100020: "ba\xFA1"
     400000: ba__1
     400002: //RootNode
     400004: pCylinder1
@@ -23,6 +24,7 @@ ModelImporter:
     400014: pCylinder7
     400016: pCylinder8
     400018: pCylinder9
+    400020: "ba\xFA1"
     2300000: ba__1
     2300002: pCylinder1
     2300004: pCylinder2
@@ -32,6 +34,7 @@ ModelImporter:
     2300012: pCylinder7
     2300014: pCylinder8
     2300016: pCylinder9
+    2300018: "ba\xFA1"
     3300000: ba__1
     3300002: pCylinder1
     3300004: pCylinder2
@@ -41,6 +44,7 @@ ModelImporter:
     3300012: pCylinder7
     3300014: pCylinder8
     3300016: pCylinder9
+    3300018: "ba\xFA1"
     4300000: pCylinder9
     4300002: pCylinder3
     4300004: pCylinder1
@@ -50,6 +54,7 @@ ModelImporter:
     4300012: pCylinder5
     4300014: pCylinder8
     4300016: ba__1
+    4300018: "ba\xFA1"
     9500000: //RootNode
   materials:
     importMaterials: 0
@@ -78,11 +83,13 @@ ModelImporter:
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
+    keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
@@ -105,3 +112,5 @@ ModelImporter:
   animationType: 2
   additionalBone: 0
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 
