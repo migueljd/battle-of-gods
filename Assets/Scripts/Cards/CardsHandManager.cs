@@ -30,7 +30,7 @@ namespace Cards
 
 		public CardsList cardsInHand;
 
-		private float distanceFromCenter =10f;
+		private float distanceFromCenter =8f;
 		private float distanceFromOtherCard;
 
 		//this variable is used to store in what mode the game is on, so the card activations will have different effects
@@ -175,6 +175,7 @@ namespace Cards
 //			GameObject deck = GameObject.FindGameObjectWithTag ("");
 			foreach (GameObject t in instantiator.cardsToInstantiate) {
 				GameObject card = (GameObject) Instantiate(t, cardsLimbo, Quaternion.identity);
+				card.transform.localScale= new Vector3 (0.25f, 0.35f, 0.35f);
 				instance.cardsInDeck.addCard((Card) card.GetComponent<Card>());
 			}
 		}
