@@ -446,7 +446,7 @@ namespace TBTK{
 			for(int i=0; i<factionList.Count; i++){
 				if(factionList[i].ID==factionID){
 					factionList[i].allUnitList.Add(unit);
-					unit.isAIUnit=factionList[i].isPlayerFaction;
+					unit.isAIUnit=!factionList[i].isPlayerFaction;
 				}
 			}
 			

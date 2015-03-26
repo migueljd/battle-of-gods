@@ -293,14 +293,11 @@ public class MapController : MonoBehaviour {
 
 	private void createNewEnemy(Tile tile){
 		int enemyID = Random.Range (0, MapController.instance.enemyPrefabs.Count - 1);
-		Debug.Log (tile);
-		foreach(Transform t in MapController.instance.enemyPrefabs) Debug.Log (t);
 		Transform newEnemy = (Transform) Instantiate ( MapController.instance.enemyPrefabs [enemyID], tile.GetPos(), Quaternion.identity);
 
 		Unit unit = newEnemy.GetComponent<Unit>();
 		unit.tile = tile;
 		tile.unit = unit;
-		Debug.Log (enemyFactionID);
 		FactionManager.InsertUnit (unit, enemyFactionID);
 	}
 
