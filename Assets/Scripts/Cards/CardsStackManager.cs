@@ -28,16 +28,19 @@ namespace Cards{
 
 		//This method should only be called when adding damage cards
 		public void addDamageCard(Card card){
+			card.currentCount = card.turnCount;
 			damageCards.addCard (card);
 		}
 
 		//This method should only be called when adding guard cards
 		public void addGuardCard(Card card){
+			card.currentCount = card.turnCount;
 			guardCards.addCard (card);
 		}
 
 		//This method should only be called when adding move cards
 		public void addMoveCard(Card card){
+			card.currentCount = card.turnCount;
 			moveCards.addCard (card);
 		}
 

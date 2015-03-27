@@ -97,24 +97,7 @@ namespace Cards
 			return instance;
 		}
 
-		private void instantiateDeck(){
-			Card next = cardsInDeck.getNextCard ();
-			Card first = cardsInDeck.first.card;
-			bool firstTime = true;
-			while((next != null && !next.Equals(first)) || firstTime){
-				firstTime = false;
-
-//				Instantiate(next.prefab, new Vector3(9999,9999,9999), Quaternion.identity);
-
-
-
-
-
-
-//				next = cardsInDeck.next();
-			}
-		}
-
+	
 		public void updateCardsPosition(){
 			int initialAngle = -15;
 			float range = 7.5f*handSize;
@@ -122,12 +105,8 @@ namespace Cards
 
 			int cardCount = 0;
 
-			Card first = instance.cardsInHand.first.card;
-			bool firstTime = true;
-			Card next = instance.cardsInHand.getNextCard();
 
-			while(!first.Equals(next) || firstTime) {
-				firstTime = false;
+			foreach(Card c in cardsInHand.list){
 
 				float angle = initialAngle + increment*cardCount;
 				Debug.Log (string.Format("The angle is {0}, and the increment is {1}, the cardCount is {2}", angle, increment, cardCount));
@@ -139,9 +118,8 @@ namespace Cards
 				finalPosition.z += distanceFromCenter*Mathf.Cos(Mathf.Deg2Rad*angle);
 				Debug.Log (finalPosition);
 		
-				next.updateTransform(finalPosition, Quaternion.Euler(90,  angle, 0));
+				c.updateTransform(finalPosition, Quaternion.Euler(90,  angle, 0));
 				
-				next = instance.cardsInHand.getNextCard();
 				cardCount++;
 			}
 //0.8, -10.4, 12
@@ -150,20 +128,26 @@ namespace Cards
 		public void updateHand(){
 			Debug.Log ("Child Count: " + instance.transform.childCount);
 			Debug.Log ("Hand Size: " + handSize);
-			if (instance.transform.childCount < handSize) {
-				for(int a = handSize - instance.transform.childCount; a != 0; a--){
-					if(instance.cardsInDeck.Count == 0) ShuffleDeck();
+			if (instance.transform.childCount < handSize && instance.cardsInDeck.list.Count > 0) {
+				for(int a = handSize - instance.transform.childCount; a != 0 &&  instance.cardsInDeck.list.Count != 0; a--){
 					Card pop = instance.cardsInDeck.popFirstCard();
 					pop.transform.SetParent(this.transform);
 					instance.cardsInHand.addCard(pop);
-
 				}
 			}
 
 		}
 
-		public void ShuffleDeck(){
-			
+		public static void ShuffleDeck(){
+			instance._ShuffleDeck ();
+		}
+
+		private void _ShuffleDeck(){
+			if (cardsInDiscard.list.Count > 0) {
+				do {
+					cardsInDeck.addCard(cardsInDeck.removeCardAt(0));
+				} while(cardsInDiscard.getCount() > 0);
+			}
 		}
 
 		public static void CreateDeck(){

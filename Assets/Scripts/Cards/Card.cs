@@ -17,6 +17,7 @@ namespace Cards{
 		public int guard;
 
 		public int turnCount;
+		public int currentCount;
 
 		public static float acceptableDistanceVectors = 0.2f;
 		public static float acceptableAngleDifference = 10;
