@@ -168,7 +168,7 @@ namespace Cards
 //			GameObject deck = GameObject.FindGameObjectWithTag ("");
 			foreach (GameObject t in instantiator.cardsToInstantiate) {
 				GameObject card = (GameObject) Instantiate(t, cardsLimbo, Quaternion.identity);
-				card.transform.localScale= new Vector3 (0.25f, 0.35f, 0.35f);
+//				card.transform.localScale= new Vector3 (0.25f, 0.35f, 0.35f);
 				instance.cardsInDiscard.addCard((Card) card.GetComponent<Card>());
 			}
 		}

@@ -19,36 +19,52 @@ namespace Cards
 
 		public Vector3 endScale;
 		public static float holdTimeTreshold = 0.2f;
+		public static float distanceToActivate = 10;
+
 		public Vector3 finalPosition;
 
 		private Vector3 initialPosition;
 		private Vector3 baseScale;
-		private float holdTime;
 
 		private bool cardHeld = false;
 
 		private bool zoomed;
+
+		private float yDistance;
 
 		void Start(){
 			this.transformCard = (Card) transform.GetComponent<Card> ();
 		}
 
 		void Update(){
+
 			if (cardHeld) {
-				holdTime += Time.deltaTime;
-				if (holdTime >= holdTimeTreshold && !zoomed) {
+//				Debug.Log ("Distance from parent: " + Vector3.Distance(this.transform.position, this.transform.parent.position));
 
-					CardsHandManager.DeselectCard();
-
-					zoomed = true;
+				if (!zoomed && Vector3.Distance (this.transform.position, this.transform.parent.position) < distanceToActivate) {
 					ZoomCard ();
+					zoomed = true;
+				} 
+				else if(Vector3.Distance(this.transform.position,this.transform.parent.position) >= distanceToActivate && zoomed){
+					scaleDown();
+					zoomed = false;
 				}
-			} else if(zoomed) {
-				DeZoom();
-				zoomed = false;
+				Vector3 mousePos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, yDistance));
+				this.transform.position = mousePos;
+
+
+			} else if (zoomed && this.transform.parent != null) {
+				DeZoom ();
+			}
+			else if(zoomed) {
+				this.initialPosition = this.transform.position;
+				DeZoom ();
 			}
 		}
 
+		private void scaleDown(){
+			transformCard.updateTransform (this.transform.position, this.transform.rotation, baseScale);
+		}
 
 		private void activateCard(CardsStackManager stack){
 			if (this.transformCard.damageCard) 
@@ -65,41 +81,44 @@ namespace Cards
 			this.transform.position = CardsHandManager.getInstance ().cardsLimbo;
 			CardsHandManager.getInstance ().cardsInDiscard.addCard (transformCard);
 		}
-
-		public void selectCard(){
-		
-		}
-
-		public void deselectCard(){
-			
-		}
+//
+//		public void selectCard(){
+//		
+//		}
+//
+//		public void deselectCard(){
+//			
+//		}
 
 		public void ZoomCard(){
-			this.baseScale = transform.localScale;
-			this.initialPosition = transform.position;
-			transformCard.updateTransform (transform.position + finalPosition, this.transform.rotation, endScale);
+			transformCard.updateTransform (this.transform.position, this.transform.rotation, endScale);
 		}
 		public void DeZoom(){
-			transformCard.updateTransform (initialPosition, this.transform.rotation, baseScale);
+			transformCard.updateTransform (this.initialPosition, this.transform.rotation, baseScale);
+			zoomed = false;
 		}
 
 		void OnMouseDown(){
 			if (CardsHandManager.getInstance () != null && CardsHandManager.getInstance ().mode == CardsHandManager.modes._DeckBuild) {
 				GameObject o = (GameObject)Resources.Load ("Prefabs/Cards/" + this.transform.name);
 				CardsHandManager.getInstance ().instantiator.addPrefab (o);
-			} else if (CardsHandManager.getInstance () != null && CardsHandManager.instance.selectedCard == this && GameControl.selectedUnit.factionID == FactionManager.GetPlayerFactionID () [0])
-				activateCard ((CardsStackManager)GameControl.selectedUnit.GetComponent<CardsStackManager> ());
+			} 
 			else {
+				yDistance = Camera.main.transform.position.y - this.transform.position.y;
 				cardHeld = true;
+				this.baseScale = transform.localScale;
+				this.initialPosition = transform.position;
 			}
 		}
 
 		void OnMouseUp(){
 			if(CardsHandManager.getInstance () != null && CardsHandManager.getInstance ().mode == CardsHandManager.modes._GameOn && cardHeld){
-				CardsHandManager.DeselectCard();
-				selectCard();
+				if(Vector3.Distance(this.transform.position,this.transform.parent.position) >= distanceToActivate && GameControl.selectedUnit != null){
+					activateCard(GameControl.selectedUnit.getStack());
+				}
 			}
 			cardHeld = false;
+
 		}
 
 	}

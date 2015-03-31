@@ -69,7 +69,6 @@ public class MapController : MonoBehaviour {
 	private void _RevealArea(Tile tile){
 //		IList<Tile> tileList = tile.GetNeighbourList ();
 
-		int tileNumber = tile.tileNumber;
 
 		//positioning tile according to it's tile number
 
@@ -105,7 +104,6 @@ public class MapController : MonoBehaviour {
 				break;
 		}
 
-		Transform mainGridT= GameObject.FindGameObjectWithTag("MainGrid").transform;
 		//this list will be used to logically add all tiles to their respective neighbours
 		List<Tile> addedTiles = new List<Tile>();
 
@@ -187,8 +185,6 @@ public class MapController : MonoBehaviour {
 			closeList.Add(currentTile);
 			currentTile.aStar.listState = TileAStar._AStarListState.Close;
 			List<Tile> newNeighbourList = currentTile.GetNeighbourList();
-
-			int tileNumber = currentTile.tileNumber;
 
 			Vector3 firstVector = instance.findFirstVector(currentTile);
 			Vector3 secondVector = instance.findSecondVector(currentTile);

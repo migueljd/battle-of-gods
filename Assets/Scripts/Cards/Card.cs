@@ -94,17 +94,13 @@ namespace Cards{
 
 		void Update(){
 			if (shouldUpdate) {
-				Debug.Log("Still updating");
 				updatePosition (finalPosition);
 				updateRotation(finalRotation);
 				updateScale(finalScale);
 
 				bool rotationDone =Quaternion.Angle (this.transform.rotation, finalRotation) <= 0.1f;
-				if(!rotationDone)Debug.Log ("Angle diff is: " + Quaternion.Angle (this.transform.rotation, finalRotation));
 				bool positionDone = Vector3.Distance(this.transform.position, finalPosition) <= 0.001f;
-				if(!positionDone)Debug.Log ("Distance diff is: " + Vector3.Distance(this.transform.position, finalPosition));
 				bool scaleDone = Vector3.Distance(this.transform.localScale,finalScale) <= 0.001f;
-				if(!scaleDone)Debug.Log ("Scale diff is: " + Vector3.Distance(this.transform.position, finalPosition));
 
 
 				if(rotationDone && positionDone && scaleDone) shouldUpdate = false;

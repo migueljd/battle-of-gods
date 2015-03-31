@@ -891,7 +891,6 @@ namespace TBTK{
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
 
-			int hash = Animator.StringToHash("Base Layer.UnitsAttack");
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			while(!TurnControl.ClearToProceed()) yield return null;
 			Debug.Log ("Finished attacking");
@@ -935,7 +934,6 @@ namespace TBTK{
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
 			
-			int hash = Animator.StringToHash("Base Layer.UnitsAttack");
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			while(!TurnControl.ClearToCounter()) yield return null;
 			TurnControl.CounterCompleted();
