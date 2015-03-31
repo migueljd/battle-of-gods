@@ -224,7 +224,7 @@ namespace TBTK{
 			
 			//if there's only 1 faction remain (since faction with no active unit will be removed), then faction has won the game
 			//if(factionList.Count==1) GameControl.GameOver(factionList[0].ID);
-			if(Objective.objectiveCompleted(unit.GetInstanceID()) || factionList.Count==1) GameControl.GameOver(FactionManager.GetFactionList()[0].ID);
+			if(factionList.Count==1 && FactionManager.IsPlayerFaction(unit.factionID)) GameControl.GameOver(FactionManager.GetFactionList()[0].ID);
 
 		}
 		

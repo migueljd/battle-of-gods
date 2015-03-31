@@ -881,6 +881,8 @@ namespace TBTK{
 			
 			//play animation
 			if(unitAnim!=null) unitAnim.Attack();
+			if (unitParticles != null)
+				unitParticles.Attack (targetUnit);
 			if(unitAudio!=null) unitAudio.Attack();
 
 			//shoot
@@ -893,6 +895,8 @@ namespace TBTK{
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			while(!TurnControl.ClearToProceed()) yield return null;
 			Debug.Log ("Finished attacking");
+			if (unitParticles != null)
+				unitParticles.EndAttack ();
 			FinishAction();
 			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit != null && targetUnit.CanCounter(this)) targetUnit.Counter(this);
 
@@ -1016,7 +1020,7 @@ namespace TBTK{
 
 			if (dmg >= totalHP)
 			//It's important to do some sort of animation in case the unit didn't die
-				if(playerUnit){
+				if(playerUnit && totalHP <= 0){
 					//this will be used to decrease the total life of the player
 					if(source != null){
 						FactionManager.GetFaction(this.factionID).factionHp -= source.HPDamage;
@@ -1039,10 +1043,10 @@ namespace TBTK{
 		protected virtual IEnumerator Dead(){
 			if(destroyEffectObj!=null) Instantiate(destroyEffectObj, GetTargetT().position, Quaternion.identity);
 			
-			float delay=0;
-			if(unitAudio!=null) delay=unitAudio.Destroy();
+			float delay=0.5f;
+			if(unitAudio!=null) delay=Mathf.Max (delay,unitAudio.Destroy());
 			if(unitAnim!=null) delay=Mathf.Max(delay, unitAnim.Destroy());
-				
+
 			OnUnitDestroyed(this);
 			
 			yield return new WaitForSeconds(delay);
@@ -1156,6 +1160,9 @@ namespace TBTK{
 		}
 
 		
+		[HideInInspector] protected UnitParticles unitParticles;
+		public void setParticles(UnitParticles unitParticlesInstance){this.unitParticles = unitParticlesInstance;} 
+
 		[HideInInspector] protected UnitAudio unitAudio;
 		public void SetAudio(UnitAudio unitAudioInstance){ unitAudio=unitAudioInstance; }
 		

@@ -23,11 +23,18 @@ namespace Cards{
 		public static float acceptableAngleDifference = 10;
 		public static float translationSpeed = 20f;
 
+		public static float timeToScale = 0.1f;
+
+	
+		private float updateTime;
+
 		private bool shouldUpdate;
 		private Vector3 initialPosition;
 		private Vector3 finalPosition;
 		private Quaternion initialRotation;
 		private Quaternion finalRotation;
+		private Vector3 initialScale;
+		private Vector3 finalScale;
 
 		public bool isDamageCard(){
 			return damageCard;
@@ -53,40 +60,54 @@ namespace Cards{
 			return guard;
 		}
 
-		public void updateTransform(Vector3 position, Quaternion rotationAroundY){
-			Debug.Log (position);
+		public void updateTransform(Vector3 position, Quaternion rotationAroundY, Vector3 scale){
+
 			this.initialPosition = this.transform.position;
 			this.finalPosition = position;
 			this.initialRotation = this.transform.rotation;
 			this.finalRotation = rotationAroundY;
+			this.initialScale = this.transform.localScale;
+			this.finalScale = scale;
+
+			updateTime = Time.time;
 
 			shouldUpdate = true;
 		}
 
 		public void updatePosition(Vector3 position){
-			if (position.y < this.transform.position.y)
-				this.transform.position = position;
-			else if(Vector3.Distance (this.transform.position, position) > acceptableDistanceVectors)
-				transform.Translate ((position - this.initialPosition).normalized * Time.deltaTime*translationSpeed, Space.World);
+			float interpolate = (Time.time - updateTime)/timeToScale > 1? 1 :  (Time.time - updateTime)/timeToScale;
+			transform.position = Vector3.Lerp (this.initialPosition, position, interpolate);
 		}
 
 
 		public void updateRotation(Quaternion rotation){
-			float angleDifference = Quaternion.Angle (rotation, this.transform.rotation);
 
-			if (angleDifference > acceptableAngleDifference)
-				this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, Time.deltaTime);
+			float interpolate = (Time.time - updateTime)/timeToScale > 1? 1 :  (Time.time - updateTime)/timeToScale;
+			transform.rotation = Quaternion.Lerp (this.initialRotation, rotation, interpolate);
+
+		}
+
+		public void updateScale(Vector3 scale){
+			float interpolate = (Time.time - updateTime)/timeToScale > 1? 1 :  (Time.time - updateTime)/timeToScale;
+			transform.localScale = Vector3.Lerp (this.initialScale, scale, interpolate);
 		}
 
 		void Update(){
 			if (shouldUpdate) {
+				Debug.Log("Still updating");
 				updatePosition (finalPosition);
 				updateRotation(finalRotation);
+				updateScale(finalScale);
 
-				float angleDifference = Quaternion.Angle (this.transform.rotation, finalRotation);
-				float vectorDistance = Vector3.Distance(this.transform.position, finalPosition);
+				bool rotationDone =Quaternion.Angle (this.transform.rotation, finalRotation) <= 0.1f;
+				if(!rotationDone)Debug.Log ("Angle diff is: " + Quaternion.Angle (this.transform.rotation, finalRotation));
+				bool positionDone = Vector3.Distance(this.transform.position, finalPosition) <= 0.001f;
+				if(!positionDone)Debug.Log ("Distance diff is: " + Vector3.Distance(this.transform.position, finalPosition));
+				bool scaleDone = Vector3.Distance(this.transform.localScale,finalScale) <= 0.001f;
+				if(!scaleDone)Debug.Log ("Scale diff is: " + Vector3.Distance(this.transform.position, finalPosition));
 
-				if(vectorDistance <= acceptableDistanceVectors && angleDifference <= acceptableAngleDifference) shouldUpdate = false;
+
+				if(rotationDone && positionDone && scaleDone) shouldUpdate = false;
 
 			}
 		}

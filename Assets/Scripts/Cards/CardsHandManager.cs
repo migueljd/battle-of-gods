@@ -30,7 +30,7 @@ namespace Cards
 
 		public CardsList cardsInHand;
 
-		private float distanceFromCenter =10f;
+		private float distanceFromCenter =8f;
 		private float distanceFromOtherCard;
 
 		//this variable is used to store in what mode the game is on, so the card activations will have different effects
@@ -51,6 +51,7 @@ namespace Cards
 				instance = this;
 				instance.cardsInDeck = new CardsList ();
 				instance.cardsInHand = new CardsList ();
+				instance.cardsInDiscard = new CardsList();
 				instantiator = new CardPrefabInstatiator ();
 				instance.mode = modes._DeckBuild;
 			} else {
@@ -68,11 +69,10 @@ namespace Cards
 			transform.localPosition = instance.managerPosition;
 			transform.localRotation = Quaternion.Euler (instance.managerRotation);
 
-			Debug.Log ("Position is " + transform.position);
-			Debug.Log ("Rotation is " + transform.rotation);
+//			Debug.Log ("Position is " + transform.position);
+//			Debug.Log ("Rotation is " + transform.rotation);
 
 			if (instance.mode == modes._GameOn) {
-				Debug.Log ("instanti");
 				CreateDeck();
 				updateHand();
 				updateCardsPosition ();
@@ -109,16 +109,16 @@ namespace Cards
 			foreach(Card c in cardsInHand.list){
 
 				float angle = initialAngle + increment*cardCount;
-				Debug.Log (string.Format("The angle is {0}, and the increment is {1}, the cardCount is {2}", angle, increment, cardCount));
+//				Debug.Log (string.Format("The angle is {0}, and the increment is {1}, the cardCount is {2}", angle, increment, cardCount));
 
 				Vector3 finalPosition = transform.position;
 
 				finalPosition.x += distanceFromCenter*Mathf.Sin(Mathf.Deg2Rad*angle);
-				finalPosition.y += 0.2f*cardCount;
+				finalPosition.y += 0.05f*cardCount;
 				finalPosition.z += distanceFromCenter*Mathf.Cos(Mathf.Deg2Rad*angle);
-				Debug.Log (finalPosition);
 		
-				c.updateTransform(finalPosition, Quaternion.Euler(90,  angle, 0));
+//				Debug.Log ("Local scale before start is:  " + this.transform.localScale); 
+				c.updateTransform(finalPosition, Quaternion.Euler(90,  angle, 0), c.transform.localScale);
 				
 				cardCount++;
 			}
@@ -126,16 +126,16 @@ namespace Cards
 		}
 
 		public void updateHand(){
-			Debug.Log ("Child Count: " + instance.transform.childCount);
-			Debug.Log ("Hand Size: " + handSize);
-			if (instance.transform.childCount < handSize && instance.cardsInDeck.list.Count > 0) {
+//			Debug.Log ("Child Count: " + instance.transform.childCount);
+//			Debug.Log ("Hand Size: " + handSize);
+			if (cardsInHand.getCount() < handSize && instance.cardsInDeck.list.Count > 0) {
 				for(int a = handSize - instance.transform.childCount; a != 0 &&  instance.cardsInDeck.list.Count != 0; a--){
 					Card pop = instance.cardsInDeck.popFirstCard();
 					pop.transform.SetParent(this.transform);
-					instance.cardsInHand.addCard(pop);
+					cardsInHand.addCard(pop);
 				}
 			}
-
+			updateCardsPosition ();
 		}
 
 		public static void ShuffleDeck(){
@@ -145,22 +145,31 @@ namespace Cards
 		private void _ShuffleDeck(){
 			if (cardsInDiscard.list.Count > 0) {
 				do {
-					cardsInDeck.addCard(cardsInDeck.removeCardAt(0));
+					cardsInDeck.addCard(cardsInDiscard.removeCardAt(0));
 				} while(cardsInDiscard.getCount() > 0);
 			}
 		}
+
+		public static void DeselectCard(){
+			instance._DeselectCard ();
+		}
+
+		private void _DeselectCard(){
+			selectedCard = null;
+		}
+
 
 		public static void CreateDeck(){
 			instance._CreateDeck ();
 		}
 
 		private void _CreateDeck(){
-			Debug.Log (instantiator.cardsToInstantiate.Count);
+//			Debug.Log (instantiator.cardsToInstantiate.Count);
 //			GameObject deck = GameObject.FindGameObjectWithTag ("");
 			foreach (GameObject t in instantiator.cardsToInstantiate) {
 				GameObject card = (GameObject) Instantiate(t, cardsLimbo, Quaternion.identity);
 				card.transform.localScale= new Vector3 (0.25f, 0.35f, 0.35f);
-				instance.cardsInDeck.addCard((Card) card.GetComponent<Card>());
+				instance.cardsInDiscard.addCard((Card) card.GetComponent<Card>());
 			}
 		}
 

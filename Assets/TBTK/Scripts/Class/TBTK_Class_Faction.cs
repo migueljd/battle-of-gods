@@ -21,7 +21,7 @@ namespace TBTK{
 
 
 		//This HP will be used mostly for players, for when they take damage, this is where they'll lose HP
-		public int factionHp = 10;
+		public int factionHp = 0;
 
 		
 		
