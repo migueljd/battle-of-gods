@@ -21,6 +21,11 @@ namespace Cards
 
 		public List<Card> list;
 
+		public int damageCount;
+		public int guardCount;
+		public int movementCount;
+
+
 		public CardsList ()
 		{
 			list = new List<Card> ();
@@ -46,13 +51,30 @@ namespace Cards
 			return ret;
 		}
 
+		public bool removeCard(Card card){
+			return list.Remove (card);
+		
+		}
+
 		//each time a card is added, it should be added in the right list, so we don't really need to check their type
 		//however, we need to check if the cards turn counts is lower or higher than the ones in the existing list
 		//if it is lower, it should appear before them
 		public void addCard(Card card){
 			list.Add (card);
 			list.Sort((x,y) => {return x.currentCount - y.currentCount;});
+			damageCount += card.isDamageCard () ? card.damage : 0;
+			guardCount += card.isGuardCard () ? card.guard : 0;
+			movementCount += card.isMoveCard() ? card.movement : 0;
 
+		}
+
+		public void updateAttributesCount(){
+
+			foreach (Card c in list) {
+				damageCount += c.isDamageCard() ? c.damage: 0;
+				guardCount += c.isGuardCard() ? c.guard : 0;
+				movementCount += c.isMoveCard() ? c.movement : 0;
+			}
 		}
 
 		public void updateList(){
@@ -71,8 +93,9 @@ namespace Cards
 		public int getAttribute(bool damage = false, bool guard = false, bool move = false){
 			int attribute = 0;
 
-			foreach (Card c in list) {
-				attribute += c.isDamageCard() && damage ? c.damage : (c.isGuardCard() && guard? c.guard : c.movement);
+			if (list.Count > 0) {
+				Card c = list[0];
+				attribute += c.isDamageCard() && damage ? damageCount : (c.isGuardCard() && guard? guardCount : movementCount);
 			}
 
 			return attribute;

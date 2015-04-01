@@ -70,7 +70,6 @@ namespace TBTK{
 				}
 			}
 
-			Debug.Log ("index: " + index);
 
 			if(index>=0){
 				selectedUnitID=index;

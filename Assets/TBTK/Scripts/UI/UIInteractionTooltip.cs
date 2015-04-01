@@ -67,7 +67,6 @@ namespace TBTK{
 //			GridManager.onHoverAttackableTileE += OnHoverAttackableTile;
 //			GridManager.onExitAttackableTileE += OnExitAttackableTile;
 
-			GridManager.onHostileSelectE += OnSelectHostileUnit;
 			GridManager.onHostileDeselectE += OnDeselectHostileUnit;
 
 			GridManager.onHoverWalkableTileE += OnHoverWalkableTile;
@@ -77,7 +76,6 @@ namespace TBTK{
 //			GridManager.onHoverAttackableTileE -= OnHoverAttackableTile;
 //			GridManager.onExitAttackableTileE -= OnExitAttackableTile;
 
-			GridManager.onHostileSelectE -= OnSelectHostileUnit;
 			GridManager.onHostileDeselectE -= OnDeselectHostileUnit;
 
 			GridManager.onHoverWalkableTileE -= OnHoverWalkableTile;

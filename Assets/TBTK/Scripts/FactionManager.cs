@@ -311,8 +311,11 @@ namespace TBTK{
 				}
 
 				factionList[selectedFactionID].allUnitList[0].getStack().updateMove();
+				factionList[selectedFactionID].allUnitList[0].getStack().updateMovementCount();
+
 				foreach(Unit u in factionList[selectedFactionID].allUnitList){
 					u.getStack().updateDamageAndGuard();
+					u.getStack().updateAttributesForLists();
 				}
 
 				CardsHandManager.getInstance().updateHand();

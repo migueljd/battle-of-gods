@@ -21,7 +21,7 @@ namespace TBTK{
 		public delegate void ExitWalkableHandler();
 		public static event ExitWalkableHandler onExitWalkableTileE;			//listen by UI only
 
-		public delegate void SelectHostileUnit(Tile sourceTile, Tile tile);
+		public delegate void SelectHostileUnit(Unit unit);
 		public static event SelectHostileUnit onHostileSelectE;
 		
 		public delegate void DeselectHostileUnit();
@@ -377,7 +377,7 @@ namespace TBTK{
 			
 			if(attackableTileList.Contains(tile)){
 				if(TurnControl.ClearToProceed()){	//if the some unit is in action, dont show the overlay, the unit cant attack while someone is in action anyway
-					if(onHostileSelectE!=null) onHostileSelectE(GameControl.selectedUnit.tile, tile);	//show attack info on UI
+					if(onHostileSelectE!=null) onHostileSelectE(tile.unit);	//show attack info on UI
 				}
 			}
 			else if(onHostileDeselectE!=null) onHostileDeselectE();	//hide attack info on UI
@@ -820,7 +820,7 @@ namespace TBTK{
 					Tile targetTile=allHostileUnitList[j].tile;
 					
 					if(GridManager.GetDistance(srcTile, targetTile, true)>range) continue;
-					Debug.Log (string.Format ("The distance between {0} and {1} is {2}, and the allowed is {3}. And their position is {4} and {5}", srcTile, targetTile,GridManager.GetDistance(srcTile, targetTile), range, srcTile.transform.position, targetTile.transform.position)); 
+//					Debug.Log (string.Format ("The distance between {0} and {1} is {2}, and the allowed is {3}. And their position is {4} and {5}", srcTile, targetTile,GridManager.GetDistance(srcTile, targetTile), range, srcTile.transform.position, targetTile.transform.position)); 
 					if(!GameControl.EnableFogOfWar() && !GameControl.AttackThroughObstacle()){
 						if(!FogOfWar.InLOS(srcTile, targetTile, 0)) continue;
 					}

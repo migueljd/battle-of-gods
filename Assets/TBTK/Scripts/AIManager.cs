@@ -112,8 +112,7 @@ namespace TBTK{
 				}
 				
 				int rand=Random.Range(0, targetTile.hostileInRangeList.Count - 1);
-				Debug.Log(unit.tile);
-				Debug.Log (unit.tile.GetNeighbourList().Count);
+		
 				unit.Attack(targetTile.hostileInRangeList[rand].unit);
 			}
 			

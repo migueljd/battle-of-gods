@@ -23,8 +23,9 @@ namespace Cards
 
 		public Vector3 finalPosition;
 
+		public static Vector3 baseScale;
+
 		private Vector3 initialPosition;
-		private Vector3 baseScale;
 
 		private bool cardHeld = false;
 
@@ -57,7 +58,7 @@ namespace Cards
 				DeZoom ();
 			}
 			else if(zoomed) {
-				this.initialPosition = this.transform.position;
+				this.initialPosition = CardsHandManager.getInstance().cardsLimbo;
 				DeZoom ();
 			}
 		}
@@ -67,6 +68,7 @@ namespace Cards
 		}
 
 		private void activateCard(CardsStackManager stack){
+			Debug.Log ("Card activated");
 			if (this.transformCard.damageCard) 
 				stack.addDamageCard(this.transformCard);
 			if (this.transformCard.guardCard)
@@ -79,6 +81,8 @@ namespace Cards
 			//Do some sort of animation then destroy this card
 			this.transform.SetParent (null);
 			this.transform.position = CardsHandManager.getInstance ().cardsLimbo;
+			transformCard.stopUpdating ();
+			CardsHandManager.getInstance ().cardsInHand.removeCard (transformCard);
 			CardsHandManager.getInstance ().cardsInDiscard.addCard (transformCard);
 		}
 //
@@ -106,7 +110,6 @@ namespace Cards
 			else {
 				yDistance = Camera.main.transform.position.y - this.transform.position.y;
 				cardHeld = true;
-				this.baseScale = transform.localScale;
 				this.initialPosition = transform.position;
 			}
 		}

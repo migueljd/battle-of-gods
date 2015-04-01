@@ -1,14 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+
 
 using TBTK;
 
 namespace TBTK{
 	
 	public class UIUnitInfoTooltip : MonoBehaviour {
+
+		public Text unitName;
+
+		public Text unitAttack;
+		public Text unitDefense;
+
+		public Sprite unitSprite;
+
 		
 		public Text lbName;
 		public Text lbLevel;
@@ -20,6 +30,7 @@ namespace TBTK{
 		public Text lbOffenseAlt;
 		
 		public Text lbDesp;
+
 		
 		public List<UnityButton> abilityButtonList=new List<UnityButton>();
 		
@@ -131,6 +142,12 @@ namespace TBTK{
 		}
 		public void OnExitHoverAbilityButton(){
 			//lbDesp.text=currentunit.unit.desp;
+		}
+
+		public void UpdateUnitInfo(Unit unit){
+			unitName.text = unit.unitName;
+			unitAttack.text = Convert.ToString(unit.GetEffectiveDamage());
+//			unitDefense.text = unit.Get
 		}
 		
 		

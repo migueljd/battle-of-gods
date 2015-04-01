@@ -74,6 +74,10 @@ namespace Cards{
 			shouldUpdate = true;
 		}
 
+		public void stopUpdating(){
+			shouldUpdate = false;
+		}
+
 		public void updatePosition(Vector3 position){
 			float interpolate = (Time.time - updateTime)/timeToScale > 1? 1 :  (Time.time - updateTime)/timeToScale;
 			transform.position = Vector3.Lerp (this.initialPosition, position, interpolate);

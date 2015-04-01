@@ -69,5 +69,14 @@ namespace Cards{
 		public static void decreaseMovement(int decrease){
 			moveCards.decreaseAttribute (decrease, false, false, true);
 		}
+
+		public void updateMovementCount(){
+			moveCards.updateAttributesCount ();
+		}
+
+		public void updateAttributesForLists(){
+			damageCards.updateAttributesCount ();
+			guardCards.updateAttributesCount ();
+		}
 	}
 }
