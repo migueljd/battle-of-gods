@@ -40,8 +40,10 @@ namespace Cards{
 
 		//This method should only be called when adding move cards
 		public void addMoveCard(Card card){
+			Debug.Log ("adding move card");
 			card.currentCount = card.turnCount;
 			moveCards.addCard (card);
+			Debug.Log ("Movement count: " + moveCards.movementCount);
 		}
 
 		public static int getMovement(){
@@ -60,7 +62,6 @@ namespace Cards{
 		public void decreaseDamage(int decrease){
 			damageCards.decreaseAttribute (decrease, true);
 		}
-
 		
 		public void decreaseGuard(int decrease){
 			damageCards.decreaseAttribute (decrease, false, true);

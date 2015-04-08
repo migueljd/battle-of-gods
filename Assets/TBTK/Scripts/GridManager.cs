@@ -143,7 +143,11 @@ namespace TBTK{
 		private static GridManager instance;
 		public static void SetInstance(){ if(instance==null) instance=(GridManager)FindObjectOfType(typeof(GridManager)); }
 		public static GridManager GetInstance(){ return instance; }
-		
+
+
+
+
+
 		void Awake(){
 			if(instance==null) instance=this;
 		}	
@@ -696,8 +700,9 @@ namespace TBTK{
                 //if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
 				//endif
 					GameControl.selectedUnit.Move(tile);
-				Debug.Log(string.Format("Distance is {0}",AStar.GetDistance(tile, GameControl.selectedUnit.tile)));
-					CardsStackManager.decreaseMovement(AStar.GetDistance(tile, GameControl.selectedUnit.tile));
+					int distance = GetDistance(tile, GameControl.selectedUnit.tile, true);
+					CardsStackManager.decreaseMovement(distance);
+
 					if(onExitWalkableTileE!=null) onExitWalkableTileE();	//for clear UI move cost overlay
 					ClearWalkableHostileList();	//in case the unit move into the destination and has insufficient ap to attack
 				//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
@@ -739,6 +744,7 @@ namespace TBTK{
 		//select a unit, setup the walkable, attackable tiles and what not
 		public static void Select(Unit unit){
 			unit.tile.SetState(_TileState.Selected);
+			Debug.Log ("unit can move: " +unit.CanMove ());
 			if(unit.CanMove()) instance.SetupWalkableTileList(unit);
 			if(unit.CanAttack()) instance.SetupAttackableTileList(unit);
 			instance.indicatorSelected.position=unit.tile.GetPos();
@@ -762,13 +768,13 @@ namespace TBTK{
 			ClearWalkableTileList();
 			//List<Tile> newList=GetTilesWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true, true);
 			List<Tile> newList = AStar.GetTileWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true);
+			Debug.Log ("List count: " + newList.Count);
 			for(int i=0; i<newList.Count; i++){
 				if(newList[i].unit==null){
 					walkableTileList.Add(newList[i]);
 					newList[i].SetState(_TileState.Walkable);
 				}
 			}
-			AStar.ResetGraph(unit.tile, new List<Tile>(), newList);
 			SetupHostileInRangeforTile(unit, walkableTileList);
 		}
 		
@@ -793,8 +799,8 @@ namespace TBTK{
 			
 			ShowHostileIndicator(attackableTileList);
 		}
-		
-		
+
+
 		//given a unit and a list of tiles, setup the attackable tiles with that unit in each of those given tiles. the attackble tile list are stored in each corresponding tile
 		public static void SetupHostileInRangeforTile(Unit unit, Tile tile){ SetupHostileInRangeforTile(unit, new List<Tile>{ tile }); }
 		public static void SetupHostileInRangeforTile(Unit unit, List<Tile> tileList){
@@ -807,7 +813,7 @@ namespace TBTK{
 			List<Unit> allFriendlyUnitList=new List<Unit>();
 			if(GameControl.EnableFogOfWar()) allFriendlyUnitList=FactionManager.GetAllUnitsOfFaction(unit.factionID);
 			
-			int range=unit.GetAttackRange();
+			float range=unit.GetAttackRange();
 			int sight=unit.GetSight();
 
 			
@@ -818,9 +824,10 @@ namespace TBTK{
 				
 				for(int j=0; j<allHostileUnitList.Count; j++){
 					Tile targetTile=allHostileUnitList[j].tile;
-					
-					if(GridManager.GetDistance(srcTile, targetTile, true)>range) continue;
-//					Debug.Log (string.Format ("The distance between {0} and {1} is {2}, and the allowed is {3}. And their position is {4} and {5}", srcTile, targetTile,GridManager.GetDistance(srcTile, targetTile), range, srcTile.transform.position, targetTile.transform.position)); 
+
+					int distance = GridManager.GetDistance(srcTile, targetTile, false);
+
+					if(distance>range) continue;
 					if(!GameControl.EnableFogOfWar() && !GameControl.AttackThroughObstacle()){
 						if(!FogOfWar.InLOS(srcTile, targetTile, 0)) continue;
 					}

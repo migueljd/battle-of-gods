@@ -13,6 +13,9 @@ namespace TBTK{
 		public List<Tile> tileList=new List<Tile>();
 		
 		public List<Transform> tileTList=new List<Transform>();
+
+		//Used to check if 2 tiles are close enough
+		public static float acceptableDistance = 0.1f;
 		
 		//used in editor only
 		public Tile GetNeighbourInDir(Tile tile, float angle){
@@ -302,21 +305,98 @@ namespace TBTK{
 		}
 		
 		//get a direct distance, regardless of the walkable state
-		public int GetDistance(Tile tile1, Tile tile2){
-			if(GridManager.GetTileType()==_TileType.Hex){
-				float x=Mathf.Abs(tile1.x-tile2.x);
-				float y=Mathf.Abs(tile1.y-tile2.y);
-				float z=Mathf.Abs(tile1.z-tile2.z);
-
-
-				return (int)((x + y + z)/2);
+		public int GetDistance(Tile srcTile, Tile targetTile){
+			List<Tile> closeList=new List<Tile>();
+			List<Tile> openList=new List<Tile>();
+			
+			Tile currentTile=srcTile;
+			if(srcTile==null) Debug.Log("src tile is null!!!");
+			
+			float currentLowestG=Mathf.Infinity;
+			int id=0;
+			int i=0;
+			
+			while(true){
+				//if we have reach the destination
+				if(currentTile==targetTile) break;
+				
+				//move currentNode to closeList;
+				closeList.Add(currentTile);
+				currentTile.aStar.listState=TileAStar._AStarListState.Close;
+				
+				//loop through all neighbours, regardless of status 
+				//currentTile.ProcessAllNeighbours(targetTile);
+				currentTile.aStar.ProcessNeighbour(targetTile);
+				
+				//put all neighbour in openlist
+				foreach(Tile neighbour in currentTile.aStar.GetNeighbourList()){
+					if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned ) {
+						//set the node state to open
+						neighbour.aStar.listState=TileAStar._AStarListState.Open;
+						openList.Add(neighbour);
+					}
+				}
+				
+				currentTile=null;
+				
+				currentLowestG=Mathf.Infinity;
+				id=0;
+				for(i=0; i<openList.Count; i++){
+					if(openList[i].aStar.scoreF<currentLowestG){
+						currentLowestG=openList[i].aStar.scoreG;
+						currentTile=openList[i];
+						id=i;
+					}
+				}
+				
+				if(currentTile==null) return -1;
+				
+				openList.RemoveAt(id);
 			}
-			else{
-				float tileSize=GridManager.GetTileSize()*GridManager.GetGridToTileSizeRatio();
-				Vector3 pos1=tile1.GetPos();
-				Vector3 pos2=tile2.GetPos();
-				return (int)(Mathf.Abs((pos1.x-pos2.x)/tileSize)+Mathf.Abs((pos1.z-pos2.z)/tileSize));
+			
+			
+			int counter=0;
+			while(currentTile!=null){
+				counter++;
+				currentTile=currentTile.aStar.parent;
 			}
+			
+			AStar.ResetGraph(targetTile, openList, closeList);
+			
+			
+			return counter - 1;
+//
+//			if(GridManager.GetTileType()==_TileType.Hex){
+//				float x=Mathf.Abs(tile1.x-tile2.x);
+//				float y=Mathf.Abs(tile1.y-tile2.y);
+//				float z=Mathf.Abs(tile1.z-tile2.z);
+//				
+////				Debug.Log ("Source Tile is " + tile1);
+////				Debug.Log ("Target Tile is " + tile2);
+////
+////				float distance = Vector3.Distance(tile1.transform.position, tile2.transform.position);
+////
+////				int ret = 0;
+////				float okDist = tile1.GetComponent<Collider>().bounds.extents.z*tile1.transform.localScale.z;
+////				Debug.Log ("Distance is " + distance);
+////				Debug.Log ("okDist is " + okDist);
+////				while(distance + acceptableDistance >= okDist){
+////					distance -= okDist + acceptableDistance;
+////					ret++;
+////
+////				}
+////
+////
+////				Debug.Log("Ret is " + ret);
+//
+//				return (int) ((x + y + z)/2);
+//			}
+//			else{
+//				float tileSize=GridManager.GetTileSize()*GridManager.GetGridToTileSizeRatio();
+//				Vector3 pos1=tile1.GetPos();
+//				Vector3 pos2=tile2.GetPos();
+//				return (int)(Mathf.Abs((pos1.x-pos2.x)/tileSize)+Mathf.Abs((pos1.z-pos2.z)/tileSize));
+//			}
 		}
 		
 		//get distance when restricted to walkable tile, using A*

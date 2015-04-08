@@ -138,7 +138,6 @@ namespace TBTK{
 				
 				//put all neighbour in openlist
 				foreach(Tile neighbour in currentTile.aStar.GetNeighbourList()){
-					if((neighbour.unit!=null && neighbour!=targetTile) || !neighbour.walkable) continue;
 					if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned ) {
 						//set the node state to open
                         neighbour.aStar.listState=TileAStar._AStarListState.Open;
@@ -171,8 +170,9 @@ namespace TBTK{
 			}
 			
 			ResetGraph(targetTile, openList, closeList);
-			
-			return counter-1;
+
+
+			return counter - 1;
 		}
 		
 		
@@ -228,52 +228,40 @@ namespace TBTK{
 			
 			currentTile.aStar.scoreG = 0;
 			do{
-//				string name = currentTile.name;
-//				string[] s = {"Tile_5x14", "Tile_5x16", "Tile_5x17"};
-//				if(name.Equals(s[0]) || name.Equals(s[1]) || name.Equals(s[2])) Debug.Log("AStar used tile: " + name);
 				//move currentNode to closeList;
 				closeList.Add(currentTile);
 				currentTile.distance = (int)currentTile.aStar.scoreG;
 				currentTile.aStar.listState=TileAStar._AStarListState.Close;
-				/*if(currentTile.aStar.parent != null){
-					string s = "Nome do tile: " + currentTile.name;
-					Tile t = null;
-					do{ 
-						t = currentTile.aStar.parent;
-						if(t != null) s += " ,nome do pai: " + t.name;
-					}
-					while(t != null);
-					Debug.Log(s);
-				}*/
+
 				//loop through all neighbours, regardless of status 
 				//currentTile.ProcessAllNeighbours(targetTile);
 				List<Tile> neighbourList = currentTile.aStar.GetNeighbourList(true);
+
 				for(int a=0; a<neighbourList.Count; a++){
 					TileAStar neighbour=neighbourList[a].aStar;
 					//if it is possible to go to the neighbour tile
-					if(neighbour.tile.walkable && neighbour.tile.unit==null){
-						//if the neightbour state is clean (never evaluated so far in the search)
-						if(neighbour.listState==TileAStar._AStarListState.Unassigned){
-							//check the score of G and H and update F, also assign the parent to currentNode
-							neighbour.scoreG= currentTile.aStar.scoreG+(float)neighbour.tile.cost;
+
+					float tempScoreG = currentTile.aStar.scoreG+(float)neighbour.tile.cost;
+					//if the neightbour state is clean (never evaluated so far in the search)
+					if(neighbour.listState==TileAStar._AStarListState.Unassigned){
+						//check the score of G and H and update F, also assign the parent to currentNode
+						neighbour.scoreG= tempScoreG;
+						neighbour.parent=currentTile;
+					}
+					//if the neighbour state is open (it has been evaluated and added to the open list)
+					else if(neighbour.listState==TileAStar._AStarListState.Open){
+						//calculate if the path if using this neighbour node through current node would be shorter compare to previous assigned parent node
+						if(neighbour.scoreG>tempScoreG){
+							//if so, update the corresponding score and and reassigned parent
 							neighbour.parent=currentTile;
-						}
-						//if the neighbour state is open (it has been evaluated and added to the open list)
-						else if(neighbour.listState==TileAStar._AStarListState.Open){
-							//calculate if the path if using this neighbour node through current node would be shorter compare to previous assigned parent node
-							float tempScoreG=currentTile.aStar.scoreG+(float)neighbour.tile.cost;
-							if(neighbour.scoreG>tempScoreG){
-								//if so, update the corresponding score and and reassigned parent
-								neighbour.parent=currentTile;
-								neighbour.scoreG=tempScoreG;
-							}
+							neighbour.scoreG=tempScoreG;
 						}
 					}
 				}
 				
 				//put all neighbour in openlist
 				foreach(Tile neighbour in currentTile.aStar.GetNeighbourList(true)){
-					if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned && neighbour.aStar.scoreG <= dist) {
+					if(neighbour.aStar.listState==TileAStar._AStarListState.Unassigned) {
 						//set the node state to open
 						neighbour.aStar.listState=TileAStar._AStarListState.Open;
 						openList.Add(neighbour);
@@ -286,19 +274,18 @@ namespace TBTK{
 				id=-1;
 				//TODO increase performance
 				for(i=0; i<openList.Count; i++){
-					if(openList[i].aStar.scoreG<currentLowestG){
+					if(openList[i].aStar.scoreG<currentLowestG && openList[i].aStar.scoreG <= dist){
 						currentLowestG=openList[i].aStar.scoreG;
 						currentTile=openList[i];
 						id=i;
 					}
 
 				}
-
 				if(id != -1)openList.RemoveAt(id);
 			}while(currentTile != null);
-	ResetTilesWithinDistance(srcTile, closeList, openList);	
+			ResetTilesWithinDistance(srcTile, closeList, openList);	
 
-	return closeList;
+			return closeList;
 	}
 
 		private static void ResetTilesWithinDistance(Tile hTile, List<Tile> cList, List<Tile> oList){

@@ -68,6 +68,7 @@ namespace Cards
 		}
 
 		private void activateCard(CardsStackManager stack){
+
 			Debug.Log ("Card activated");
 			if (this.transformCard.damageCard) 
 				stack.addDamageCard(this.transformCard);

@@ -14,7 +14,7 @@ namespace TBTK{
 	
 	public enum _TileType{Hex, Square}
 	public enum _TileState{Default, Selected, Walkable, Hostile, Range}
-	public enum _TileCost{Grass=1, DenseGrass=2}
+	public enum _TileCost{Grass=1, Lime=2, Sand = 3, Crows = 4, Swamp = 5}
 
 
 	[System.Serializable]
@@ -83,7 +83,9 @@ namespace TBTK{
 //		[HideInInspector] 
 		public int distance=0;	//for when the tile is in walkableTileList for the selected unit, indicate the distance from selected unit
 
-		public _TileCost cost = _TileCost.Grass;
+		public _TileCost tileType = _TileCost.Grass;
+
+		public int cost = 1;
 
 		/*	//path-smoothing, not in used
 		public List<Vector3> path=new List<Vector3>();
@@ -106,14 +108,31 @@ namespace TBTK{
 
 		public void setTileAttributes(){
 			if (this.tileAttack == 0){
-				switch(this.cost){
+				switch(tileType){
 					case _TileCost.Grass:
-						this.tileAttack = 1f;
-						this.tileDefense = 1f;
+						this.tileAttack = 2f;
+						this.tileDefense = 0f;
+						this.cost = 1;
 						break;
-					case _TileCost.DenseGrass:
-						this.tileAttack = .6f;
-						this.tileDefense = 1.3f;
+					case _TileCost.Lime:
+						this.tileAttack = 0f;
+						this.tileDefense = -2f;
+						this.cost = 3;
+						break;
+					case _TileCost.Sand:
+						this.tileAttack = 2f;
+						this.tileDefense = -3f;
+						this.cost = 1;
+						break;
+					case _TileCost.Crows:
+						this.tileAttack = -3f;
+						this.tileDefense = -3f;
+						this.cost = 1;
+						break;
+					case _TileCost.Swamp:
+						this.tileAttack = 0f;
+						this.tileDefense = 3f;
+						this.cost = 4;
 						break;
 				}
 			}

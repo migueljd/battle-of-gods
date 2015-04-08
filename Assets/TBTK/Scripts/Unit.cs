@@ -179,6 +179,7 @@ namespace TBTK{
 			} else {
 				apAllowance = apCost == 0 ? 999999 : (int)Mathf.Abs (AP / apCost);
 			}
+			Debug.Log ("Ap is " + AP + " and apCost is " + apCost);
 			return apAllowance;
 			//return Mathf.Min(GetMoveRange(), apAllowance); 
 		}
@@ -671,8 +672,10 @@ namespace TBTK{
 			moveRemain-=1;
 			Debug.Log("moving "+name+" to "+targetTile);
 			GameControl.LockUnitSelect();
-			
+
+
 			StartCoroutine(MoveRoutine(targetTile));
+			this.AP -= targetTile.distance;
 		}
 		public IEnumerator MoveRoutine(Tile targetTile){
 			tile.unit=null;
@@ -686,7 +689,10 @@ namespace TBTK{
 			for(int a =path.Count - 1; a >= 0; a--){
 //				Debug.Log (path[a].name);
 //				Debug.Log (path[a].distance);
-				if(path[a].distance > allowedDistance || path[a].unit != null) path.RemoveAt(a);
+				if(path[a].distance > allowedDistance || path[a].unit != null){
+					Debug.Log ("Removing " + path[a] + " which have distance " + path[a].distance + " and the allowed distance is " + allowedDistance);
+					path.RemoveAt(a);
+				}
 			}
 			if(GridManager.GetTileType()==_TileType.Square){	//smooth the path so the unit wont zig-zag along a diagonal direction
 				path.Insert(0, tile);
@@ -893,7 +899,11 @@ namespace TBTK{
 			}
 
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
-			while(!TurnControl.ClearToProceed()) yield return null;
+			while (!TurnControl.ClearToProceed()) {
+
+				Debug.Log ("Attacking");
+				yield return null;
+				}
 			Debug.Log ("Finished attacking");
 			if (unitParticles != null)
 				unitParticles.EndAttack ();

@@ -318,7 +318,7 @@ namespace TBTK{
 		public void ProcessWalkableNeighbour(Tile targetTile){
 			for(int i=0; i<neighbourList.Count; i++){
 				TileAStar neighbour=neighbourList[i].aStar;
-				if((neighbour.tile.walkable && neighbour.tile.unit==null) || neighbour.tile==targetTile){
+				if(((neighbour.tile.walkable && neighbour.tile.unit==null)) || neighbour.tile==targetTile){
 					//if the neightbour state is clean (never evaluated so far in the search)
 					if(neighbour.listState==_AStarListState.Unassigned){
 						//check the score of G and H and update F, also assign the parent to currentNode
@@ -343,8 +343,33 @@ namespace TBTK{
 				}
 			}
 		}
-		
-		
+
+		public void ProcessNeighbour(Tile targetTile){
+			for(int i=0; i<neighbourList.Count; i++){
+				TileAStar neighbour=neighbourList[i].aStar;
+				//if the neightbour state is clean (never evaluated so far in the search)
+				if(neighbour.listState==_AStarListState.Unassigned){
+					//check the score of G and H and update F, also assign the parent to currentNode
+					neighbour.scoreG=this.scoreG+1;
+					neighbour.scoreH=Vector3.Distance(neighbour.tile.GetPos(), targetTile.GetPos());
+					neighbour.UpdateScoreF();
+					neighbour.parent=tile;
+
+				}
+				//if the neighbour state is open (it has been evaluated and added to the open list)
+				else if(neighbour.listState==_AStarListState.Open){
+					//calculate if the path if using this neighbour node through current node would be shorter compare to previous assigned parent node
+					float tempScoreG=scoreG+1;
+					float tempScoreF=tempScoreG + neighbour.scoreH;
+					if(neighbour.scoreF>tempScoreF){
+						//if so, update the corresponding score and and reassigned parent
+						neighbour.parent=tile;
+						neighbour.scoreG=tempScoreG;
+						neighbour.UpdateScoreF();
+					}
+				}
+			}
+		}
 		public void UpdateScoreF(){ scoreF=scoreG+scoreH; }
 	}
 	

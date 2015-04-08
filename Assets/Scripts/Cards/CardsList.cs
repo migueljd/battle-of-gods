@@ -70,6 +70,9 @@ namespace Cards
 
 		public void updateAttributesCount(){
 
+			damageCount = 0;
+			guardCount = 0;
+			movementCount = 0;
 			foreach (Card c in list) {
 				damageCount += c.isDamageCard() ? c.damage: 0;
 				guardCount += c.isGuardCard() ? c.guard : 0;
@@ -108,13 +111,12 @@ namespace Cards
 
 		public void decreaseAttribute(int decrease, bool damage = false, bool guard = false, bool move = false){
 
-			int b = 0;
-			for(int a = 0; a < list.Count && decrease > 0; a++){
-				decrease -= list[a].isDamageCard() && damage ? list[a].damage : (list[a].isGuardCard() && guard? list[a].guard : list[a].movement);
-				b++;
-			}
-			if(b > 0)
-				list.RemoveRange (0, b);
+			if (damage)
+				damageCount -= decrease;
+			if (guard)
+				guardCount -= decrease;
+			if (move)
+				movementCount -= decrease;
 		}
 
 
