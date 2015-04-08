@@ -217,7 +217,7 @@ namespace TBTK{
 			for(int i=0; i<factionList.Count; i++){
 				if(factionList[i].ID==unit.factionID){
 					factionList[i].RemoveUnit(unit);
-					if(factionList[i].allUnitList.Count==0) factionList.RemoveAt(i);
+//					if(factionList[i].allUnitList.Count==0) factionList.RemoveAt(i);
 					break;
 				}
 			}
