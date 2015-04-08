@@ -17,7 +17,15 @@ namespace TBTK{
 		public bool disablePerkMenu=false;
 		
 		private static UI instance;
-		
+
+		public Image heroImg;
+		public Image enemyImg;
+		public Text heroAttack;
+		public Text enemyAttack;
+		public Text heroDefense;
+		public Text enemyDefense;
+
+
 		void Awake(){
 			instance=this;
 			transform.position=Vector3.zero;
@@ -56,16 +64,31 @@ namespace TBTK{
 		
 		
 		void OnUnitSelected(Unit unit){
-			if(unit!=null) endTurnButtonObj.SetActive(true);
+			if (unit != null) {
+				endTurnButtonObj.SetActive (true);
+				heroImg.sprite = unit.iconSprite;
+				heroAttack.text = unit.GetEffectiveDamage().ToString();
+				heroDefense.text = unit.GetEffectiveHP().ToString();
+			}
 			else endTurnButtonObj.SetActive(false);
+		}
+
+		void OnHostileSelected(Tile selectedTile, Tile hoveredTile){
+			Unit enemy = hoveredTile.unit;
+			if(enemy != null){
+				enemyImg.sprite = enemy.iconSprite;
+				enemyAttack.text = enemy.GetEffectiveDamage().ToString();
+				enemyDefense.text = enemy.GetEffectiveHP().ToString();
+			}
 		}
 		
 		
 		public void OnEndTurnButton(){
 			GameControl.EndTurn();
 		}
-		
-		
+
+
+
 		
 		public void OnGameOver(int factionID){ StartCoroutine(ShowGameOverScreen(factionID)); }
 		IEnumerator ShowGameOverScreen(int factionID){

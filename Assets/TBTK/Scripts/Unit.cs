@@ -179,7 +179,6 @@ namespace TBTK{
 			} else {
 				apAllowance = apCost == 0 ? 999999 : (int)Mathf.Abs (AP / apCost);
 			}
-			Debug.Log ("Ap is " + AP + " and apCost is " + apCost);
 			return apAllowance;
 			//return Mathf.Min(GetMoveRange(), apAllowance); 
 		}
@@ -1024,9 +1023,9 @@ namespace TBTK{
 
 			float totalHP = this.HP;
 
-			if (playerUnit)
+			if (playerUnit) {
 				totalHP += this.getStack ().getGuard ();
-
+			}
 			if (dmg >= totalHP)
 			//It's important to do some sort of animation in case the unit didn't die
 				if(playerUnit && totalHP <= 0){
@@ -1047,6 +1046,11 @@ namespace TBTK{
 					tile.unit=null;
 			}
 		}
+
+		public float GetEffectiveHP (){
+			return defaultHP + this.getStack ().getGuard ();
+		}
+		                      
 		
 		public GameObject destroyEffectObj;
 		protected virtual IEnumerator Dead(){

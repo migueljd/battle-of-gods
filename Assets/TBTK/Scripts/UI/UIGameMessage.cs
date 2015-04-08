@@ -62,7 +62,7 @@ namespace TBTK {
 		
 		IEnumerator DestroyMessage(GameObject obj){
 			float dur=0;
-			while(dur<1.25f){ dur+=Time.unscaledDeltaTime;	yield return null; Debug.Log ("Desstroying message");}
+			while(dur<1.25f){ dur+=Time.unscaledDeltaTime;	yield return null;}
 			//yield return new WaitForSeconds(1.25f);
 			
 			TweenScale(obj, 0.5f, new Vector3(0.01f, 0.01f, 0.01f));

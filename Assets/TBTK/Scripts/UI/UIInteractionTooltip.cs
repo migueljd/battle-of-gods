@@ -25,12 +25,12 @@ namespace TBTK{
 		public Text lbSpecial;
 		public Text lbCover;
 
-		private Text sourceHP;
-		private Text targetHP;
-		private Image sourceImg;
-		private Image targetImg;
-		private Text sourceName;
-		private Text targetName;
+//		private Text sourceHP;
+//		private Text targetHP;
+//		private Image sourceImg;
+//		private Image targetImg;
+//		private Text sourceName;
+//		private Text targetName;
 		
 		
 		// Use this for initialization
@@ -151,11 +151,11 @@ namespace TBTK{
 		void OnSelectHostileUnit(Tile sourceTile, Tile tile){
 			this.tgtUnit = tile.unit;
 
-			sourceName.text = sourceTile.unit.name;
-			targetName.text = tile.unit.name;
-
-			sourceImg.sprite = sourceTile.unit.iconSprite;
-			targetImg.sprite = tile.unit.iconSprite;
+//			sourceName.text = sourceTile.unit.name;
+//			targetName.text = tile.unit.name;
+//
+//			sourceImg.sprite = sourceTile.unit.iconSprite;
+//			targetImg.sprite = tile.unit.iconSprite;
 
 			int srcDamage = AttackInstance.calculateDamage(sourceTile, tile);
 			int tgtDamage = sourceTile.GetNeighbourList().Contains(tile)? AttackInstance.calculateDamage(tile, sourceTile, false, true) : 0;
@@ -165,8 +165,8 @@ namespace TBTK{
 			int sourceUnitHp = Mathf.RoundToInt(sourceTile.unit.HP);
 			int targetUnitHp = Mathf.RoundToInt(tile.unit.HP);
 
-			sourceHP.text = string.Format("HP: {0}->{1}", sourceUnitHp, Mathf.Max(0, sourceUnitHp - tgtDamage));
-			targetHP.text = string.Format("HP: {0}->{1}", targetUnitHp, Mathf.Max(0,targetUnitHp - srcDamage));
+//			sourceHP.text = string.Format("HP: {0}->{1}", sourceUnitHp, Mathf.Max(0, sourceUnitHp - tgtDamage));
+//			targetHP.text = string.Format("HP: {0}->{1}", targetUnitHp, Mathf.Max(0,targetUnitHp - srcDamage));
 
 			//UpdateActionOutcomePos();
 			actionOutcome.gameObject.SetActive(true);

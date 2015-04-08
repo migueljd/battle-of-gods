@@ -39,20 +39,16 @@ namespace TBTK{
 		//move the whole faction, unit by unit
 		IEnumerator FactionRoutine(Faction faction){
 			//GameControl.DisplayMessage("AI's Turn");
-			Debug.Log ("Starting faction Routine");
 			yield return new WaitForSeconds(0.5f);
 			
 			for(int i=0; i<faction.allUnitList.Count; i++){
-				Debug.Log("picking unit");
 				if(faction.allUnitList[i].IsStunned()) continue;
 				Debug.Log (faction.allUnitList[i]);
 				StartCoroutine(MoveUnitRoutine(faction.allUnitList[i]));
 				while(movingUnit) {
-					Debug.Log ("still moving unit") ; 
 					yield return null;
 				}
 				yield return new WaitForSeconds(0.25f);
-				Debug.Log("Movement done");
 				if(GameControl.GetGamePhase()==_GamePhase.Over) yield break;
 			}
 			
@@ -107,7 +103,6 @@ namespace TBTK{
 			if(targetTile.hostileInRangeList.Count>0){
 				if(targetTile!=unit.tile){	//wait until the unit has moved into the targetTile
 					yield return new WaitForSeconds(.25f);
-					Debug.Log ("Not clear to proceed");
 					while(!TurnControl.ClearToProceed()){
 						yield return null;
 					
