@@ -107,10 +107,11 @@ namespace Cards
 				GameObject o = (GameObject)Resources.Load ("Prefabs/Cards/" + this.transform.name);
 				CardsHandManager.getInstance ().instantiator.addPrefab (o);
 			} 
-			else {
+			else if(!CardsHandManager.movingCard){
 				yDistance = Camera.main.transform.position.y - this.transform.position.y;
 				cardHeld = true;
 				this.initialPosition = transform.position;
+				CardsHandManager.movingCard = true;
 			}
 		}
 
@@ -120,6 +121,7 @@ namespace Cards
 					activateCard(GameControl.selectedUnit.getStack());
 				}
 			}
+			CardsHandManager.movingCard = false;
 			cardHeld = false;
 
 		}

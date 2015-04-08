@@ -1028,7 +1028,7 @@ namespace TBTK{
 			}
 			if (dmg >= totalHP)
 			//It's important to do some sort of animation in case the unit didn't die
-				if(playerUnit && totalHP <= 0){
+				if(playerUnit){
 					//this will be used to decrease the total life of the player
 					if(source != null){
 						FactionManager.GetFaction(this.factionID).factionHp -= source.HPDamage;

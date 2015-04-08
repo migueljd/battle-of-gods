@@ -22,6 +22,8 @@ namespace Cards
 		public static int handSize = 5;
 		public Transform deck;
 
+		public static bool movingCard = false;
+
 		public CardTransform selectedCard;
 
 		public CardsList cardsInDeck;

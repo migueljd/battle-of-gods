@@ -41,13 +41,15 @@ namespace TBTK{
 		void OnEnable(){
 			FactionManager.onUnitDeploymentPhaseE += OnUnitDeploymentPhase;
 			Unit.onUnitSelectedE += OnUnitSelected;
-			
+			GridManager.onHostileSelectE +=OnHostileSelected;
+			GridManager.onHostileDeselectE += OnHostileDeselect;
 			GameControl.onGameOverE += OnGameOver;
 		}
 		void OnDisable(){
 			FactionManager.onUnitDeploymentPhaseE -= OnUnitDeploymentPhase;
 			Unit.onUnitSelectedE -= OnUnitSelected;
-			
+			GridManager.onHostileSelectE -=OnHostileSelected;
+			GridManager.onHostileDeselectE -= OnHostileDeselect;
 			GameControl.onGameOverE -= OnGameOver;
 		}
 		
@@ -73,13 +75,20 @@ namespace TBTK{
 			else endTurnButtonObj.SetActive(false);
 		}
 
-		void OnHostileSelected(Tile selectedTile, Tile hoveredTile){
-			Unit enemy = hoveredTile.unit;
+		void OnHostileSelected(Unit unit){
+			Unit enemy = unit;
 			if(enemy != null){
+				enemyImg.enabled = true;
 				enemyImg.sprite = enemy.iconSprite;
-				enemyAttack.text = enemy.GetEffectiveDamage().ToString();
-				enemyDefense.text = enemy.GetEffectiveHP().ToString();
+				enemyAttack.text = enemy.damageMin.ToString();
+				enemyDefense.text = enemy.HP.ToString();
 			}
+		}
+
+		void OnHostileDeselect(){
+			enemyImg.enabled = false;
+			enemyAttack.text = "";
+			enemyDefense.text = "";
 		}
 		
 		

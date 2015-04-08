@@ -106,9 +106,9 @@ namespace Cards{
 				bool positionDone = Vector3.Distance(this.transform.position, finalPosition) <= 0.001f;
 				bool scaleDone = Vector3.Distance(this.transform.localScale,finalScale) <= 0.001f;
 
-
-				if(rotationDone && positionDone && scaleDone) shouldUpdate = false;
-
+				if(rotationDone && positionDone && scaleDone){
+					shouldUpdate = false;
+				}
 			}
 		}
 

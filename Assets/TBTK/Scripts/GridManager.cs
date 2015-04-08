@@ -277,7 +277,10 @@ namespace TBTK{
 			Ray ray = Camera.main.ScreenPointToRay(cursorPosition);
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit, Mathf.Infinity, mask)){
-				Tile newTile=_GetTileOnPos(hit.point);
+				//Tile newTile=_GetTileOnPos(hit.point);
+
+				Tile newTile = hit.collider.gameObject.GetComponent<Tile>();
+
 				if(newTile==null || !newTile.walkable){
 					if(hoveredTile!=null) _ClearHoveredTile();
 					return;
@@ -293,12 +296,13 @@ namespace TBTK{
 							OnTileTouchDown();
                     	}
 						else{
+							if(attackableTileList.Contains(currentSelectTile))onHostileDeselectE ();
 							if(targetMode || hoveredTile.unit==null || attackableTileList.Contains(hoveredTile)){
 								currentSelectTile=hoveredTile;
-							if(attackableTileList.Contains(hoveredTile)) onHostileSelectE(GameControl.selectedUnit.tile, hoveredTile);
-                        }
-                        else{
-                            OnTileTouchDown();
+								if(attackableTileList.Contains(hoveredTile)) onHostileSelectE(hoveredTile.unit);
+                        	}
+                        	else{
+                            	OnTileTouchDown();
 							}
 						}
 					#else
@@ -327,12 +331,9 @@ namespace TBTK{
 		
 			//for touch input, confirm when a tile has been selected
 			private void OnTileTouchDown(){
-				_OnTileCursorDown(hoveredTile);
-				currentSelectTile=null;
-				onHostileDeselectE();
-            
-            	
-			_ClearHoveredTile();
+				_OnTileCursorDown (hoveredTile);
+				_ClearHoveredTile ();
+
 			}
 		#endif
 		
@@ -678,41 +679,40 @@ namespace TBTK{
 
 				//if the unit in the tile can be attack by current selected unit, attack it
 				else if(attackableTileList.Contains(tile)){
-					//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-					//if(GameControl.selectedTile != null /*&& GameControl.selectedTile.Equals(tile)*/ ){
-					//endif
-					Debug.Log("Here");
+					/*#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+					if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile) ){
+					#endif*/
 						GameControl.selectedUnit.Attack(tile.unit);
 						//onHostileDeselectE();
-					//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-					/*}
-					else {
-						GameControl.SelectTile(tile);
-						onHostileSelectE(GameControl.selectedUnit.tile, tile);
-					}
-					//endif*/
+					//#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+					//}
+					//else {
+					//	GameControl.SelectTile(tile);
+						//onHostileSelectE(GameControl.selectedUnit);
+					//}
+					//#endif
 				}
 			}
 			//if the tile is within the move range of current selected unit, try to select it, if it is already selected, move
 			else if(walkableTileList.Contains(tile)){
 
-				//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-                //if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
-				//endif
+//				#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+  //              if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
+	//			#endif
 					GameControl.selectedUnit.Move(tile);
 					int distance = GetDistance(tile, GameControl.selectedUnit.tile, true);
 					CardsStackManager.decreaseMovement(distance);
 
 					if(onExitWalkableTileE!=null) onExitWalkableTileE();	//for clear UI move cost overlay
 					ClearWalkableHostileList();	//in case the unit move into the destination and has insufficient ap to attack
-				//if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+	//			#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
                     
-                //}
-				/*else {
-					onHostileDeselectE();
-					GameControl.SelectTile(tile);
-				}
-				//endif*/
+      //          }
+		//		else {
+		//			onHostileDeselectE();
+		//			GameControl.SelectTile(tile);
+		//		}
+		//		#endif
 			}
 
 			ClearHoveredTile();	//clear the hovered tile so all the UI overlay will be cleared
