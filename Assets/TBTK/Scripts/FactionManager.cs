@@ -302,6 +302,10 @@ namespace TBTK{
 			selectedFactionID+=1;
 			if(selectedFactionID>=factionList.Count) selectedFactionID=0;
 			factionList[selectedFactionID].ResetFactionTurnData();
+
+			foreach (Unit unit in _GetAllUnitsOfFaction(selectedFactionID)) {
+				unit.HP = unit.defaultHP;
+			}
 			
 			if(factionList[selectedFactionID].isPlayerFaction){	//if it's a player's faction, select a unit
 

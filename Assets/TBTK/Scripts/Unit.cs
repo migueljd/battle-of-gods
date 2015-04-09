@@ -1021,12 +1021,14 @@ namespace TBTK{
 
 			bool playerUnit = this.factionID == FactionManager.GetPlayerFactionID () [0];
 
-			float totalHP = this.HP;
+			this.HP-=dmg;
+			float totalHP = this.HP + this.tile.tileDefense;
+
 
 			if (playerUnit) {
 				totalHP += this.getStack ().getGuard ();
-			}
-			if (dmg >= totalHP)
+			} 
+			if (totalHP <=0)
 			//It's important to do some sort of animation in case the unit didn't die
 				if(playerUnit){
 					//this will be used to decrease the total life of the player
