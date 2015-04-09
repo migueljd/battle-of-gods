@@ -164,12 +164,12 @@ public class MapController : MonoBehaviour {
 
 
 			//it's necessary that an enemy is instantiated here
-			if((a-1) - (enemyCount) == 0 && tile.walkable){
+			if((a) - (enemyCount) == 0 && tile.walkable){
 				enemyCount --;
 				MapController.instance.createNewEnemy(tile); 
 			}
 			//it it's possible that this tile has no enemy, toss a coin
-			else if(Random.Range(0,1) >0.5f && tile.walkable){
+			else if(Random.Range(0,2) >1 && tile.walkable){
 				enemyCount --;
 				MapController.instance.createNewEnemy(tile);
 			}
