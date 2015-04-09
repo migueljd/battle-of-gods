@@ -144,11 +144,8 @@ namespace Cards
 				_ShuffleDeck ();
 
 			Debug.Log (instance.cardsInDeck.getCount ());
-			Debug.Log ("Cards in hand is " +  cardsInHand.getCount());
-			Debug.Log ("Hand size is " + handSize);
 			if (cardsInHand.getCount() < handSize && instance.cardsInDeck.getCount()> 0) {
 				for(int a = handSize - cardsInHand.getCount(); a != 0 &&  cardsInDeck.getCount() != 0; a--){
-					Debug.Log ( " adding card to hand");
 					Card pop = instance.cardsInDeck.popFirstCard();
 					pop.transform.SetParent(this.transform);
 					cardsInHand.addCard(pop);
@@ -164,7 +161,6 @@ namespace Cards
 		private void _ShuffleDeck(){
 			if (cardsInDiscard.list.Count > 0) {
 				do {
-					Debug.Log ("Shuffling deck");
 					int position = Random.Range(0, cardsInDiscard.getCount());
 					cardsInDeck.addCard(cardsInDiscard.removeCardAt(position));
 				} while(cardsInDiscard.getCount() > 0);
@@ -189,7 +185,8 @@ namespace Cards
 //			GameObject deck = GameObject.FindGameObjectWithTag ("");
 			foreach (GameObject t in instantiator.cardsToInstantiate) {
 				GameObject card = (GameObject) Instantiate(t, cardsLimbo, Quaternion.identity);
-				Vector3 baseScale = new Vector3 (0.25f, 0.35f, 0.35f);
+				Vector3 baseScale = new Vector3 (0.15f, 0.21f, 0.21f);
+//				Vector3 baseScale = this.transform.localScale;
 				card.transform.localScale= baseScale;
 				CardTransform.baseScale = baseScale;
 				instance.cardsInDiscard.addCard((Card) card.GetComponent<Card>());
