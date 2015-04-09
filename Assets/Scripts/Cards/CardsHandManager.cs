@@ -18,7 +18,7 @@ namespace Cards
 		public enum modes {_DeckBuild = 1, _GameOn = 2};
 
 		public static CardsHandManager instance;
-		public static int handSize = 5;
+		public int handSize = 6;
 		public Transform deck;
 
 		public static bool movingCard = false;
