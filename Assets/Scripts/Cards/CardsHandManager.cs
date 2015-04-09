@@ -54,13 +54,23 @@ namespace Cards
 				instance.cardsInHand = new CardsList ();
 				instance.cardsInDiscard = new CardsList();
 				instantiator = new CardPrefabInstatiator ();
-				instance.mode = modes._DeckBuild;
+				SetUpInstantiator();
 			} else {
 				Destroy (this.gameObject);
 			}
 
 			DontDestroyOnLoad (this.gameObject);
 
+		}
+
+		private void SetUpInstantiator(){
+			Object[] o = Resources.LoadAll ("Prefabs/Cards/");
+			for(int a = 0; a < o.Length; a++){
+				for(int b = 0; b < 5; b++){
+					instantiator.addPrefab ((GameObject)o[a]);
+				}
+			}
+			changeModeToGameOn ();
 		}
 
 		public void GameStarted (){
@@ -74,6 +84,7 @@ namespace Cards
 //			Debug.Log ("Rotation is " + transform.rotation);
 
 			if (instance.mode == modes._GameOn) {
+				Debug.Log ("Game On");
 				CreateDeck();
 				updateHand();
 				updateCardsPosition ();
@@ -131,8 +142,13 @@ namespace Cards
 //			Debug.Log ("Hand Size: " + handSize);
 			if (handSize - cardsInHand.getCount () > cardsInDeck.getCount ())
 				_ShuffleDeck ();
-			if (cardsInHand.getCount() < handSize && instance.cardsInDeck.list.Count > 0) {
-				for(int a = handSize - instance.transform.childCount; a != 0 &&  instance.cardsInDeck.list.Count != 0; a--){
+
+			Debug.Log (instance.cardsInDeck.getCount ());
+			Debug.Log ("Cards in hand is " +  cardsInHand.getCount());
+			Debug.Log ("Hand size is " + handSize);
+			if (cardsInHand.getCount() < handSize && instance.cardsInDeck.getCount()> 0) {
+				for(int a = handSize - cardsInHand.getCount(); a != 0 &&  cardsInDeck.getCount() != 0; a--){
+					Debug.Log ( " adding card to hand");
 					Card pop = instance.cardsInDeck.popFirstCard();
 					pop.transform.SetParent(this.transform);
 					cardsInHand.addCard(pop);
@@ -148,6 +164,7 @@ namespace Cards
 		private void _ShuffleDeck(){
 			if (cardsInDiscard.list.Count > 0) {
 				do {
+					Debug.Log ("Shuffling deck");
 					int position = Random.Range(0, cardsInDiscard.getCount());
 					cardsInDeck.addCard(cardsInDiscard.removeCardAt(position));
 				} while(cardsInDiscard.getCount() > 0);

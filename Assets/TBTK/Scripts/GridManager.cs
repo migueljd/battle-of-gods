@@ -744,7 +744,6 @@ namespace TBTK{
 		//select a unit, setup the walkable, attackable tiles and what not
 		public static void Select(Unit unit){
 			unit.tile.SetState(_TileState.Selected);
-			Debug.Log ("unit can move: " +unit.CanMove ());
 			if(unit.CanMove()) instance.SetupWalkableTileList(unit);
 			if(unit.CanAttack()) instance.SetupAttackableTileList(unit);
 			instance.indicatorSelected.position=unit.tile.GetPos();
