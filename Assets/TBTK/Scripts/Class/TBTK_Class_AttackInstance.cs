@@ -115,7 +115,6 @@ namespace TBTK{
 			float damage = 0;
 
 			sourceTile.setTileAttributes();
-			targetTile.setTileAttributes();
 			//			Debug.Log ("attack and defense:");
 			//			Debug.Log (srcUnit.tile.tileAttack);
 			//			Debug.Log(tgtUnit.tile.tileDefense);

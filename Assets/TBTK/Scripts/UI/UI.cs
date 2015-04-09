@@ -69,8 +69,8 @@ namespace TBTK{
 			if (unit != null) {
 				endTurnButtonObj.SetActive (true);
 				heroImg.sprite = unit.iconSprite;
-				heroAttack.text = unit.GetEffectiveDamage().ToString();
-				heroDefense.text = unit.GetEffectiveHP().ToString();
+				heroAttack.text = (unit.GetEffectiveDamage()+ unit.tile.tileAttack).ToString();
+				heroDefense.text = (unit.GetEffectiveHP() + unit.tile.tileDefense).ToString();
 			}
 			else endTurnButtonObj.SetActive(false);
 		}
