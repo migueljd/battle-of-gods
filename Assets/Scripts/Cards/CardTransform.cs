@@ -103,11 +103,12 @@ namespace Cards
 		}
 
 		void OnMouseDown(){
-			if (CardsHandManager.getInstance () != null && CardsHandManager.getInstance ().mode == CardsHandManager.modes._DeckBuild) {
-				GameObject o = (GameObject)Resources.Load ("Prefabs/Cards/" + this.transform.name);
-				CardsHandManager.getInstance ().instantiator.addPrefab (o);
-			} 
-			else if(!CardsHandManager.movingCard){
+//			if (CardsHandManager.getInstance () != null && CardsHandManager.getInstance ().mode == CardsHandManager.modes._DeckBuild) {
+//				GameObject o = (GameObject)Resources.Load ("Prefabs/Cards/" + this.transform.name);
+//				CardsHandManager.getInstance ().instantiator.addPrefab (o);
+//			} 
+//			else 
+			if(!CardsHandManager.movingCard){
 				yDistance = Camera.main.transform.position.y - this.transform.position.y;
 				cardHeld = true;
 				this.initialPosition = transform.position;

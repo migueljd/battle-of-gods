@@ -98,7 +98,6 @@ namespace TBTK {
 
 			
 			if(!CardsHandManager.movingCard){
-				Debug.Log ("Is a card being moved? " + CardsHandManager.movingCard);
 			#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 		
 				if(enableTouchPan){

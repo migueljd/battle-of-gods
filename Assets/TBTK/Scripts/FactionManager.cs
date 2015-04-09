@@ -306,9 +306,9 @@ namespace TBTK{
 			if(factionList[selectedFactionID].isPlayerFaction){	//if it's a player's faction, select a unit
 
 				//Update the card count for all cards in stack. 
-				if(CardsHandManager.instance.cardsInDeck.getCount() == 0){
-					CardsHandManager.ShuffleDeck();
-				}
+//				if(CardsHandManager.instance.cardsInDeck.getCount() == 0){
+//					CardsHandManager.ShuffleDeck();
+//				}
 
 				factionList[selectedFactionID].allUnitList[0].getStack().updateMove();
 				factionList[selectedFactionID].allUnitList[0].getStack().updateMovementCount();
