@@ -152,7 +152,7 @@ namespace Cards
 				}
 			}
 			updateCardsPosition ();
-			this.transform.position = managerPosition;
+			this.transform.localPosition = managerPosition;
 		}
 
 		public static void ShuffleDeck(){

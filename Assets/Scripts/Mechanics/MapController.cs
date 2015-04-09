@@ -164,7 +164,7 @@ public class MapController : MonoBehaviour {
 
 
 			//it's necessary that an enemy is instantiated here
-			if((a) - (enemyCount) == 0 && tile.walkable && enemyCount > 0){
+			if((a-1) - (enemyCount) == 0 && tile.walkable && enemyCount > 0){
 				enemyCount --;
 				Debug.Log ("Got here once");
 				MapController.instance.createNewEnemy(tile); 
