@@ -148,7 +148,7 @@ public class MapController : MonoBehaviour {
 	private void initTiles(Transform tilesT, GridManager instance, List<Tile> added, float range, int rotation){
 		List<Tile> tileList = new List<Tile> ();
 
-		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount);
+		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
 
 		for (int a = tilesT.childCount - 1; a >=0; a--) {
 
@@ -164,7 +164,7 @@ public class MapController : MonoBehaviour {
 
 
 			//it's necessary that an enemy is instantiated here
-			if((a-1) - (enemyCount + 1) == 0 && tile.walkable){
+			if((a-1) - (enemyCount) == 0 && tile.walkable){
 				enemyCount --;
 				MapController.instance.createNewEnemy(tile); 
 			}
