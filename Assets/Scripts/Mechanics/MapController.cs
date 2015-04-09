@@ -149,7 +149,7 @@ public class MapController : MonoBehaviour {
 		List<Tile> tileList = new List<Tile> ();
 
 		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
-
+		Debug.Log (enemyCount);
 		for (int a = tilesT.childCount - 1; a >=0; a--) {
 
 			if(!tilesT.GetChild(a).name.Contains("Tile")){
@@ -164,12 +164,13 @@ public class MapController : MonoBehaviour {
 
 
 			//it's necessary that an enemy is instantiated here
-			if((a) - (enemyCount) == 0 && tile.walkable){
+			if((a) - (enemyCount) == 0 && tile.walkable && enemyCount > 0){
 				enemyCount --;
+				Debug.Log ("Got here once");
 				MapController.instance.createNewEnemy(tile); 
 			}
 			//it it's possible that this tile has no enemy, toss a coin
-			else if(Random.Range(0,2) >1 && tile.walkable){
+			else if(Random.Range(0,2) >1 && tile.walkable && enemyCount > 0){
 				enemyCount --;
 				MapController.instance.createNewEnemy(tile);
 			}
@@ -281,7 +282,6 @@ public class MapController : MonoBehaviour {
 		}
 		
 		AStar.ResetGraph (origin, openList, closeList);
-		Debug.Log (origin.GetNeighbourList ().Count);
 	}
 
 	private void updateTileRevealed(Tile tile, bool first, bool second){
