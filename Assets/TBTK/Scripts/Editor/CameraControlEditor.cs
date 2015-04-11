@@ -44,17 +44,13 @@ namespace TBTK{
 			cont=new GUIContent("Zoom Speed:", "The speed at witch the camera zooms");
 			instance.zoomSpeed=EditorGUILayout.FloatField(cont, instance.zoomSpeed);
 
-			cont = new GUIContent ("Max X increase:", "The increase on the x axis in camera movement for when a tile is created");
-			instance.xIncrease = EditorGUILayout.FloatField (cont, instance.xIncrease);
+			cont = new GUIContent ("X Change:", "The change on the x axis in camera movement for when a tile is created");
+			instance.xChange = EditorGUILayout.FloatField (cont, instance.xChange);
 
-			cont = new GUIContent ("Max Z increase:", "The increase on the z axis in camera movement for when a tile is created");
-			instance.zIncrease = EditorGUILayout.FloatField (cont, instance.zIncrease);
+			cont = new GUIContent ("Z Change:", "The change on the z axis in camera movement for when a tile is created");
+			instance.zChange = EditorGUILayout.FloatField (cont, instance.zChange);
 
-			cont = new GUIContent ("Max X decrease:", "The decrease on the x axis in camera movement for when a tile is created");
-			instance.xDecrease = EditorGUILayout.FloatField (cont, instance.xDecrease);
 
-			cont = new GUIContent ("Max Z decrease:", "The decrease on the x axis in camera movement for when a tile is created");
-			instance.zDecrease = EditorGUILayout.FloatField (cont, instance.zDecrease);
 
 			EditorGUILayout.Space();
 			

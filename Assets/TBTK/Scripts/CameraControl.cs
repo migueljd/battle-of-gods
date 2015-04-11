@@ -14,11 +14,8 @@ namespace TBTK {
 		private float initialRotX;
 		private float initialRotY;
 
-		public float xIncrease;
-		public float zIncrease;
-		public float xDecrease;
-		public float zDecrease;
-
+		public float xChange;
+		public float zChange;
 		
 		#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 			private Vector3 lastTouchPos=new Vector3(9999, 9999, 9999);
@@ -304,13 +301,13 @@ namespace TBTK {
 		}
 
 		private void _IncreaseMaxCameraMovement(bool increaseX, bool increaseZ){
-			this.maxPosX += increaseX ? this.xIncrease : 0;
-			this.maxPosZ += increaseZ ? this.zIncrease : 0;
+			this.maxPosX += increaseX ? this.xChange : 0;
+			this.maxPosZ += increaseZ ? this.zChange : 0;
 		}
 
 		private void _DecreaseMinCameraMovement(bool decreaseX, bool decreaseZ){
-			this.minPosX -= decreaseX ? this.xDecrease : 0;
-			this.minPosZ -= decreaseZ ? this.zDecrease : 0;
+			this.minPosX -= decreaseX ? this.xChange : 0;
+			this.minPosZ -= decreaseZ ? this.zChange : 0;
 		}
 
 		public bool avoidClipping=false;
