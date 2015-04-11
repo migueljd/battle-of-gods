@@ -88,7 +88,7 @@ public class MapController : MonoBehaviour {
 		GridManager gridInstance = GridManager.GetInstance ();
 
 		Vector3 firstVector = instance.findFirstVector (tile);
-
+		
 		//-60*number - 90
 		Vector3 secondVector = instance.findSecondVector (tile);
 
@@ -96,7 +96,7 @@ public class MapController : MonoBehaviour {
 
 		Transform first = null;
 		Transform second = null;
-		int firstRotation = 2;Random.Range(0,5);
+		int firstRotation = Random.Range(0,5);
 //		Debug.Log ("First rotation: " + firstRotation*rotation);
 		int secondRotation = Random.Range(0,5);
 //		Debug.Log ("Second rotation: " + secondRotation);
@@ -109,15 +109,46 @@ public class MapController : MonoBehaviour {
 		switch (tile.revealed) {
 			case 0:
 				first = (Transform) Instantiate(tilesPrefab, sourcePosition + firstVector, Quaternion.Euler(new Vector3(0,firstRotation*rotation,0)));
+				
+				//adjusting camera movement for first tile created
+				if(firstVector.x > 0 ) CameraControl.IncreaseMaxCameraMovement(true,false);
+				else CameraControl.DecreaseMinCameraMovement(true, false);
+
+				if(firstVector.z > 0 ) CameraControl.IncreaseMaxCameraMovement(false,true);
+				else CameraControl.DecreaseMinCameraMovement(false, true);
+			
+
+				
 				tilesPrefab = generatedTileList [0];
 				generatedTileList.RemoveAt (0);    
 				second = (Transform) Instantiate(tilesPrefab, sourcePosition + secondVector, Quaternion.Euler(new Vector3(0,secondRotation*rotation,0)));
+				
+				//adjusting camera movement for second created
+				if(secondVector.x > 0 ) CameraControl.IncreaseMaxCameraMovement(true,false);
+				else CameraControl.DecreaseMinCameraMovement(true, false);
+				
+				if(secondVector.z > 0 ) CameraControl.IncreaseMaxCameraMovement(false,true);
+				else CameraControl.DecreaseMinCameraMovement(false, true);
+
 				break;
 			case 1:
+				//adjusting camera movement for second created
+				if(secondVector.x > 0 ) CameraControl.IncreaseMaxCameraMovement(true,false);
+				else CameraControl.DecreaseMinCameraMovement(true, false);
+				
+				if(secondVector.z > 0 ) CameraControl.IncreaseMaxCameraMovement(false,true);
+				else CameraControl.DecreaseMinCameraMovement(false, true);
 				second = (Transform) Instantiate(tilesPrefab, sourcePosition + secondVector, Quaternion.Euler(new Vector3(0,secondRotation*rotation,0)));
-				break;
+				
+			break;
 			case 2:
 			    first = (Transform) Instantiate(tilesPrefab, sourcePosition + firstVector, Quaternion.Euler(new Vector3(0,firstRotation*rotation,0)));
+				//adjusting camera movement for first tile created
+				if(firstVector.x > 0 ) CameraControl.IncreaseMaxCameraMovement(true,false);
+				else CameraControl.DecreaseMinCameraMovement(true, false);
+				
+				if(firstVector.z > 0 ) CameraControl.IncreaseMaxCameraMovement(false,true);
+				else CameraControl.DecreaseMinCameraMovement(false, true);
 				break;
 		}
 
