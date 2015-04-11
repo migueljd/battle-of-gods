@@ -1,35 +1,32 @@
 fileFormatVersion: 2
-guid: 765436721b86b0843b4659125f6ce6e6
+guid: e88f7fd859ec3bc4b9184d54ff89e8e1
+timeCreated: 1428781960
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: axe
     100002: base
-    100004: body
-    100006: //RootNode
-    100008: straps
-    100010: teeth1
+    100004: //RootNode
+    100006: Ciclope_body
+    100008: teeth1
     400000: axe
     400002: base
-    400004: body
-    400006: //RootNode
-    400008: straps
-    400010: teeth1
+    400004: //RootNode
+    400006: Ciclope_body
+    400008: teeth1
     2300000: axe
     2300002: base
-    2300004: body
-    2300006: straps
-    2300008: teeth1
+    2300004: Ciclope_body
+    2300006: teeth1
     3300000: axe
     3300002: base
-    3300004: body
-    3300006: straps
-    3300008: teeth1
+    3300004: Ciclope_body
+    3300006: teeth1
     4300000: teeth1
-    4300002: body
-    4300004: axe
-    4300006: base
-    4300008: straps
+    4300002: axe
+    4300004: base
+    4300006: Ciclope_body
     9500000: //RootNode
   materials:
     importMaterials: 0
@@ -50,7 +47,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .100000001
+    globalScale: 20
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -64,7 +61,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
