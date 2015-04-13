@@ -20,6 +20,8 @@ namespace Cards
 		public static Vector3 endScale = new Vector3(0.25f, 0.35f, 0.35f);
 		public static float holdTimeTreshold = 0.2f;
 		public static float distanceToActivate = 10;
+		public static float distanceFromCursorZZoomed = 1.4f;
+		public static float distanceFromCursorZShrinked = 0.9f;
 
 		public Vector3 finalPosition;
 
@@ -43,17 +45,25 @@ namespace Cards
 
 			if (cardHeld) {
 //				Debug.Log ("Distance from parent: " + Vector3.Distance(this.transform.position, this.transform.parent.position));
-
-				if (!zoomed && Vector3.Distance (this.transform.position, this.transform.parent.position) < distanceToActivate) {
-					ZoomCard ();
-					zoomed = true;
-				} 
-				else if(Vector3.Distance(this.transform.position,this.transform.parent.position) >= distanceToActivate && zoomed){
-					scaleDown();
-					zoomed = false;
-				}
 				Vector3 mousePos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, yDistance));
-				this.transform.position = mousePos;
+
+				float distance = Vector3.Distance (mousePos, this.transform.parent.position);
+
+				if (distance < distanceToActivate) {
+					if(!zoomed){
+						ZoomCard ();
+						zoomed = true;
+					}
+					this.transform.position = mousePos + new Vector3(0,0, distanceFromCursorZZoomed) ;
+
+				} 
+				else if(distance >= distanceToActivate){
+					if(zoomed){
+						scaleDown();
+						zoomed = false;
+					}
+					this.transform.position = mousePos + new Vector3(0,0, distanceFromCursorZShrinked) ;
+				}
 
 
 			} else if (zoomed && this.transform.parent != null) {
@@ -98,7 +108,6 @@ namespace Cards
 //		}
 
 		public void ZoomCard(){
-			baseRotation = this.transform.rotation;
 			transformCard.updateTransform (this.transform.position, Quaternion.Euler(new Vector3(90, 0,0)), endScale);
 		}
 		public void DeZoom(){
@@ -117,6 +126,7 @@ namespace Cards
 				cardHeld = true;
 				this.initialPosition = transform.position;
 				CardsHandManager.movingCard = true;
+				baseRotation = this.transform.rotation;
 			}
 		}
 
