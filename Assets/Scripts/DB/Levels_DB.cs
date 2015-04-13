@@ -107,4 +107,13 @@ public class Levels_DB : MonoBehaviour {
 
 		return enemyPrefabs;
 	}
+
+	public static int GetSceneLevel(int lvl){
+		if (lvl < 9)
+			return 0;
+		else if (lvl < 17)
+			return 1;
+		else 
+			return 2;
+	}
 }

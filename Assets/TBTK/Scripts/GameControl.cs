@@ -325,7 +325,7 @@ namespace TBTK{
 
 		public static void PassLevel(){
 			MapController.level += 1;
-			Application.LoadLevel (0);
+			Application.LoadLevel (Levels_DB.GetSceneLevel(MapController.level));
 		}
 		
 		
