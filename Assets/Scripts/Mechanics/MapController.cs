@@ -195,8 +195,8 @@ public class MapController : MonoBehaviour {
 	private void InitTiles(Transform tilesT, GridManager instance, List<Tile> added, float range, int rotation){
 		List<Tile> tileList = new List<Tile> ();
 
-		int enemyCount = 0;
-//		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
+//		int enemyCount = 0;
+		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
 		for (int a = tilesT.childCount - 1; a >=0; a--) {
 
 			if(!tilesT.GetChild(a).name.Contains("Tile")){

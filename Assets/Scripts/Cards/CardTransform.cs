@@ -27,6 +27,8 @@ namespace Cards
 
 		private Vector3 initialPosition;
 
+		private Quaternion baseRotation;
+
 		private bool cardHeld = false;
 
 		private bool zoomed;
@@ -84,6 +86,7 @@ namespace Cards
 			transformCard.stopUpdating ();
 			CardsHandManager.getInstance ().cardsInHand.removeCard (transformCard);
 			CardsHandManager.getInstance ().cardsInDiscard.addCard (transformCard);
+			CardsHandManager.UpdateCardsPosition ();
 		}
 //
 //		public void selectCard(){
@@ -95,10 +98,11 @@ namespace Cards
 //		}
 
 		public void ZoomCard(){
-			transformCard.updateTransform (this.transform.position, this.transform.rotation, endScale);
+			baseRotation = this.transform.rotation;
+			transformCard.updateTransform (this.transform.position, Quaternion.Euler(new Vector3(90, 0,0)), endScale);
 		}
 		public void DeZoom(){
-			transformCard.updateTransform (this.initialPosition, this.transform.rotation, baseScale);
+			transformCard.updateTransform (this.initialPosition, baseRotation, baseScale);
 			zoomed = false;
 		}
 

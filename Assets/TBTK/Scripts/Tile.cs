@@ -113,29 +113,29 @@ namespace TBTK{
 			if (this.tileAttack == 0){
 				switch(tileType){
 					case _TileCost.Grass:
-						this.tileAttack = 2f;
+						this.tileAttack = 0f;
 						this.tileDefense = 0f;
 						this.cost = 1;
 						break;
 					case _TileCost.Lime:
 						this.tileAttack = 0f;
-						this.tileDefense = -2f;
-						this.cost = 3;
+						this.tileDefense = 0f;
+						this.cost = 1;
 						break;
 					case _TileCost.Sand:
-						this.tileAttack = 2f;
-						this.tileDefense = -3f;
+						this.tileAttack = 0f;
+						this.tileDefense = 0f;
 						this.cost = 1;
 						break;
 					case _TileCost.Crows:
-						this.tileAttack = -3f;
-						this.tileDefense = -3f;
+						this.tileAttack = 0f;
+						this.tileDefense = 0f;
 						this.cost = 1;
 						break;
 					case _TileCost.Swamp:
 						this.tileAttack = 0f;
-						this.tileDefense = 3f;
-						this.cost = 4;
+						this.tileDefense = 0f;
+						this.cost = 1;
 						break;
 				}
 			}

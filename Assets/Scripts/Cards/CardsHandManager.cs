@@ -32,7 +32,6 @@ namespace Cards
 		public CardsList cardsInHand;
 
 		private float distanceFromCenter =8f;
-		private float distanceFromOtherCard;
 
 		//this variable is used to store in what mode the game is on, so the card activations will have different effects
 		public modes mode;
@@ -87,7 +86,7 @@ namespace Cards
 				Debug.Log ("Game On");
 				CreateDeck();
 				updateHand();
-				updateCardsPosition ();
+				_UpdateCardsPosition ();
 				
 			} else {
 				
@@ -109,10 +108,13 @@ namespace Cards
 			return instance;
 		}
 
+		public static void UpdateCardsPosition(){
+			instance._UpdateCardsPosition();
+		}
 	
-		public void updateCardsPosition(){
-			int initialAngle = -15;
-			float range = 7.5f*handSize;
+		private void _UpdateCardsPosition(){
+			int initialAngle = -12;
+			float range = 4f*handSize;
 			float increment = range/handSize;
 
 			int cardCount = 0;
@@ -126,7 +128,7 @@ namespace Cards
 				Vector3 finalPosition = transform.position;
 
 				finalPosition.x += distanceFromCenter*Mathf.Sin(Mathf.Deg2Rad*angle);
-				finalPosition.y += 0.05f*cardCount;
+				finalPosition.y += 0.02f*cardCount;
 				finalPosition.z += distanceFromCenter*Mathf.Cos(Mathf.Deg2Rad*angle);
 		
 //				Debug.Log ("Local scale before start is:  " + this.transform.localScale); 
@@ -151,7 +153,7 @@ namespace Cards
 					cardsInHand.addCard(pop);
 				}
 			}
-			updateCardsPosition ();
+			_UpdateCardsPosition ();
 			this.transform.localPosition = managerPosition;
 		}
 

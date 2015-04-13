@@ -102,7 +102,7 @@ public class Levels_DB : MonoBehaviour {
 		string levelName = GetLevelName (lvl);
 
 		enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Centaur", typeof(Transform)) as Transform);
-		enemyPrefabs.Add(Resources.Load("Prefabs/Units/minotaur", typeof(Transform)) as Transform);
+		enemyPrefabs.Add(Resources.Load("Prefabs/Units/Minotaur", typeof(Transform)) as Transform);
 		enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Cyclop", typeof(Transform)) as Transform);
 
 		return enemyPrefabs;
