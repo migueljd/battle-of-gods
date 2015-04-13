@@ -173,12 +173,12 @@ namespace TBTK{
 
 			int apAllowance = 0;
 
-			if (FactionManager.IsPlayerTurn ()) {
-				AP = CardsStackManager.getMovement ();
-				apAllowance = (int)Mathf.Abs (AP / apCost);
-			} else {
-				apAllowance = apCost == 0 ? 999999 : (int)Mathf.Abs (AP / apCost);
-			}
+//			if (FactionManager.IsPlayerTurn ()) {
+//				AP = CardsStackManager.getMovement ();
+//				apAllowance = (int)Mathf.Abs (AP / apCost);
+//			} else {
+			apAllowance = apCost == 0 ? 999999 : (int)Mathf.Abs (AP / apCost);
+//			}
 			return apAllowance;
 			//return Mathf.Min(GetMoveRange(), apAllowance); 
 		}
