@@ -699,12 +699,18 @@ namespace TBTK{
 //				#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
   //              if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
 	//			#endif
-					GameControl.selectedUnit.Move(tile);
-					int distance = GetDistance(tile, GameControl.selectedUnit.tile, true);
-					CardsStackManager.decreaseMovement(distance);
+					if(!tile.isPortal){
+						GameControl.selectedUnit.Move(tile);
+						int distance = GetDistance(tile, GameControl.selectedUnit.tile, true);
+						CardsStackManager.decreaseMovement(distance);
 
-					if(onExitWalkableTileE!=null) onExitWalkableTileE();	//for clear UI move cost overlay
-					ClearWalkableHostileList();	//in case the unit move into the destination and has insufficient ap to attack
+						if(onExitWalkableTileE!=null) onExitWalkableTileE();	//for clear UI move cost overlay
+						ClearWalkableHostileList();	
+
+					}
+					else{
+						GameControl.PassLevel();
+					}//in case the unit move into the destination and has insufficient ap to attack
 	//			#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
                     
       //          }

@@ -49,6 +49,9 @@ namespace TBTK{
 		public int minEnemyCount;
 		public int maxEnemyCount;
 
+		//This Variable will be used to check if this tile is a portal or not
+		public bool isPortal;
+
 
 		//-------------------------------------------------End of non TBTK variables
 

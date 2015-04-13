@@ -26,12 +26,10 @@ public class CardPrefabInstatiator{
 			count ++;
 			cardTypeCount[prefab] =  count;
 			cardsToInstantiate.Push(prefab);
-			Debug.Log ("Card added! It's count now is " + count);
 		} else if(!cardTypeCount.ContainsKey(prefab)){
 			count = 1;
 			cardTypeCount.Add (prefab, count);
 			cardsToInstantiate.Push(prefab);
-			Debug.Log ("Card added! It's count now is " + count);
 		}else{
 			Debug.Log("There are too many of this card already");
 		}

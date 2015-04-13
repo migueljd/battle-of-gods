@@ -80,8 +80,8 @@ namespace TBTK{
 			if(enemy != null){
 				enemyImg.enabled = true;
 				enemyImg.sprite = enemy.iconSprite;
-				enemyAttack.text = enemy.damageMin.ToString();
-				enemyDefense.text = enemy.HP.ToString();
+				enemyAttack.text = (enemy.damageMin.ToString()+ unit.tile.tileAttack).ToString();
+				enemyDefense.text = (enemy.HP.ToString()+ unit.tile.tileDefense).ToString();
 			}
 		}
 

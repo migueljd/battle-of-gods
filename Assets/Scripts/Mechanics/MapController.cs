@@ -12,12 +12,16 @@ public class MapController : MonoBehaviour {
 
 	public static MapController instance;
 
+	public static int level = 1;
+
 	public float rangeTunel = 0.2f;
 	
 	public string levelName = "Forest";
 
+
 	private IList<Transform> generatedTileList;
 
+	public Transform portalPrefab;
 
 
 	private float height;
@@ -25,50 +29,63 @@ public class MapController : MonoBehaviour {
 
 	public static float rotation =-60;
 
-	public int levelType  = 0;
+
+	private int numberOfTiles = 30;
 
 	public static int enemyFactionID;
+	
 
 	void Awake(){
 		if (instance == null) {
 			instance = this;
+		} else {
+			Destroy(this.gameObject);
 		}
 
-		generatedTileList = new List<Transform> ();
+		gameObject.SendMessage("OnLevelWasLoaded",Application.loadedLevel);
 
-		instance.populatePrefabList (levelName);
-
-		line = GridGenerator.spaceXHex * GridManager.GetInstance().tileSize * GridManager.GetInstance().gridToTileRatio/1.5f;
-		height = line * Mathf.Sin (Mathf.PI / 3);
-
-		instance.enemyPrefabs = new List<Transform> ();
-
-
-		switch (instance.levelType) {
-			case 0:
-				instance.enemyPrefabs.Add(Resources.Load("Prefabs/Units/Centaur", typeof(Transform)) as Transform);
-				instance.enemyPrefabs.Add(Resources.Load("Prefabs/Units/minotaur", typeof(Transform)) as Transform);
-				instance.enemyPrefabs.Add(Resources.Load("Prefabs/Units/Cyclop", typeof(Transform)) as Transform);
-				break;
-		}
-
-	}
-
-	private void populatePrefabList(string finalPath){
-		Object[] tiles = Resources.LoadAll ("Prefabs/Environment/Tiles");
-		for (int a =0; a < 20; a++) {
-			int b = Random.Range(0, tiles.Length - 1);
-			generatedTileList.Add(((GameObject)tiles[b]).transform);
-		}
+		DontDestroyOnLoad (this.gameObject);
 	}
 
 	void Start(){
 		foreach (Faction f in FactionManager.GetFactionList()) {
-			if (!FactionManager.IsPlayerFaction (f.ID)){
+			if (!FactionManager.IsPlayerFaction (f.ID)) {
 				enemyFactionID = f.ID;
 			}
 		}
 	}
+
+	void OnLevelWasLoaded(int levelLoaded){
+		generatedTileList = new List<Transform> ();
+		
+		//setting all variables from the DB
+		numberOfTiles = Levels_DB.GetTileCount (level);
+		levelName = Levels_DB.GetLevelName (level);
+		Object[] tiles = Levels_DB.GenerateLevelPrefabList(level);
+		instance.enemyPrefabs = Levels_DB.GetEnemyPrefabsForLevel(level);
+
+
+		//Setting class variables that will be necessary for each run
+		SetNewLevel (numberOfTiles, levelName);
+		populatePrefabList (levelName, tiles);
+		
+		line = GridGenerator.spaceXHex * GridManager.GetInstance().tileSize * GridManager.GetInstance().gridToTileRatio/1.5f;
+		height = line * Mathf.Sin (Mathf.PI / 3);
+		
+
+	}
+
+	private void populatePrefabList(string finalPath, Object[] tiles){
+
+		for (int a =0; a < numberOfTiles - 1; a++) {
+			int b = Random.Range(0, tiles.Length);
+			generatedTileList.Add(((GameObject)tiles[b]).transform);
+		}
+		generatedTileList.Add(((GameObject) Resources.Load ("Prefabs/Environment/Tiles/" + finalPath + "/Temple")).transform);
+
+	}
+
+
 
 
 	//this method is called when it's necessary to instantiate a new area, given a tile
@@ -102,7 +119,7 @@ public class MapController : MonoBehaviour {
 //		Debug.Log ("Second rotation: " + secondRotation);
 
 		if (generatedTileList.Count == 0)
-			populatePrefabList (levelName); 
+			return;
 		tilesPrefab = generatedTileList [0];
 		generatedTileList.RemoveAt (0);
 
@@ -118,18 +135,18 @@ public class MapController : MonoBehaviour {
 				else CameraControl.DecreaseMinCameraMovement(false, true);
 			
 
-				
-				tilesPrefab = generatedTileList [0];
-				generatedTileList.RemoveAt (0);    
-				second = (Transform) Instantiate(tilesPrefab, sourcePosition + secondVector, Quaternion.Euler(new Vector3(0,secondRotation*rotation,0)));
-				
-				//adjusting camera movement for second created
-				if(secondVector.x > 0 ) CameraControl.IncreaseMaxCameraMovement(true,false);
-				else CameraControl.DecreaseMinCameraMovement(true, false);
-				
-				if(secondVector.z > 0 ) CameraControl.IncreaseMaxCameraMovement(false,true);
-				else CameraControl.DecreaseMinCameraMovement(false, true);
-
+				if (generatedTileList.Count != 0){
+					tilesPrefab = generatedTileList [0];
+					generatedTileList.RemoveAt (0);    
+					second = (Transform) Instantiate(tilesPrefab, sourcePosition + secondVector, Quaternion.Euler(new Vector3(0,secondRotation*rotation,0)));
+					
+					//adjusting camera movement for second created
+					if(secondVector.x > 0 ) CameraControl.IncreaseMaxCameraMovement(true,false);
+					else CameraControl.DecreaseMinCameraMovement(true, false);
+					
+					if(secondVector.z > 0 ) CameraControl.IncreaseMaxCameraMovement(false,true);
+					else CameraControl.DecreaseMinCameraMovement(false, true);
+				}
 				break;
 			case 1:
 				//adjusting camera movement for second created
@@ -140,7 +157,7 @@ public class MapController : MonoBehaviour {
 				else CameraControl.DecreaseMinCameraMovement(false, true);
 				second = (Transform) Instantiate(tilesPrefab, sourcePosition + secondVector, Quaternion.Euler(new Vector3(0,secondRotation*rotation,0)));
 				
-			break;
+				break;
 			case 2:
 			    first = (Transform) Instantiate(tilesPrefab, sourcePosition + firstVector, Quaternion.Euler(new Vector3(0,firstRotation*rotation,0)));
 				//adjusting camera movement for first tile created
@@ -156,16 +173,15 @@ public class MapController : MonoBehaviour {
 		List<Tile> addedTiles = new List<Tile>();
 
 
-
 		//add all new tiles to the gameObject hierarchy as well as add all of them to the existing tiles logic
 		if (first != null) {
-			initTiles (first, gridInstance, addedTiles, (line*2) + rangeTunel, firstRotation);
+			InitTiles (first, gridInstance, addedTiles, (line*2) + rangeTunel, firstRotation);
 			addTiles (tile, addedTiles,(line*2) + rangeTunel);
 			addedTiles = new List<Tile>();
 		}
 
 		if (second != null) {
-			initTiles (second, gridInstance, addedTiles, (line*2) + rangeTunel, secondRotation);
+			InitTiles (second, gridInstance, addedTiles, (line*2) + rangeTunel, secondRotation);
 			addTiles (tile, addedTiles,(line*2) + rangeTunel);
 		}
 
@@ -176,11 +192,11 @@ public class MapController : MonoBehaviour {
 	}
 
 	//Initialize all new tiles, so all their logic is ready to be appended to the existing tiles
-	private void initTiles(Transform tilesT, GridManager instance, List<Tile> added, float range, int rotation){
+	private void InitTiles(Transform tilesT, GridManager instance, List<Tile> added, float range, int rotation){
 		List<Tile> tileList = new List<Tile> ();
 
-		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
-		Debug.Log (enemyCount);
+		int enemyCount = 0;
+//		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
 		for (int a = tilesT.childCount - 1; a >=0; a--) {
 
 			if(!tilesT.GetChild(a).name.Contains("Tile")){
@@ -193,18 +209,22 @@ public class MapController : MonoBehaviour {
 			if(tileNumber > 6) tileNumber = tileNumber%7 + 1;
 			tile.tileNumber = tile.name != "Tile_0" ? tileNumber : 0;
 
+			//----------------------------------- Spawn code start
+
+
 
 			//it's necessary that an enemy is instantiated here
 			if((a-1) - (enemyCount) == 0 && tile.walkable && enemyCount > 0){
 				enemyCount --;
-				Debug.Log ("Got here once");
-				MapController.instance.createNewEnemy(tile); 
+				createNewEnemy(tile); 
 			}
 			//it it's possible that this tile has no enemy, toss a coin
 			else if(Random.Range(0,2) >1 && tile.walkable && enemyCount > 0){
 				enemyCount --;
-				MapController.instance.createNewEnemy(tile);
+				createNewEnemy(tile);
 			}
+
+			//----------------------------------- Spawn code end
 			tile.setTileAttributes();
 		}
 		foreach(Tile tile in tileList){
@@ -339,7 +359,7 @@ public class MapController : MonoBehaviour {
 	}
 
 	private void createNewEnemy(Tile tile){
-		int enemyID = Random.Range (0, MapController.instance.enemyPrefabs.Count - 1);
+		int enemyID = Random.Range (0, MapController.instance.enemyPrefabs.Count);
 		Transform newEnemy = (Transform) Instantiate ( MapController.instance.enemyPrefabs [enemyID], tile.GetPos(), Quaternion.identity);
 
 		Unit unit = newEnemy.GetComponent<Unit>();
@@ -348,5 +368,10 @@ public class MapController : MonoBehaviour {
 		FactionManager.InsertUnit (unit, enemyFactionID);
 	}
 
+
+	private void SetNewLevel(int numberOfTiles, string LevelName){
+		this.numberOfTiles = numberOfTiles; 
+		this.levelName = LevelName;
+	}
 }
 		                          

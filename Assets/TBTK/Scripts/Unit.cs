@@ -784,6 +784,8 @@ namespace TBTK{
 				MapController.RevealArea (tile);
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			FinishAction();
+
+ 
 		}
 		
 		

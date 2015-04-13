@@ -321,7 +321,12 @@ namespace TBTK{
 			
 			return db;
 		}
-		
+
+
+		public static void PassLevel(){
+			MapController.level += 1;
+			Application.LoadLevel (0);
+		}
 		
 		
 		public static void DisplayMessage(string msg){ 
