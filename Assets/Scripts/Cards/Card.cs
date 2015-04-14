@@ -23,16 +23,13 @@ namespace Cards{
 		public int turnCount;
 		public int currentCount;
 
-		public static float acceptableDistanceVectors = 0.2f;
-		public static float acceptableAngleDifference = 10;
-		public static float translationSpeed = 20f;
-
 		public static float timeToScale = 0.1f;
 
 	
 		private float updateTime;
 
-		private bool shouldUpdate;
+		public bool shouldUpdate;
+
 		private Vector3 initialPosition;
 		private Vector3 finalPosition;
 		private Quaternion initialRotation;
@@ -131,17 +128,18 @@ namespace Cards{
 		void Update(){
 			if (shouldUpdate) {
 				updatePosition (finalPosition);
-				updateRotation(finalRotation);
-				updateScale(finalScale);
+				updateRotation (finalRotation);
+				updateScale (finalScale);
 
-				bool rotationDone =Quaternion.Angle (this.transform.rotation, finalRotation) <= 0.1f;
-				bool positionDone = Vector3.Distance(this.transform.position, finalPosition) <= 0.001f;
-				bool scaleDone = Vector3.Distance(this.transform.localScale,finalScale) <= 0.001f;
+				bool rotationDone = Quaternion.Angle (this.transform.rotation, finalRotation) <= 0.1f;
+				bool positionDone = Vector3.Distance (this.transform.position, finalPosition) <= 0.001f;
+				bool scaleDone = Vector3.Distance (this.transform.localScale, finalScale) <= 0.001f;
 
-				if(rotationDone && positionDone && scaleDone){
+				if (rotationDone && positionDone && scaleDone) {
 					shouldUpdate = false;
 				}
 			}
+
 		}
 
 	}
