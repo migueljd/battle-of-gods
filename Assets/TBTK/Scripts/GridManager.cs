@@ -683,6 +683,7 @@ namespace TBTK{
 					if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile) ){
 					#endif*/
 						GameControl.selectedUnit.Attack(tile.unit);
+						onHostileDeselectE();
 						//onHostileDeselectE();
 					//#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 					//}
