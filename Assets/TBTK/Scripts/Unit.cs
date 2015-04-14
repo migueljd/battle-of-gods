@@ -1032,24 +1032,24 @@ namespace TBTK{
 			} 
 			if (totalHP <=0)
 			//It's important to do some sort of animation in case the unit didn't die
-				if(playerUnit){
-					//this will be used to decrease the total life of the player
-					if(source != null){
-						FactionManager.playerHP -= source.HPDamage;
-						PlayerHP.UpdatePlayerHP(true);
-						if(FactionManager.playerHP <= 0){//GameOver
-						}
-					}
-				}
-					//if its an enemy unit, the enemy should just disappear and give exp/money/etc
-				else{
+//				if(playerUnit){
+//					//this will be used to decrease the total life of the player
+//					if(source != null){
+//						FactionManager.playerHP -= source.HPDamage;
+//						PlayerHP.UpdatePlayerHP(true);
+//						if(FactionManager.playerHP <= 0){//GameOver
+//						}
+//					}
+//				}
+//					//if its an enemy unit, the enemy should just disappear and give exp/money/etc
+//				else{
 					HP=0;
 				
 					StartCoroutine(Dead());
 				
 					ClearVisibleTile();
 					tile.unit=null;
-			}
+//			}
 		}
 
 		public float GetEffectiveHP (){
