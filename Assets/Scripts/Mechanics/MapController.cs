@@ -42,12 +42,13 @@ public class MapController : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 
-		gameObject.SendMessage("OnLevelWasLoaded",Application.loadedLevel);
 
 		DontDestroyOnLoad (this.gameObject);
 	}
 
-	void Start(){
+	void Start(){		
+		gameObject.SendMessage("OnLevelWasLoaded",Application.loadedLevel);
+
 		foreach (Faction f in FactionManager.GetFactionList()) {
 			if (!FactionManager.IsPlayerFaction (f.ID)) {
 				enemyFactionID = f.ID;

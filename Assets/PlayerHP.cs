@@ -23,6 +23,6 @@ public class PlayerHP : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.text.text = "Player HP: " + fac.factionHp;
+		if(text != null && fac != null) this.text.text = "Player HP: " + fac.factionHp;
 	}
 }
