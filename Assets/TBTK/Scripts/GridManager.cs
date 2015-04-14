@@ -683,6 +683,7 @@ namespace TBTK{
 					if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile) ){
 					#endif*/
 						GameControl.selectedUnit.Attack(tile.unit);
+						GameControl.SelectTile(null);
 						onHostileDeselectE();
 						//onHostileDeselectE();
 					//#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
@@ -758,7 +759,7 @@ namespace TBTK{
 
 		//select a given tile
 		public static void Select(Tile tile){
-			instance.indicatorSelectedConfirmation.position=tile.GetPos();
+			if(tile != null)instance.indicatorSelectedConfirmation.position=tile.GetPos();
 		}
 
 		//function to setup and clear walkable tiles in range for current selected unit
