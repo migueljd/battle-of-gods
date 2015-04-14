@@ -126,7 +126,7 @@ namespace Cards
 //				CardsHandManager.getInstance ().instantiator.addPrefab (o);
 //			} 
 //			else 
-			if(!CardsHandManager.movingCard){
+			if(!CardsHandManager.movingCard && FactionManager.IsPlayerTurn()){
 				yDistance = Camera.main.transform.position.y - this.transform.position.y;
 				cardHeld = true;
 				this.initialPosition = transform.position;
