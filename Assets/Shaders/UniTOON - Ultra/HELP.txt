@@ -1,0 +1,20 @@
+
+
+
+// UniTOON - Ultra    (HELP FILE).
+-------------------------------------------------------------------------------------------------
+
+// UniTOON - Ultra is now in the 2.X series.
+
+ 
+// For the best results please make sure your camera(s)
+// are in Forward Rendering mode!
+
+
+
+// If your run into any problems please review the Contact text file.
+//
+// Also please check the revisions text file.
+// I have included all changes to the newest versions, if I had missed something,
+// please contact me and let me know the bug/critical problem.  
+------------------------------------------------------------------------------------------------- 

@@ -1,0 +1,26 @@
+
+
+UniTOON - Ultra
+--------------------------------------------------------------------------------------------------------------
+
+// UniTOON - Ultra is a work in progress, you will continue to freely get updates as they progress.
+// UniTOON - Ultra is in her infancy, I promise to you I will continue working on UniTOON
+// To make this a great asset for any of your games!
+
+// UniTOON strives to be different than normal toon shaders that might have a bit of a bump map,
+// we are taking this to the next level to allow for optimalistic realistic cartoon graphics.
+// there is nothing wrong with cel-shading it's self, but it could be better.
+// I am a big fan of cel-shading, but there has to be more to it than just solid colors.
+
+// UniTOON is here to suffice for the lack of features.
+// UniTOON will allow the use of full on contact of normal maps, specular maps, rim shading with specular
+// and normal maps all combined (also now with Parrallax Mapping techniques!)
+
+// This set of Shaders should be 100% compatible in DX11 Mode now, if you run into any problems where the
+// Shader turn a purple or pink like color, please review the contact page and please forward
+// the error from the console log to me so I can get this working asap!
+//
+// Thank you so much for your purchase, hope you enjoy!
+
+
+--------------------------------------------------------------------------------------------------------------
