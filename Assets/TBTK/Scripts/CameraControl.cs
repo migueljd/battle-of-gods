@@ -57,6 +57,8 @@ namespace TBTK {
 		public float minRotateAngle=10;
 		public float maxRotateAngle=89;
 
+		public static bool isMoving = false;
+
 
 		//calculated deltaTime based on timeScale so camera movement speed always remain constant
 		private float deltaT;
@@ -110,6 +112,7 @@ namespace TBTK {
 			if(enableTouchPan){
 				Quaternion camDir=Quaternion.Euler(0, transform.eulerAngles.y, 0);
 				if(Input.touchCount==1){
+					isMoving = true;
 					Touch touch=Input.touches[0];
 					if (touch.phase == TouchPhase.Moved){
 						Vector3 deltaPos = touch.position;
@@ -122,7 +125,6 @@ namespace TBTK {
 		
 						lastTouchPos=touch.position;
 					}
-					CardsHandManager.UpdateCardsPosition();
 
 				}
 				else lastTouchPos=new Vector3(9999, 9999, 9999);
