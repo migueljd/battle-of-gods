@@ -26,10 +26,10 @@ namespace Cards
 		}
 
 		public override IEnumerator PlayParticle(Vector3 position){
-			particles.transform.position = Camera.main.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, Camera.main.nearClipPlane));
+			particles.transform.position = Camera.main.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 2));
 			particles.Play ();
 			float timeToEnd = Time.time + particles.duration;
-			while(Time.time > timeToEnd) yield return null;
+			while(Time.time < timeToEnd) yield return null;
 			
 			particles.Stop ();
 		}
