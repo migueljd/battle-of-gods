@@ -193,8 +193,13 @@ namespace TBTK{
 				//then filter thru walkableTilesInRange, those that have a hostile in range will be add to a tilesWithHostileInRange
 				List<Tile> tilesWithHostileInRange=new List<Tile>();
 				GridManager.SetupHostileInRangeforTile(unit, walkableTilesInRange);
+				int closest = int.MaxValue;
+
 				for(int i=0; i<walkableTilesInRange.Count; i++){
-					if(walkableTilesInRange[i].GetHostileInRange().Count>0) tilesWithHostileInRange.Add(walkableTilesInRange[i]);
+					if(walkableTilesInRange[i].GetHostileInRange().Count>0 && walkableTilesInRange[i].distance < closest) closest = walkableTilesInRange[i].distance;
+				}
+				for(int i=0; i<walkableTilesInRange.Count; i++){
+					if(walkableTilesInRange[i].GetHostileInRange().Count>0 && walkableTilesInRange[i].distance == closest ) tilesWithHostileInRange.Add(walkableTilesInRange[i]);
 				}
 				
 				//if the tilesWithHostileInRange is not empty after the process, means there's tiles which the unit can move into and attack
@@ -205,6 +210,7 @@ namespace TBTK{
 						//randomize it a bit so the unit do move around but not stay in place all the time
 						if(Random.Range(0f, 1f)>0.25f) return unit.tile;
 					}
+
 					return tilesWithHostileInRange[Random.Range(0, tilesWithHostileInRange.Count)];
 				}
 			}
