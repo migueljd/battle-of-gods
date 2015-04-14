@@ -11,6 +11,7 @@ namespace Cards{
 		public bool damageCard;
 		public bool guardCard;
 		public bool moveCard;
+		public bool magicCard;
 
 		public int damage;
 		public int movement;
@@ -94,6 +95,9 @@ namespace Cards{
 		public void updateScale(Vector3 scale){
 			float interpolate = (Time.time - updateTime)/timeToScale > 1? 1 :  (Time.time - updateTime)/timeToScale;
 			transform.localScale = Vector3.Lerp (this.initialScale, scale, interpolate);
+		}
+
+		public override void ActivateMagic(){
 		}
 
 		void Update(){
