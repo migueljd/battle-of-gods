@@ -138,7 +138,7 @@ namespace TBTK{
 		public int GetCounterPerTurn(){ return counterPerTurn+GetEffCounterPerTurn()+PerkManager.GetUnitCounterPerTurn(prefabID); }
 		
 		public float GetDamageMin(){ return damageMin*(1+GetEffDamage()+tile.GetDamage()+PerkManager.GetUnitDamage(prefabID)); }
-		public float GetEffectiveDamage(){ return this.GetDamageMin () + this.getStack != null? this.getStack ().getDamage () : 0; }
+		public float GetEffectiveDamage(){ return this.GetDamageMin () + (this.getStack() != null? this.getStack ().getDamage () : 0); }
 		public float GetDamageMax(){ return damageMax*(1+GetEffDamage()+tile.GetDamage()+PerkManager.GetUnitDamage(prefabID)); }
 		
 		public float GetHitChance(){ return hitChance+GetEffHitChance()+tile.GetHitChance()+PerkManager.GetUnitHitChance(prefabID); }
