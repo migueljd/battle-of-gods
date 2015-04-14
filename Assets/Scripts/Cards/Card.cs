@@ -124,6 +124,10 @@ namespace Cards{
 		public virtual void ActivateMagic(){
 		}
 
+		public virtual bool CanUseCard(){
+			return true;
+		}
+
 		void Update(){
 			if (shouldUpdate) {
 				updatePosition (finalPosition);

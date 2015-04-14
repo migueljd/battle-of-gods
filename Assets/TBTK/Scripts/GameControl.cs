@@ -30,6 +30,7 @@ namespace TBTK{
 		
 		public delegate void GameOverHandler(int factionID);	
 		public static event GameOverHandler onGameOverE;	//listen by AudioManager and UI
+
 		
 		
 		private static _GamePhase gamePhase=_GamePhase.Initialization;
@@ -255,11 +256,18 @@ namespace TBTK{
 		
 		void OnEnable(){
 			Unit.onUnitDestroyedE += OnUnitDestroyed;
+			GridManager.onHostileSelectE += OnHostileSelected;
 			GridManager.onHostileDeselectE += ClearSelectedTile;
+			GridManager.onHostileDeselectE += OnHostileDeselected;
+
+
 		}
 		void OnDisable(){
 			Unit.onUnitDestroyedE -= OnUnitDestroyed;
+			GridManager.onHostileSelectE -= OnHostileSelected;
 			GridManager.onHostileDeselectE -= ClearSelectedTile;
+			GridManager.onHostileDeselectE -= OnHostileDeselected;
+
 		}
 		
 		void OnUnitDestroyed(Unit unit){
@@ -323,6 +331,13 @@ namespace TBTK{
 			return db;
 		}
 
+		void OnHostileSelected(Unit unit){
+			selectedTile = unit.tile;
+		}
+
+		void OnHostileDeselected(){
+			selectedTile = null;
+		}
 
 		public static void PassLevel(){
 			MapController.level += 1;

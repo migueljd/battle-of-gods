@@ -31,6 +31,7 @@ public class PlayerHP : MonoBehaviour {
 	void Start(){
 		fac = FactionManager.GetFaction(playerUnit.factionID);
 		baseSize = text.fontSize;
+		this.text.text = FactionManager.playerHP.ToString();
 	}
 
 

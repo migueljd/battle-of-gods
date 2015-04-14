@@ -80,8 +80,6 @@ namespace Cards
 		}
 
 		private void activateCard(CardsStackManager stack){
-			if (transformCard.particles != null)
-				StartCoroutine (transformCard.PlayParticle (GameControl.selectedUnit.transform.position));
 
 			if (this.transformCard.damageCard) 
 				stack.addDamageCard(this.transformCard);
@@ -90,7 +88,11 @@ namespace Cards
 			if (this.transformCard.moveCard)
 				stack.addMoveCard (this.transformCard);
 			if (this.transformCard.magicCard)
-				this.transformCard.ActivateMagic ();
+					this.transformCard.ActivateMagic ();
+			
+			if (transformCard.particles != null && transformCard.particles.transform != null)
+				StartCoroutine (transformCard.PlayParticle (GameControl.selectedUnit.transform.position));
+
 			GameControl.SelectUnit (GameControl.selectedUnit);
 
 			//Do some sort of animation then destroy this card
@@ -135,9 +137,10 @@ namespace Cards
 
 		void OnMouseUp(){
 			if(CardsHandManager.getInstance () != null && CardsHandManager.getInstance ().mode == CardsHandManager.modes._GameOn && cardHeld){
-				if(Vector3.Distance(this.transform.position,this.transform.parent.position) >= distanceToActivate && GameControl.selectedUnit != null){
+				if(Vector3.Distance(this.transform.position,this.transform.parent.position) >= distanceToActivate && GameControl.selectedUnit != null && transformCard.CanUseCard()){
 					activateCard(GameControl.selectedUnit.getStack());
 				}
+				else if(!transformCard.CanUseCard()) zoomed = true;
 			}
 			CardsHandManager.movingCard = false;
 			cardHeld = false;
