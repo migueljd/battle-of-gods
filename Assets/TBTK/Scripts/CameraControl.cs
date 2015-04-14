@@ -122,6 +122,8 @@ namespace TBTK {
 		
 						lastTouchPos=touch.position;
 					}
+					CardsHandManager.UpdateCardsPosition();
+
 				}
 				else lastTouchPos=new Vector3(9999, 9999, 9999);
 
