@@ -19,7 +19,7 @@ namespace Cards
 
 		public static Vector3 endScale = new Vector3(0.25f, 0.35f, 0.35f);
 		public static float holdTimeTreshold = 0.2f;
-		public static float distanceToActivate = 10;
+		public static float distanceToActivate = 9;
 		public static float distanceFromCursorZZoomed = 1.4f;
 		public static float distanceFromCursorZShrinked = 0.9f;
 
@@ -45,7 +45,7 @@ namespace Cards
 
 			if (cardHeld) {
 //				Debug.Log ("Distance from parent: " + Vector3.Distance(this.transform.position, this.transform.parent.position));
-				Vector3 mousePos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, yDistance));
+				Vector3 mousePos = GameObject.FindWithTag("CardsCamera").GetComponent<Camera>().ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, yDistance));
 
 				float distance = Vector3.Distance (mousePos, this.transform.parent.position);
 
@@ -136,8 +136,11 @@ namespace Cards
 		}
 
 		void OnMouseUp(){
+			Vector3 mousePos = GameObject.FindWithTag("CardsCamera").GetComponent<Camera>().ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, yDistance));
+			
+			float distance = Vector3.Distance (mousePos, this.transform.parent.position);
 			if(CardsHandManager.getInstance () != null && CardsHandManager.getInstance ().mode == CardsHandManager.modes._GameOn && cardHeld){
-				if(Vector3.Distance(this.transform.position,this.transform.parent.position) >= distanceToActivate && GameControl.selectedUnit != null && transformCard.CanUseCard()){
+				if(distance >= distanceToActivate && GameControl.selectedUnit != null && transformCard.CanUseCard()){
 					activateCard(GameControl.selectedUnit.getStack());
 				}
 				else if(!transformCard.CanUseCard()) zoomed = true;

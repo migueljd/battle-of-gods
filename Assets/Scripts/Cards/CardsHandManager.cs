@@ -74,7 +74,7 @@ namespace Cards
 
 		public void GameStarted (){
 
-			transform.SetParent (Camera.allCameras [0].transform);
+			transform.SetParent (GameObject.FindWithTag("CardsCamera").transform);
 
 			transform.localPosition = instance.managerPosition;
 			transform.localRotation = Quaternion.Euler (instance.managerRotation);
