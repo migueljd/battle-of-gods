@@ -20,8 +20,8 @@ namespace Cards
 		
 		public override void ActivateMagic(){
 			Effect stun = new Effect ();
-			stun.stun = turnsStunned;
-//			stun.duration = turnsStunned;
+			stun.stun = 1;
+			stun.duration = turnsStunned;
 			GameControl.selectedTile.unit.ApplyEffect (stun);
 
 		}
