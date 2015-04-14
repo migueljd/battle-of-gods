@@ -43,7 +43,7 @@ namespace TBTK{
 		public static FactionManager GetInstance(){ return instance; }
 		public static Transform GetTransform(){ return instance!=null ? instance.transform : null ; }
 
-		public static int playerHP = 20;
+		public static int playerHP = 2;
 
 		void Awake(){
 			if(instance==null) instance=this;
