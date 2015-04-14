@@ -80,6 +80,8 @@ namespace Cards
 		}
 
 		private void activateCard(CardsStackManager stack){
+			if (transformCard.particles != null)
+				StartCoroutine (transformCard.PlayParticle (GameControl.selectedUnit.transform.position));
 
 			if (this.transformCard.damageCard) 
 				stack.addDamageCard(this.transformCard);
@@ -87,7 +89,8 @@ namespace Cards
 				stack.addGuardCard (this.transformCard);
 			if (this.transformCard.moveCard)
 				stack.addMoveCard (this.transformCard);
-
+			if (this.transformCard.magicCard)
+				this.transformCard.ActivateMagic ();
 			GameControl.SelectUnit (GameControl.selectedUnit);
 
 			//Do some sort of animation then destroy this card

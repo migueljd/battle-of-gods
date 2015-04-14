@@ -13,6 +13,9 @@ namespace Cards{
 		public bool moveCard;
 		public bool magicCard;
 
+		public ParticleSystem particles;
+		public float height;
+
 		public int damage;
 		public int movement;
 		public int guard;
@@ -36,6 +39,17 @@ namespace Cards{
 		private Quaternion finalRotation;
 		private Vector3 initialScale;
 		private Vector3 finalScale;
+
+		protected void BaseAwake(){
+			Awake ();
+		}
+
+		void Awake(){
+			if (particles != null) {
+				particles = (ParticleSystem) Instantiate(particles, this.transform.position, this.transform.rotation);
+				particles.enableEmission = false;
+			}
+		}
 
 		public bool isDamageCard(){
 			return damageCard;
@@ -97,7 +111,17 @@ namespace Cards{
 			transform.localScale = Vector3.Lerp (this.initialScale, scale, interpolate);
 		}
 
-		public override void ActivateMagic(){
+		public virtual IEnumerator PlayParticle(Vector3 position){
+			particles.transform.position = position + new Vector3(0,height,0);
+			particles.Play ();
+			float timeToEnd = Time.time + particles.duration;
+			while(Time.time > timeToEnd) yield return null;
+
+			particles.Stop ();
+		}
+
+
+		public virtual void ActivateMagic(){
 		}
 
 		void Update(){

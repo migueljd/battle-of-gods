@@ -1035,8 +1035,9 @@ namespace TBTK{
 				if(playerUnit){
 					//this will be used to decrease the total life of the player
 					if(source != null){
-						FactionManager.GetFaction(this.factionID).factionHp -= source.HPDamage;
-						if(FactionManager.GetFaction(this.factionID).factionHp <= 0){//GameOver
+						FactionManager.playerHP -= source.HPDamage;
+						PlayerHP.UpdatePlayerHP(true);
+						if(FactionManager.playerHP <= 0){//GameOver
 						}
 					}
 				}

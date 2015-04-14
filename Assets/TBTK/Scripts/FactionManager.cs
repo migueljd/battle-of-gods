@@ -42,7 +42,8 @@ namespace TBTK{
 		public static void SetInstance(){ if(instance==null) instance=(FactionManager)FindObjectOfType(typeof(FactionManager)); }
 		public static FactionManager GetInstance(){ return instance; }
 		public static Transform GetTransform(){ return instance!=null ? instance.transform : null ; }
-		
+
+		public static int playerHP = 20;
 
 		void Awake(){
 			if(instance==null) instance=this;

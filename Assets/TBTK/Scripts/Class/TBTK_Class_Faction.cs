@@ -20,8 +20,7 @@ namespace TBTK{
 		public Color color=Color.white;
 
 
-		//This HP will be used mostly for players, for when they take damage, this is where they'll lose HP
-		public int factionHp = 20;
+
 
 		
 		
