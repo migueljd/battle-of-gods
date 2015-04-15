@@ -46,6 +46,7 @@ namespace Cards
 
 		public float DropCardChance = 60;
 
+		private bool startedOnce = false;
 
 		void Awake ()
 		{
@@ -84,8 +85,8 @@ namespace Cards
 //			Debug.Log ("Position is " + transform.position);
 //			Debug.Log ("Rotation is " + transform.rotation);
 
-			if (instance.mode == modes._GameOn) {
-				Debug.Log ("Game On");
+			if (instance.mode == modes._GameOn && !startedOnce) {
+				startedOnce = true;
 				CreateDeck();
 				updateHand();
 				_UpdateCardsPosition ();

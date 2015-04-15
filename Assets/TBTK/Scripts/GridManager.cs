@@ -667,8 +667,7 @@ namespace TBTK{
 			bool endTurn = false;
 			if(tile.unit!=null){
 				//select the unit if the unit belong's to current player in turn
-				Debug.Log (attackableTileList.Contains(tile));
-				if(FactionManager.GetSelectedFactionID()==tile.unit.factionID){
+				if(FactionManager.GetSelectedFactionID()==tile.unit.factionID && TurnControl.GetTurnMode()==_TurnMode.FactionPerTurn){
 					if(TurnControl.GetMoveOrder()!=_MoveOrder.Free) return;
 					if(TurnControl.GetTurnMode()==_TurnMode.UnitPerTurn) return;
 					if(!GameControl.AllowUnitSelect()) return;
@@ -705,7 +704,7 @@ namespace TBTK{
 	//			#endif
 					if(!tile.isPortal){
 						if(FactionManager.GetAllHostileUnit(GameControl.selectedUnit.factionID).Count == 0) endTurn = true;
-					
+					Debug.Log (endTurn);
 						GameControl.selectedUnit.Move(tile);
 						int distance = GetDistance(tile, GameControl.selectedUnit.tile, true);
 						CardsStackManager.decreaseMovement(distance);
@@ -728,8 +727,17 @@ namespace TBTK{
 			}
 
 			ClearHoveredTile();	//clear the hovered tile so all the UI overlay will be cleared
-			if(endTurn) TurnControl.EndTurn();
+			if (endTurn) {
+				StartCoroutine(EndTurn());
+			}
 
+		}
+
+		IEnumerator EndTurn(){
+			while(!TurnControl.ClearToProceed()){
+				yield return null;
+			}
+			TurnControl.EndTurn();
 		}
 		
 		

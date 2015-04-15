@@ -881,7 +881,7 @@ namespace TBTK{
 		
 		public IEnumerator AttackRoutine(Tile targetTile, Unit targetUnit, GameObject shootObject, AttackInstance attInstance){
 			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit != null && targetUnit.CanCounter(this)) targetUnit.Counter(this);
-			while(!TurnControl.ClearToProceed()) yield return null;
+			while(!TurnControl.ClearToProceed() && !TurnControl.CounterInProgress()) yield return null;
 			TurnControl.ActionCommenced();
 			
 			aiming=true;	yield return null;
