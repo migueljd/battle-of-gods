@@ -216,7 +216,7 @@ namespace Cards
 //			GameObject deck = GameObject.FindGameObjectWithTag ("");
 			foreach (GameObject t in instantiator.cardsToInstantiate) {
 				GameObject card = (GameObject) Instantiate(t, cardsLimbo, Quaternion.identity);
-				Vector3 baseScale = new Vector3 (0.15f, 0.21f, 0.21f);
+				Vector3 baseScale = new Vector3 (0.30f, 0.42f, 0.42f);
 //				Vector3 baseScale = this.transform.localScale;
 				card.transform.localScale= baseScale;
 				CardTransform.baseScale = baseScale;

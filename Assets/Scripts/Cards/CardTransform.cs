@@ -17,7 +17,7 @@ namespace Cards
 	{
 		public Card transformCard;
 
-		public static Vector3 endScale = new Vector3(0.25f, 0.35f, 0.35f);
+		public static Vector3 endScale = new Vector3(0.35f, 0.49f, 0.49f);
 		public static float holdTimeTreshold = 0.2f;
 		public static float distanceToActivate = 9;
 		public static float distanceFromCursorZZoomed = 1.4f;
