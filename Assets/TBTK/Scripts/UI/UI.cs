@@ -79,7 +79,7 @@ namespace TBTK{
 			else endTurnButtonObj.SetActive(false);
 		}
 
-		void OnHostileSelected(Unit unit){
+		private void OnHostileSelected(Unit unit){
 			Unit enemy = unit;
 			if(enemy != null){
 				enemyImg.enabled = true;
@@ -90,7 +90,7 @@ namespace TBTK{
 			}
 		}
 
-		void OnHostileDeselect(){
+		private void OnHostileDeselect(){
 			enemyImg.enabled = false;
 			enemyAttack.text = "";
 			enemyDefense.text = "";
@@ -98,12 +98,12 @@ namespace TBTK{
 
 		}
 
-		public static void UpdateUnitInfo(){
-			instance.OnUnitSelected ();
+		public static void UpdateUnitInfo(Unit unit){
+			instance.OnUnitSelected (unit);
 		}
 
-		public static void UpdateEnemyInfo(){
-			instance.OnHostileSelected();
+		public static void UpdateEnemyInfo(Unit unit){
+			instance.OnHostileSelected(unit);
 		}
 		
 		
