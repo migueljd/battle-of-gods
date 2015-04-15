@@ -375,10 +375,11 @@ namespace TBTK{
 		public void _SelectNextUnit(){
 			selectedUnitID+=1;
 			if(selectedUnitID>=allUnitList.Count) selectedUnitID=0;
-			
+
+
 			allUnitList[selectedUnitID].ResetUnitTurnData();
 			GameControl.SelectUnit(allUnitList[selectedUnitID]);
-			
+
 			selectedFactionID=allUnitList[selectedUnitID].factionID;
 		}
 		

@@ -880,6 +880,7 @@ namespace TBTK{
 		}
 		
 		public IEnumerator AttackRoutine(Tile targetTile, Unit targetUnit, GameObject shootObject, AttackInstance attInstance){
+			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit != null && targetUnit.CanCounter(this)) targetUnit.Counter(this);
 			while(!TurnControl.ClearToProceed()) yield return null;
 			TurnControl.ActionCommenced();
 			
@@ -909,7 +910,6 @@ namespace TBTK{
 			if (unitParticles != null)
 				unitParticles.EndAttack ();
 			FinishAction();
-			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit != null && targetUnit.CanCounter(this)) targetUnit.Counter(this);
 
 			if(turretObject!=null && turretObject!=thisT){ while(!RotateTurretToOrigin() && !aiming) yield return null; }
 		}
