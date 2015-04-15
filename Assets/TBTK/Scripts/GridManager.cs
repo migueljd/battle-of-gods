@@ -684,7 +684,6 @@ namespace TBTK{
 					#endif*/
 						GameControl.selectedUnit.Attack(tile.unit);
 						GameControl.SelectTile(null);
-						onHostileDeselectE();
 						endTurn = true;
 						//onHostileDeselectE();
 					//#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
@@ -738,6 +737,7 @@ namespace TBTK{
 				yield return new WaitForSeconds(0.1f);
 			}
 			Debug.Log ("Ending turn at " + Time.time);
+			onHostileDeselectE();
 			TurnControl.EndTurn();
 		}
 		
