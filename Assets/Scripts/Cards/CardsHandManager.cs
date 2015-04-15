@@ -9,6 +9,10 @@
 // ------------------------------------------------------------------------------
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+
+using TBTK;
 
 namespace Cards
 {
@@ -25,7 +29,7 @@ namespace Cards
 
 		public CardTransform selectedCard;
 
-		public CardsList cardsInDeck;
+//		public CardsList cardsInDeck;
 
 		public CardsList cardsInDiscard;
 
@@ -48,12 +52,15 @@ namespace Cards
 
 		private static bool startedOnce = false;
 
+		Vector3 baseScale = new Vector3 (0.30f, 0.42f, 0.42f);
+
+
 		void Awake ()
 		{
 			if (instance == null) {
 				instance = this;
 				Debug.Log("Is instance null? " + instance.gameObject.GetInstanceID());
-				instance.cardsInDeck = new CardsList ();
+//				instance.cardsInDeck = new CardsList ();
 				instance.cardsInHand = new CardsList ();
 				instance.cardsInDiscard = new CardsList();
 				instantiator = new CardPrefabInstatiator ();
@@ -67,8 +74,12 @@ namespace Cards
 
 		}
 
-		void OnLevelWasLoaded(int wtf){
-			Debug.Log ("Scene loaded");
+		void OnEnable(){
+			Unit.onUnitDestroyedE += OnUnitDestroyed;
+		}
+
+		void OnDisable(){
+			Unit.onUnitDestroyedE -= OnUnitDestroyed;
 		}
 
 		private void SetUpInstantiator(){
@@ -93,15 +104,11 @@ namespace Cards
 
 			if (instance.mode == modes._GameOn && !startedOnce) {
 				startedOnce = true;
-				CreateDeck();
-				updateHand();
-				_UpdateCardsPosition ();
+//				CreateDeck();
+//				updateHand();
+//				_UpdateCardsPosition ();
 				
 			} else if (startedOnce) {
-				Debug.Log ("Cards in hand count is: " + cardsInHand.getCount ());
-				Debug.Log ("Cards in deck count is: " + cardsInDeck.getCount ());
-				Debug.Log ("Cards in discard count is: " + cardsInDiscard.getCount ());
-
 				_UpdateCardsPosition ();
 			}
 
@@ -167,23 +174,23 @@ namespace Cards
 			movingCard = false;
 		}
 
-		public void updateHand(){
-//			Debug.Log ("Child Count: " + instance.transform.childCount);
-//			Debug.Log ("Hand Size: " + handSize);
-			if (handSize - cardsInHand.getCount () > cardsInDeck.getCount ())
-				_ShuffleDeck ();
-
-			Debug.Log (instance.cardsInDeck.getCount ());
-			if (cardsInHand.getCount() < handSize && instance.cardsInDeck.getCount()> 0) {
-				for(int a = handSize - cardsInHand.getCount(); a != 0 &&  cardsInDeck.getCount() != 0; a--){
-					Card pop = instance.cardsInDeck.popFirstCard();
-					pop.transform.SetParent(this.transform);
-					cardsInHand.addCard(pop);
-				}
-			}
-			_UpdateCardsPosition ();
-			this.transform.localPosition = managerPosition;
-		}
+//		public void updateHand(){
+////			Debug.Log ("Child Count: " + instance.transform.childCount);
+////			Debug.Log ("Hand Size: " + handSize);
+//			if (handSize - cardsInHand.getCount () > cardsInDeck.getCount ())
+//				_ShuffleDeck ();
+//
+//			Debug.Log (instance.cardsInDeck.getCount ());
+//			if (cardsInHand.getCount() < handSize && instance.cardsInDeck.getCount()> 0) {
+//				for(int a = handSize - cardsInHand.getCount(); a != 0 &&  cardsInDeck.getCount() != 0; a--){
+//					Card pop = instance.cardsInDeck.popFirstCard();
+//					pop.transform.SetParent(this.transform);
+//					cardsInHand.addCard(pop);
+//				}
+//			}
+//			_UpdateCardsPosition ();
+//			this.transform.localPosition = managerPosition;
+//		}
 
 		public static void ShuffleDeck(){
 			instance._ShuffleDeck ();
@@ -193,7 +200,7 @@ namespace Cards
 			if (cardsInDiscard.list.Count > 0) {
 				do {
 					int position = Random.Range(0, cardsInDiscard.getCount());
-					cardsInDeck.addCard(cardsInDiscard.removeCardAt(position));
+//					cardsInDeck.addCard(cardsInDiscard.removeCardAt(position));
 				} while(cardsInDiscard.getCount() > 0);
 			}
 		}
@@ -216,7 +223,6 @@ namespace Cards
 //			GameObject deck = GameObject.FindGameObjectWithTag ("");
 			foreach (GameObject t in instantiator.cardsToInstantiate) {
 				GameObject card = (GameObject) Instantiate(t, cardsLimbo, Quaternion.identity);
-				Vector3 baseScale = new Vector3 (0.30f, 0.42f, 0.42f);
 //				Vector3 baseScale = this.transform.localScale;
 				card.transform.localScale= baseScale;
 				CardTransform.baseScale = baseScale;
@@ -224,17 +230,52 @@ namespace Cards
 			}
 		}
 
-		private void OnUnitDestroyed(){
-			float getCard = Random.Range (0, 100);
+		private void OnUnitDestroyed(Unit unit){
+			Debug.Log ("Tried to get a card");
 
-			if (getCard <= DropCardChance) {
-				
+			if (!FactionManager.IsPlayerFaction (unit.factionID) && cardsInHand.getCount () < handSize) {
+				float getCard = Random.Range (0, 100);
+				Debug.Log ("GetCard was" + getCard);
+				if (getCard <= DropCardChance) {
+					Debug.Log ("Received a card");
+
+					Dictionary<int, string> cards = Levels_DB.GetCardsForLevel (MapController.level);
+
+					int card = Random.Range (0, 101);
+
+					string cardName = "";
+					int lowestDifference = int.MaxValue;
+					int final = 0;
+					foreach (int key in cards.Keys) {
+						if (key >= card && lowestDifference > key - card) {
+							lowestDifference = key - card;
+							final = key;
+						}
+					}
+
+					cards.TryGetValue (final, out cardName);
+
+					Card won = null;
+
+					foreach (Card c in cardsInDiscard.list) {
+						if (c.name.Equals (cardName + "(Clone)")) {
+							won = c;
+						}
+					}
+					if (won != null)
+						cardsInDiscard.removeCard (won);
+					else
+						won = (Instantiate (Resources.Load ("Prefabs/Cards/" + cardName), cardsLimbo, Quaternion.identity) as GameObject).GetComponent<Card>();
+
+					won.transform.parent = this.transform;
+
+					won.transform.localScale= baseScale;
+					CardTransform.baseScale = baseScale;
+
+					cardsInHand.addCard(won);
+					_UpdateCardsPosition();
+				}
 			}
-
-		}
-
-		void OnDestroy(){
-			Debug.Log ("Being destroyed and my id is " + gameObject.GetInstanceID());
 		}
 
 		public static void Disattach(){

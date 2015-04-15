@@ -133,7 +133,6 @@ namespace TBTK{
 		private Tile Analyse(Unit unit){
 			//get all wakable tiles in range first
 			List<Tile> walkableTilesInRange=AStar.GetTileWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true);
-			Debug.Log ("They can go to " + walkableTilesInRange.Count + " tiles");
 //			Debug.Log("Walkable tiles: " + walkableTilesInRange.Count);
 			walkableTilesInRange.Add(unit.tile);
 			//setup all hostile in in those walkableTiles

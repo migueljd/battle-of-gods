@@ -737,7 +737,7 @@ namespace TBTK{
 			while(!TurnControl.ClearToProceed()){
 				yield return new WaitForSeconds(0.1f);
 			}
-			Debug.Log ("Ending turn at " + Time.time);
+//			Debug.Log ("Ending turn at " + Time.time);
 			onHostileDeselectE();
 			GameControl.SelectTile(null);
 	

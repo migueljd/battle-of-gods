@@ -1055,7 +1055,6 @@ namespace TBTK{
 
 			if (playerUnit) {
 				getStack ().decreaseGuard ((int)dmg);
-				Debug.Log (this.name + " total HP is : " + HP);
 				totalHP += this.getStack ().getGuard ();
 				if(GameControl.selectedUnit != null)UI.UpdateUnitInfo(GameControl.selectedUnit);
 			} else {

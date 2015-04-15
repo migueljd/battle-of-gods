@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using Cards;
+
 
 public class Levels_DB : MonoBehaviour {
 
@@ -115,5 +117,32 @@ public class Levels_DB : MonoBehaviour {
 			return 1;
 		else 
 			return 2;
+	}
+
+	public static Dictionary<int, string> GetCardsForLevel(int lvl){
+		Dictionary<int, string> cardList = new Dictionary<int, string>();
+
+		if (lvl < 5) {
+			cardList.Add (40, "Athena's Touch");
+			cardList.Add (80, "HeroicStrike");
+			cardList.Add (100, "Zeus Thunder");
+
+		} else if (lvl < 9) {
+			cardList.Add (30, "Athena's Touch");
+			cardList.Add (60, "HeroicStrike");
+			cardList.Add (85, "Zeus Thunder");
+			cardList.Add (100, "Afrodite's Blessing");
+
+		} else {
+			cardList.Add (25, "Athena's Touch");
+			cardList.Add (50, "HeroicStrike");
+			cardList.Add (65, "Zeus Thunder");
+			cardList.Add (80, "Hefestus Curse");
+			cardList.Add (95, "Afrodite's Blessing");
+			cardList.Add (100, "Ares Wrath");
+		}
+
+		return cardList;
+	
 	}
 }

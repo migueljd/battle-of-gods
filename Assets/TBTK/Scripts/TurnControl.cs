@@ -60,7 +60,7 @@ namespace TBTK{
 		//also used when the game first started
 		public static void EndTurn(){ instance._EndTurn(); }
 		public void _EndTurn(){
-			Debug.Log ("Ending turn 2 at " + Time.time);
+//			Debug.Log ("Ending turn 2 at " + Time.time);
 			if(GameControl.GetGamePhase()==_GamePhase.Over) return;
 			
 			GameControl.UnlockUnitSelect();
