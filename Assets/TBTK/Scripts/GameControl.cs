@@ -341,6 +341,7 @@ namespace TBTK{
 
 		public static void PassLevel(){
 			MapController.level += 1;
+			CardsHandManager.Disattach ();
 			Application.LoadLevel (Levels_DB.GetSceneLevel(MapController.level));
 		}
 		

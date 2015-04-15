@@ -46,6 +46,7 @@ namespace Cards{
 				particles = (ParticleSystem) Instantiate(particles, this.transform.position, this.transform.rotation);
 				particles.enableEmission = false;
 			}
+			DontDestroyOnLoad (this.gameObject);
 		}
 
 		public bool isDamageCard(){

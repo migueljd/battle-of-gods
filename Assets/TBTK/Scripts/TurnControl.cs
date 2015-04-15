@@ -60,6 +60,7 @@ namespace TBTK{
 		//also used when the game first started
 		public static void EndTurn(){ instance._EndTurn(); }
 		public void _EndTurn(){
+			Debug.Log ("Ending turn 2 at " + Time.time);
 			if(GameControl.GetGamePhase()==_GamePhase.Over) return;
 			
 			GameControl.UnlockUnitSelect();
@@ -111,6 +112,7 @@ namespace TBTK{
 		
 		//called to indicate that an action has been completed
 		public static void ActionCompleted(float delay=0){ 
+			Debug.Log ("Action completed");
 			instance.StartCoroutine(instance._ActionCompleted(delay));
 		}
 		IEnumerator _ActionCompleted(float delay=0){

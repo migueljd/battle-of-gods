@@ -109,7 +109,7 @@ namespace TBTK{
 					}
 				}
 				
-				int rand=Random.Range(0, targetTile.hostileInRangeList.Count - 1);
+				int rand=Random.Range(0, targetTile.hostileInRangeList.Count);
 		
 				if(unit.tile == targetTile)unit.Attack(targetTile.hostileInRangeList[rand].unit);
 			}

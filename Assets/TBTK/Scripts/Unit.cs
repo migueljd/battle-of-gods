@@ -806,7 +806,6 @@ namespace TBTK{
 			
 			GameObject shootObj=shootObject!=null ? shootObject.gameObject : null ;
 			if(shootObj==null) shootObj=GameControl.GetDefaultShootObject();
-			
 			StartCoroutine(AttackRoutine(targetUnit.tile, targetUnit, shootObj, attInstance));
 			
 			if(!GameControl.EnableActionAfterAttack()){
@@ -880,9 +879,26 @@ namespace TBTK{
 		}
 		
 		public IEnumerator AttackRoutine(Tile targetTile, Unit targetUnit, GameObject shootObject, AttackInstance attInstance){
-			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit != null && targetUnit.CanCounter(this)) targetUnit.Counter(this);
-			while(!TurnControl.ClearToProceed() && !TurnControl.CounterInProgress()) yield return null;
 			TurnControl.ActionCommenced();
+
+			if(!attInstance.isAbility && !attInstance.stunned && targetUnit != null && targetUnit.CanCounter(this)) targetUnit.Counter(this);
+//			if (!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit != null && targetUnit.CanCounter (this))
+//				Debug.Log ("Tried to counter");
+//			else {
+//				Debug.Log (string.Format("Didn try to counter because is ability? {0}. Is stun? {1}. Is destroyed? {2}. Target is null? {3}", attInstance.isAbility,attInstance.stunned , attInstance.destroyed, targetUnit == null));
+//			}
+//			if (!targetUnit.CanCounter (this)) {
+//				if(!GameControl.EnableCounter()) Debug.Log ("Game control fault");
+//				if(targetUnit.stunned>0) Debug.Log ("Stunned");
+//				if(targetUnit.counterRemain<=0) Debug.Log ("No more counters");
+//				if(targetUnit.GetCounterAPCost()>AP) Debug.Log ("No more AP");
+//				
+//				float dist=GridManager.GetDistance(this.tile, targetUnit.tile);
+//				if(dist>GetAttackRange()) Debug.Log ( "Too far");
+//				
+//				Debug.Log ( "Yes it can");
+//			}
+			while(TurnControl.CounterInProgress()) yield return null;
 			
 			aiming=true;	yield return null;
 			while(!Aiming(targetTile, targetUnit)) yield return null;
@@ -908,15 +924,20 @@ namespace TBTK{
 			if (unitParticles != null)
 				unitParticles.EndAttack ();
 			FinishAction();
-
+			Debug.Log ("Attack done at " + Time.time);
 			if(turretObject!=null && turretObject!=thisT){ while(!RotateTurretToOrigin() && !aiming) yield return null; }
 		}
 		
 		
 		//counter attack routine
-		public void Counter(Unit targetUnit){ StartCoroutine(CounterRoutine(targetUnit)); }
-		public IEnumerator CounterRoutine(Unit targetUnit){
+		public void Counter(Unit targetUnit){ 			
 			TurnControl.CounterCommenced();
+			StartCoroutine(CounterRoutine(targetUnit)); }
+		public IEnumerator CounterRoutine(Unit targetUnit){
+
+			if (FactionManager.IsPlayerTurn ()) {
+				Debug.Log(this.name + " is trying to counter");
+			}
 
 			yield return null;	//wait for shot to be fired first
 									//TurnControl.actionInProgress will be set to >2 when there's shootObject active
@@ -944,7 +965,7 @@ namespace TBTK{
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
 			
-			TurnControl.ActionCompleted(GameControl.delayPerAction);
+//			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			while(!TurnControl.ClearToCounter()) yield return null;
 			TurnControl.CounterCompleted();
 			

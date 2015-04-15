@@ -46,23 +46,29 @@ namespace Cards
 
 		public float DropCardChance = 60;
 
-		private bool startedOnce = false;
+		private static bool startedOnce = false;
 
 		void Awake ()
 		{
 			if (instance == null) {
 				instance = this;
+				Debug.Log("Is instance null? " + instance.gameObject.GetInstanceID());
 				instance.cardsInDeck = new CardsList ();
 				instance.cardsInHand = new CardsList ();
 				instance.cardsInDiscard = new CardsList();
 				instantiator = new CardPrefabInstatiator ();
+				Debug.Log ("Instance not null");
 				SetUpInstantiator();
+				DontDestroyOnLoad (this.gameObject);
 			} else {
 				Destroy (this.gameObject);
 			}
 
-			DontDestroyOnLoad (this.gameObject);
 
+		}
+
+		void OnLevelWasLoaded(int wtf){
+			Debug.Log ("Scene loaded");
 		}
 
 		private void SetUpInstantiator(){
@@ -91,11 +97,16 @@ namespace Cards
 				updateHand();
 				_UpdateCardsPosition ();
 				
-			} else {
-				
+			} else if (startedOnce) {
+				Debug.Log ("Cards in hand count is: " + cardsInHand.getCount ());
+				Debug.Log ("Cards in deck count is: " + cardsInDeck.getCount ());
+				Debug.Log ("Cards in discard count is: " + cardsInDiscard.getCount ());
+
+				_UpdateCardsPosition ();
 			}
 
 		}
+
 
 
 		public static void changeModeToDeckBuild(){
@@ -220,6 +231,14 @@ namespace Cards
 				
 			}
 
+		}
+
+		void OnDestroy(){
+			Debug.Log ("Being destroyed and my id is " + gameObject.GetInstanceID());
+		}
+
+		public static void Disattach(){
+			instance.transform.parent = null;
 		}
 
 
