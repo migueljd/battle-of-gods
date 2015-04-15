@@ -95,7 +95,7 @@ namespace TBTK{
 			}
 			allUnitList[selectedUnitID].ResetUnitTurnData();
 			GameControl.SelectUnit(allUnitList[selectedUnitID]);
-			if (FactionManager.IsPlayerFaction (GameControl.selectedUnit.factionID)) {
+			if (GameControl.selectedUnit != null && FactionManager.IsPlayerFaction (GameControl.selectedUnit.factionID)) {
 				
 				//Update the card count for all cards in stack. 
 				//				if(CardsHandManager.instance.cardsInDeck.getCount() == 0){
