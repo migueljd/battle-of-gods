@@ -1057,10 +1057,10 @@ namespace TBTK{
 				getStack ().decreaseGuard ((int)dmg);
 				Debug.Log (this.name + " total HP is : " + HP);
 				totalHP += this.getStack ().getGuard ();
-				UI.UpdateUnitInfo(GameControl.selectedUnit);
+				if(GameControl.selectedUnit != null)UI.UpdateUnitInfo(GameControl.selectedUnit);
 			} else {
-				UI.UpdateUnitInfo(GameControl.selectedUnit);
-				UI.UpdateEnemyInfo(GameControl.selectedTile.unit);
+				if(GameControl.selectedUnit != null)UI.UpdateUnitInfo(GameControl.selectedUnit);
+				if(GameControl.selectedTile != null)UI.UpdateEnemyInfo(GameControl.selectedTile.unit);
 			}
 			if (totalHP <=0)
 			//It's important to do some sort of animation in case the unit didn't die

@@ -727,7 +727,7 @@ namespace TBTK{
 			}
 
 			ClearHoveredTile();	//clear the hovered tile so all the UI overlay will be cleared
-			if (endTurn) {
+			if (endTurn && !(GameControl.selectedUnit.CanMove() || GameControl.selectedUnit.CanAttack())) {
 				StartCoroutine(EndTurn());
 			}
 
