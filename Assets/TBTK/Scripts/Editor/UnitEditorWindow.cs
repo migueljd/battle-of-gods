@@ -178,7 +178,11 @@ namespace TBTK {
 			EditorGUI.LabelField(new Rect(startX, startY+=spaceY, width, height), cont);
 			unit.defaultAP=EditorGUI.FloatField(new Rect(startX+100, startY, 40, height), unit.defaultAP);
 			unit.AP=unit.defaultAP;
-			
+
+			cont=new GUIContent("Guard:", "The unit default's Guard.");
+			EditorGUI.LabelField(new Rect(startX, startY+=spaceY, width, height), cont);
+			unit.guard=EditorGUI.FloatField(new Rect(startX+100, startY, 40, height), unit.guard);
+
 			
 			startY=cachedY+spaceY/2;
 			startX+=35+spaceX;	//startY+=20;

@@ -24,6 +24,8 @@ namespace TBTK{
 		public Text enemyAttack;
 		public Text heroDefense;
 		public Text enemyDefense;
+		public Text heroHP;
+		public Text enemyHP;
 
 
 		void Awake(){
@@ -69,8 +71,9 @@ namespace TBTK{
 			if (unit != null) {
 				endTurnButtonObj.SetActive (true);
 				heroImg.sprite = unit.iconSprite;
+				heroHP.text = unit.HP.ToString();
 				heroAttack.text = (unit.GetEffectiveDamage()+ unit.tile.tileAttack).ToString();
-				heroDefense.text = (unit.GetEffectiveHP() + unit.tile.tileDefense).ToString();
+				heroDefense.text = (unit.GetEffectiveGuard() + unit.tile.tileDefense).ToString();
 			}
 			else endTurnButtonObj.SetActive(false);
 		}
@@ -80,8 +83,9 @@ namespace TBTK{
 			if(enemy != null){
 				enemyImg.enabled = true;
 				enemyImg.sprite = enemy.iconSprite;
+				enemyHP.text = enemy.HP.ToString();
 				enemyAttack.text = (enemy.damageMin + unit.tile.tileAttack).ToString();
-				enemyDefense.text = (enemy.HP + unit.tile.tileDefense).ToString();
+				enemyDefense.text = (enemy.GetEffectiveGuard() + unit.tile.tileDefense).ToString();
 			}
 		}
 

@@ -68,6 +68,7 @@ namespace TBTK{
 		public float defaultHP=10;
 		public float defaultAP=10;
 		public float HP=10;
+		public float guard = 0;
 		public float AP=10;
 		
 		public float moveAPCost=0;
@@ -122,6 +123,8 @@ namespace TBTK{
 		
 		public float GetFullHP(){ return defaultHP*(1+GetEffHPBuff()+PerkManager.GetUnitHPBuff(prefabID)); }
 		public float GetFullAP(){ return defaultAP*(1+GetEffAPBuff()+PerkManager.GetUnitAPBuff(prefabID)); }
+
+		public float GetEffectiveGuard(){	return this.guard + getStack ().getGuard ();}
 		
 		public float GetMoveAPCost(){ return (GameControl.UseAPForMove()) ? Mathf.Max(0, moveAPCost+GetEffMoveAPCost()+PerkManager.GetUnitMoveAPCost(prefabID)) : 0 ; }
 		public float GetAttackAPCost(){ return (GameControl.UseAPForAttack()) ? Mathf.Max(0, attackAPCost+GetEffAttackAPCost()+PerkManager.GetUnitAttackAPCost(prefabID)) : 0 ; }
@@ -881,8 +884,7 @@ namespace TBTK{
 		public IEnumerator AttackRoutine(Tile targetTile, Unit targetUnit, GameObject shootObject, AttackInstance attInstance){
 			TurnControl.ActionCommenced();
 
-			if(!attInstance.isAbility && !attInstance.stunned && targetUnit != null && targetUnit.CanCounter(this)) targetUnit.Counter(this);
-//			if (!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit != null && targetUnit.CanCounter (this))
+//			i ff (!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit != null && targetUnit.CanCounter (this))
 //				Debug.Log ("Tried to counter");
 //			else {
 //				Debug.Log (string.Format("Didn try to counter because is ability? {0}. Is stun? {1}. Is destroyed? {2}. Target is null? {3}", attInstance.isAbility,attInstance.stunned , attInstance.destroyed, targetUnit == null));
@@ -898,7 +900,7 @@ namespace TBTK{
 //				
 //				Debug.Log ( "Yes it can");
 //			}
-			while(TurnControl.CounterInProgress()) yield return null;
+
 			
 			aiming=true;	yield return null;
 			while(!Aiming(targetTile, targetUnit)) yield return null;
@@ -924,7 +926,11 @@ namespace TBTK{
 			if (unitParticles != null)
 				unitParticles.EndAttack ();
 			FinishAction();
-			Debug.Log ("Attack done at " + Time.time);
+
+			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit != null && targetUnit.CanCounter(this)) targetUnit.Counter(this);
+			
+			while(TurnControl.CounterInProgress()) yield return null;
+
 			if(turretObject!=null && turretObject!=thisT){ while(!RotateTurretToOrigin() && !aiming) yield return null; }
 		}
 		
@@ -1042,7 +1048,10 @@ namespace TBTK{
 
 			bool playerUnit = this.factionID == FactionManager.GetPlayerFactionID () [0];
 
-			this.HP-=dmg;
+			float g = this.GetEffectiveGuard ();
+
+			this.HP-= dmg - g >0? dmg : 0;
+			getStack ().decreaseGuard ((int)dmg);
 			float totalHP = this.HP + this.tile.tileDefense;
 
 
