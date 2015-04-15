@@ -1028,13 +1028,13 @@ namespace TBTK{
 
 
 			if (playerUnit) {
+				Debug.Log (this.name + " total HP is : " + HP);
 				totalHP += this.getStack ().getGuard ();
 			} 
 			if (totalHP <=0)
 			//It's important to do some sort of animation in case the unit didn't die
 				if(playerUnit){
 
-				Debug.Log (this.name + " total HP is : " + HP);
 					//this will be used to decrease the total life of the player
 //					if(source != null){
 //						FactionManager.playerHP -= source.HPDamage;

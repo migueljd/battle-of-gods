@@ -44,6 +44,8 @@ namespace Cards
 		public Vector3 managerPosition;
 		public Vector3 managerRotation;
 
+		public float DropCardChance = 60;
+
 
 		void Awake ()
 		{
@@ -209,6 +211,16 @@ namespace Cards
 				instance.cardsInDiscard.addCard((Card) card.GetComponent<Card>());
 			}
 		}
+
+		private void OnUnitDestroyed(){
+			float getCard = Random.Range (0, 100);
+
+			if (getCard <= DropCardChance) {
+				
+			}
+
+		}
+
 
 	}
 }
