@@ -323,7 +323,7 @@ namespace TBTK{
 					u.getStack().updateAttributesForLists();
 				}
 
-				CardsHandManager.getInstance().updateHand();
+//				CardsHandManager.getInstance().updateHand();
 
 				if(TurnControl.GetMoveOrder()==_MoveOrder.Free){
 					factionList[selectedFactionID].SelectFirstAvailableUnit();

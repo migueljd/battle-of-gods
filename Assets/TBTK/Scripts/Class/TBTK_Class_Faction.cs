@@ -93,6 +93,17 @@ namespace TBTK{
 			}
 			allUnitList[selectedUnitID].ResetUnitTurnData();
 			GameControl.SelectUnit(allUnitList[selectedUnitID]);
+			if (FactionManager.IsPlayerFaction (GameControl.selectedUnit.factionID)) {
+				
+				//Update the card count for all cards in stack. 
+				//				if(CardsHandManager.instance.cardsInDeck.getCount() == 0){
+				//					CardsHandManager.ShuffleDeck();
+				//				}
+				
+
+				GameControl.selectedUnit.getStack().updateDamageAndGuard();
+				GameControl.selectedUnit.getStack().updateAttributesForLists();
+			}
 			return false;
 		}
 		
