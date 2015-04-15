@@ -97,6 +97,14 @@ namespace TBTK{
 			enemyHP.text = "";
 
 		}
+
+		public static void UpdateUnitInfo(){
+			OnUnitSelected ();
+		}
+
+		public static void UpdateEnemyInfo(){
+			OnHostileSelected();
+		}
 		
 		
 		public void OnEndTurnButton(){
