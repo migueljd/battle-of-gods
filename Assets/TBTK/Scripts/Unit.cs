@@ -783,8 +783,7 @@ namespace TBTK{
 			tile.unit=this;
 			thisT.position=tile.GetPos();
 			
-			if (tile.revealed != 3 && this.factionID == FactionManager.GetPlayerFactionID()[0])
-				MapController.RevealArea (tile);
+
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			FinishAction();
 
@@ -918,7 +917,7 @@ namespace TBTK{
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
 
-			TurnControl.ActionCompleted(GameControl.delayPerAction);
+			TurnControl.ActionCompleted(0);
 			while (!TurnControl.ClearToProceed()) {
 
 				yield return null;

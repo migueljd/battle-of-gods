@@ -702,14 +702,16 @@ namespace TBTK{
   //              if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
 	//			#endif
 					if(!tile.isPortal){
-						if(FactionManager.GetAllHostileUnit(GameControl.selectedUnit.factionID).Count == 0) endTurn = true;
-					Debug.Log (endTurn);
+						
 						GameControl.selectedUnit.Move(tile);
 						int distance = GetDistance(tile, GameControl.selectedUnit.tile, true);
 						CardsStackManager.decreaseMovement(distance);
 
+						if (tile.revealed != 3 && GameControl.selectedUnit.factionID == FactionManager.GetPlayerFactionID()[0])
+							MapController.RevealArea (tile);
 						if(onExitWalkableTileE!=null) onExitWalkableTileE();	//for clear UI move cost overlay
 						ClearWalkableHostileList();	
+						if(FactionManager.GetAllHostileUnit(GameControl.selectedUnit.factionID).Count == 0) endTurn = true;
 
 					}
 					else{
@@ -740,7 +742,11 @@ namespace TBTK{
 			onHostileDeselectE();
 			TurnControl.EndTurn();
 		}
-		
+
+//		IEnumerator RevealArea(){
+//			
+//		}
+			
 		
 		//when player right-click on a particular tile
 		//only used to set unit, facing
