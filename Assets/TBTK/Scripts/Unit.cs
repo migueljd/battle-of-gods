@@ -124,7 +124,7 @@ namespace TBTK{
 		public float GetFullHP(){ return defaultHP*(1+GetEffHPBuff()+PerkManager.GetUnitHPBuff(prefabID)); }
 		public float GetFullAP(){ return defaultAP*(1+GetEffAPBuff()+PerkManager.GetUnitAPBuff(prefabID)); }
 
-		public float GetEffectiveGuard(){	return this.guard + getStack ().getGuard ();}
+		public float GetEffectiveGuard(){	return this.guard + (getStack != null?getStack ().getGuard () : 0);}
 		
 		public float GetMoveAPCost(){ return (GameControl.UseAPForMove()) ? Mathf.Max(0, moveAPCost+GetEffMoveAPCost()+PerkManager.GetUnitMoveAPCost(prefabID)) : 0 ; }
 		public float GetAttackAPCost(){ return (GameControl.UseAPForAttack()) ? Mathf.Max(0, attackAPCost+GetEffAttackAPCost()+PerkManager.GetUnitAttackAPCost(prefabID)) : 0 ; }
