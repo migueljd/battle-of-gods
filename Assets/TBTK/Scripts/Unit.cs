@@ -1049,7 +1049,7 @@ namespace TBTK{
 
 			float g = this.GetEffectiveGuard ();
 
-			this.HP-= dmg - g >0? dmg : 0;
+			this.HP-= dmg - g >0? dmg - g : 0;
 			float totalHP = this.HP + this.tile.tileDefense;
 
 
