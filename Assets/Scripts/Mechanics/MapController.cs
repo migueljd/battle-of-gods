@@ -366,7 +366,13 @@ public class MapController : MonoBehaviour {
 		Unit unit = newEnemy.GetComponent<Unit>();
 		unit.tile = tile;
 		tile.unit = unit;
+
+		float unitDamage = Random.Range (unit.damageMin, unit.damageMax + 1);
+
+		unit.damageMin = unitDamage;
+
 		FactionManager.InsertUnit (unit, enemyFactionID);
+
 	}
 
 
