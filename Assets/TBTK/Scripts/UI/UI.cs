@@ -99,11 +99,11 @@ namespace TBTK{
 		}
 
 		public static void UpdateUnitInfo(){
-			OnUnitSelected ();
+			instance.OnUnitSelected ();
 		}
 
 		public static void UpdateEnemyInfo(){
-			OnHostileSelected();
+			instance.OnHostileSelected();
 		}
 		
 		
