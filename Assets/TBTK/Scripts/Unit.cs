@@ -903,10 +903,8 @@ namespace TBTK{
 			TurnControl.ActionCompleted(GameControl.delayPerAction);
 			while (!TurnControl.ClearToProceed()) {
 
-				Debug.Log ("Attacking");
 				yield return null;
 				}
-			Debug.Log ("Finished attacking");
 			if (unitParticles != null)
 				unitParticles.EndAttack ();
 			FinishAction();

@@ -664,6 +664,7 @@ namespace TBTK{
 		public static void OnTile(Tile tile){ instance._OnTile(tile); }
 		public void _OnTile(Tile tile){
 			if(!FactionManager.IsPlayerTurn()) return;
+			bool endTurn = false;
 			if(tile.unit!=null){
 				//select the unit if the unit belong's to current player in turn
 				Debug.Log (attackableTileList.Contains(tile));
@@ -685,6 +686,7 @@ namespace TBTK{
 						GameControl.selectedUnit.Attack(tile.unit);
 						GameControl.SelectTile(null);
 						onHostileDeselectE();
+						endTurn = true;
 						//onHostileDeselectE();
 					//#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 					//}
@@ -702,6 +704,8 @@ namespace TBTK{
   //              if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
 	//			#endif
 					if(!tile.isPortal){
+						if(FactionManager.GetAllHostileUnit(GameControl.selectedUnit.factionID).Count == 0) endTurn = true;
+					
 						GameControl.selectedUnit.Move(tile);
 						int distance = GetDistance(tile, GameControl.selectedUnit.tile, true);
 						CardsStackManager.decreaseMovement(distance);
@@ -724,6 +728,8 @@ namespace TBTK{
 			}
 
 			ClearHoveredTile();	//clear the hovered tile so all the UI overlay will be cleared
+			if(endTurn) TurnControl.EndTurn();
+
 		}
 		
 		
@@ -775,7 +781,6 @@ namespace TBTK{
 			ClearWalkableTileList();
 			//List<Tile> newList=GetTilesWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true, true);
 			List<Tile> newList = AStar.GetTileWithinDistance(unit.tile, unit.GetEffectiveMoveRange(), true);
-			Debug.Log ("List count: " + newList.Count);
 			for(int i=0; i<newList.Count; i++){
 				if(newList[i].unit==null){
 					walkableTileList.Add(newList[i]);
