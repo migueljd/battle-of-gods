@@ -46,6 +46,7 @@ namespace TBTK{
 			GridManager.onHostileSelectE +=OnHostileSelected;
 			GridManager.onHostileDeselectE += OnHostileDeselect;
 			GameControl.onGameOverE += OnGameOver;
+			OnHostileDeselect ();
 		}
 		void OnDisable(){
 			FactionManager.onUnitDeploymentPhaseE -= OnUnitDeploymentPhase;
@@ -93,6 +94,8 @@ namespace TBTK{
 			enemyImg.enabled = false;
 			enemyAttack.text = "";
 			enemyDefense.text = "";
+			enemyHP.text = "";
+
 		}
 		
 		
