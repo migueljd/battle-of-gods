@@ -201,7 +201,6 @@ namespace Cards
 				int count = 0;
 				startingHand.TryGetValue(key, out count);
 				foreach (Card c in cardsInDiscard.list) {
-					Debug.Log (c.name + " is equals to " +(key+"(Clone)"));
 					if(c.name.Equals(key+"(Clone)") && count >0){
 						count--;
 						cardsInHand.addCard(c);

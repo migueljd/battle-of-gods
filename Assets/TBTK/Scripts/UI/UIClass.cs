@@ -74,6 +74,8 @@ namespace TBTK {
 
 		public Image iconMove;
 		public Image iconAttack;
+
+		public Text HPText;
 		
 		public void Init(){
 			rootT=rootObj.transform;
@@ -105,6 +107,9 @@ namespace TBTK {
 				}
 				else if(child.name=="IconAttack"){
 					iconAttack=child.GetComponent<Image>();
+				}
+				else if(child.name=="HP"){
+					HPText = child.GetComponent<Text>();
 				}
 			}
 			

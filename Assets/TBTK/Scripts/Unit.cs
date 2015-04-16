@@ -907,17 +907,17 @@ namespace TBTK{
 
 			float attackDelay = 0;
 
-			//play animation
-			if(unitAnim!=null) attackDelay = unitAnim.Attack();
-			if (unitParticles != null)
-				unitParticles.Attack (targetUnit);
-			if(unitAudio!=null) unitAudio.Attack();
 
 			//shoot
 			for(int i=0; i<shootPointList.Count; i++){
 				Shoot(shootObject, targetTile, shootPointList[i], attInstance, i==shootPointList.Count-1);
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
+			//play animation
+			if(unitAnim!=null) attackDelay = unitAnim.Attack();
+			if (unitParticles != null)
+				unitParticles.Attack (targetUnit);
+			if(unitAudio!=null) unitAudio.Attack();
 
 			TurnControl.ActionCompleted(attackDelay);
 			while (!TurnControl.ClearToProceed()) {
