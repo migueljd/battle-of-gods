@@ -34,6 +34,10 @@ namespace TBTK
 				particleAttack.Stop ();
 		}
 
+		void OnEnable(){
+			this.transform.GetChild (0).GetComponent<UnitAnimationEvents>().OnAttackEventE += Attack;
+		}
+
 		
 		
 		public void Move(){
@@ -44,8 +48,10 @@ namespace TBTK
 		}
 		
 		public void Attack(Unit targetUnit){
-			particleAttack.transform.position = targetUnit.transform.position + new Vector3 (0, height, 0);
-			particleAttack.Play();
+			if (particleAttack != null) {
+				particleAttack.transform.position = targetUnit.transform.position + new Vector3 (0, height, 0);
+				particleAttack.Play ();
+			}
 		}
 
 		public void EndAttack(){

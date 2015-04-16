@@ -182,8 +182,6 @@ namespace TBTK {
 					overlay.barHP.value=overlay.unit.GetHPRatio();
 					overlay.barAP.value=overlay.unit.GetAPRatio();
 					overlay.HPText.text = overlay.unit.HP.ToString();
-					Debug.Log ("Text: " + overlay.HPText.text);
-					Debug.Log ("HP: " + overlay.unit.HP.ToString());
 
 //					overlay.iconAttack.enabled = overlay.unit.attackRemain > 0 && overlay.unit.factionID !=1;
 //					overlay.iconMove.enabled = overlay.unit.moveRemain > 0 && overlay.unit.factionID !=1;

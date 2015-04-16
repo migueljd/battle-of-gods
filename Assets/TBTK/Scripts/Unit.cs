@@ -117,6 +117,8 @@ namespace TBTK{
 		public bool RangedAttackOnly = false;
 		
 		public bool isStatic = false;
+
+		public Unit target;
 		
 		//********************************************************************************************************************************
 		//these section are functions that get active stats of unit
@@ -794,7 +796,7 @@ namespace TBTK{
 		
 		
 		public void Attack(Unit targetUnit){
-
+			target = targetUnit;
 			if(attackRemain==0) return;
 			if(AP<GetAttackAPCost()) return;
 			attackRemain-=1;
@@ -907,6 +909,12 @@ namespace TBTK{
 
 			float attackDelay = 0;
 
+			if(unitAnim!=null) attackDelay = unitAnim.Attack();
+			//			if (unitParticles != null)
+			//				unitParticles.Attack (targetUnit);
+			if(unitAudio!=null) unitAudio.Attack();
+			Debug.Log ("Attack delay is: " + attackDelay);
+			yield return new WaitForSeconds (attackDelay);
 
 			//shoot
 			for(int i=0; i<shootPointList.Count; i++){
@@ -914,18 +922,11 @@ namespace TBTK{
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
 			//play animation
-			if(unitAnim!=null) attackDelay = unitAnim.Attack();
-			if (unitParticles != null)
-				unitParticles.Attack (targetUnit);
-			if(unitAudio!=null) unitAudio.Attack();
-
-			TurnControl.ActionCompleted(attackDelay);
+			TurnControl.ActionCompleted(0);
 			while (!TurnControl.ClearToProceed()) {
 
 				yield return null;
 				}
-			if (unitParticles != null)
-				unitParticles.EndAttack ();
 			FinishAction();
 
 			if(!attInstance.isAbility && !attInstance.stunned && !attInstance.destroyed && targetUnit != null && targetUnit.CanCounter(this)) targetUnit.Counter(this);
@@ -933,6 +934,10 @@ namespace TBTK{
 			while(TurnControl.CounterInProgress()) yield return null;
 
 			if(turretObject!=null && turretObject!=thisT){ while(!RotateTurretToOrigin() && !aiming) yield return null; }
+			target = null;
+			if (unitParticles != null)
+				unitParticles.EndAttack ();
+			Debug.Log ("Attack has come to an end");
 		}
 		
 		
