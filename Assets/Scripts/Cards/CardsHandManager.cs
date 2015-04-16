@@ -218,14 +218,14 @@ namespace Cards
 //			instance._ShuffleDeck ();
 //		}
 
-		private void _ShuffleDeck(){
-			if (cardsInDiscard.list.Count > 0) {
-				do {
-					int position = Random.Range(0, cardsInDiscard.getCount());
-//					cardsInDeck.addCard(cardsInDiscard.removeCardAt(position));
-				} while(cardsInDiscard.getCount() > 0);
-			}
-		}
+//		private void _ShuffleDeck(){
+//			if (cardsInDiscard.list.Count > 0) {
+//				do {
+//					int position = Random.Range(0, cardsInDiscard.getCount());
+////					cardsInDeck.addCard(cardsInDiscard.removeCardAt(position));
+//				} while(cardsInDiscard.getCount() > 0);
+//			}
+//		}
 
 		public static void DeselectCard(){
 			instance._DeselectCard ();
