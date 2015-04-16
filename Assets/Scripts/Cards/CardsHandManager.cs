@@ -90,6 +90,7 @@ namespace Cards
 				}
 			}
 			changeModeToGameOn ();
+
 		}
 
 		public void GameStarted (){
@@ -107,7 +108,8 @@ namespace Cards
 //				CreateDeck();
 //				updateHand();
 //				_UpdateCardsPosition ();
-				
+				StartupCards();
+				CreateStartingHand();
 			} else if (startedOnce) {
 				_UpdateCardsPosition ();
 			}
@@ -175,8 +177,8 @@ namespace Cards
 		}
 
 //		public void updateHand(){
-////			Debug.Log ("Child Count: " + instance.transform.childCount);
-////			Debug.Log ("Hand Size: " + handSize);
+//			Debug.Log ("Child Count: " + instance.transform.childCount);
+//			Debug.Log ("Hand Size: " + handSize);
 //			if (handSize - cardsInHand.getCount () > cardsInDeck.getCount ())
 //				_ShuffleDeck ();
 //
@@ -191,6 +193,27 @@ namespace Cards
 //			_UpdateCardsPosition ();
 //			this.transform.localPosition = managerPosition;
 //		}
+
+		private void CreateStartingHand(){
+			Dictionary<string, int> startingHand = Levels_DB.GetStartingCards ();
+
+			foreach (string key in startingHand.Keys) {
+				int count = 0;
+				startingHand.TryGetValue(key, out count);
+				foreach (Card c in cardsInDiscard.list) {
+					Debug.Log (c.name + " is equals to " +(key+"(Clone)"));
+					if(c.name.Equals(key+"(Clone)") && count >0){
+						count--;
+						cardsInHand.addCard(c);
+						c.transform.parent = this.transform;
+					}
+				}
+			}
+			foreach (Card c in cardsInHand.list) {
+				cardsInDiscard.removeCard(c);
+			}
+			_UpdateCardsPosition ();
+		}
 
 		public static void ShuffleDeck(){
 			instance._ShuffleDeck ();
@@ -215,10 +238,10 @@ namespace Cards
 
 
 		public static void CreateDeck(){
-			instance._CreateDeck ();
+			instance.StartupCards ();
 		}
 
-		private void _CreateDeck(){
+		private void StartupCards(){
 //			Debug.Log (instantiator.cardsToInstantiate.Count);
 //			GameObject deck = GameObject.FindGameObjectWithTag ("");
 			foreach (GameObject t in instantiator.cardsToInstantiate) {

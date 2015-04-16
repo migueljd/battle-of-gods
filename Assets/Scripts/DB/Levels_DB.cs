@@ -83,19 +83,19 @@ public class Levels_DB : MonoBehaviour {
 		case 1:
 			return 5;
 		case 2:
-			return 5;
+			return 6;
 		case 3:
-			return 5;
+			return 7;
 		case 4:
-			return 5;
+			return 8;
 		case 5:
-			return 5;
+			return 9;
 		case 6:
-			return 13;
+			return 10;
 		case 7:
-			return 14;
+			return 11;
 		default:
-			return 15;
+			return 12;
 		}
 	}
 
@@ -144,5 +144,15 @@ public class Levels_DB : MonoBehaviour {
 
 		return cardList;
 	
+	}
+
+	public static Dictionary<string, int> GetStartingCards(){
+		Dictionary<string, int> cardList = new Dictionary<string, int>();
+
+		cardList.Add ("Athena's Touch",3 );
+		cardList.Add ("HeroicStrike", 2);
+
+		return cardList;
+		
 	}
 }
