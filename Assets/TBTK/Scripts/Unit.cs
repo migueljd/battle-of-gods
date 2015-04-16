@@ -904,9 +904,11 @@ namespace TBTK{
 			aiming=true;	yield return null;
 			while(!Aiming(targetTile, targetUnit)) yield return null;
 			aiming=false;
-			
+
+			float attackDelay = 0;
+
 			//play animation
-			if(unitAnim!=null) unitAnim.Attack();
+			if(unitAnim!=null) attackDelay = unitAnim.Attack();
 			if (unitParticles != null)
 				unitParticles.Attack (targetUnit);
 			if(unitAudio!=null) unitAudio.Attack();
@@ -917,7 +919,7 @@ namespace TBTK{
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
 
-			TurnControl.ActionCompleted(0);
+			TurnControl.ActionCompleted(attackDelay);
 			while (!TurnControl.ClearToProceed()) {
 
 				yield return null;
@@ -955,8 +957,10 @@ namespace TBTK{
 			counterRemain-=1;
 			
 			while(!Aiming(targetUnit.tile, targetUnit)) yield return null;
-			
-			if(unitAnim!=null) unitAnim.Attack();
+
+			float delayAttack = 0;
+
+			if(unitAnim!=null) delayAttack = unitAnim.Attack();
 			if(unitAudio!=null) unitAudio.Attack();
 			
 			AttackInstance attInstance=new AttackInstance(this, targetUnit, true);
@@ -970,7 +974,7 @@ namespace TBTK{
 				if(delayBetweenShootPoint>0) yield return new WaitForSeconds(delayBetweenShootPoint);
 			}
 			
-//			TurnControl.ActionCompleted(GameControl.delayPerAction);
+			TurnControl.ActionCompleted(delayAttack);
 			while(!TurnControl.ClearToCounter()) yield return null;
 			TurnControl.CounterCompleted();
 			

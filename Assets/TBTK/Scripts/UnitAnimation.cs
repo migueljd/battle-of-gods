@@ -63,8 +63,10 @@ namespace TBTK {
 			anim.SetBool("Move", false);
 		}
 		
-		public void Attack(){
+		public float Attack(){
 			anim.SetTrigger("Attack");
+			return clipAttack!=null ? clipAttack.length : 0;
+
 		}
 		public void Hit(){
 			anim.SetTrigger("Hit");

@@ -23,9 +23,11 @@ namespace TBTK
 		void Awake () {
 			unit=gameObject.GetComponent<Unit>();
 
-			if (unit != null)
+			if (unit != null) {
 				unit.setParticles (this);
-
+				if(particleAttack != null) particleAttack = (ParticleSystem)Instantiate(particleAttack, this.transform.position,Quaternion.identity);
+				if(particleMove != null) particleMove = (ParticleSystem)Instantiate(particleMove, this.transform.position,Quaternion.identity);
+			}
 			if (particleMove != null)
 				particleMove.Stop ();
 			if (particleAttack != null)
