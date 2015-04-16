@@ -27,6 +27,10 @@ namespace TBTK{
 		public Text heroHP;
 		public Text enemyHP;
 
+		public GameObject unitSelectedArrow;
+		public GameObject enemySelectedArrow;
+
+		public float height;
 
 		void Awake(){
 			instance=this;
@@ -75,6 +79,10 @@ namespace TBTK{
 				heroHP.text = unit.HP.ToString();
 				heroAttack.text = (unit.GetEffectiveDamage()+ unit.tile.tileAttack).ToString();
 				heroDefense.text = (unit.GetEffectiveGuard() + unit.tile.tileDefense).ToString();
+//				Vector3 screenPos = mainCam.WorldToScreenPoint(overlay.unit.thisT.position+new Vector3(0, 0, 0));
+//				overlay.rootT.localPosition=(screenPos+new Vector3(0, -20, 0))/UI.GetScaleFactor();
+
+				unitSelectedArrow.GetComponent<SelectorAnimator>().unit = unit;
 			}
 			else endTurnButtonObj.SetActive(false);
 		}
@@ -87,6 +95,9 @@ namespace TBTK{
 				enemyHP.text = enemy.HP.ToString();
 				enemyAttack.text = ((int)(enemy.damageMin + unit.tile.tileAttack)).ToString();
 				enemyDefense.text = (enemy.GetEffectiveGuard() + unit.tile.tileDefense).ToString();
+
+				enemySelectedArrow.SetActive(true);
+				enemySelectedArrow.GetComponent<SelectorAnimator>().unit = unit;
 			}
 		}
 
@@ -95,6 +106,8 @@ namespace TBTK{
 			enemyAttack.text = "";
 			enemyDefense.text = "";
 			enemyHP.text = "";
+			enemySelectedArrow.GetComponent<SelectorAnimator> ().unit = null;
+			enemySelectedArrow.SetActive(false) ;
 
 		}
 
