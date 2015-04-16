@@ -124,18 +124,23 @@ public class Levels_DB : MonoBehaviour {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop_lvl2_", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur_lvl2_", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Minotaur_lvl2_", typeof(Transform)) as Transform);
-		}else if (lvl < 19) {
+		} else if (lvl < 19) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop_lvl3_", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Desert/Centaur_lvl2_", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Desert/Minotaur_lvl2_", typeof(Transform)) as Transform);
-		}else if (lvl < 22) {
+		} else if (lvl < 22) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop_lvl3_", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur_lvl3_", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Desert/Minotaur_lvl2_", typeof(Transform)) as Transform);
-		}else if (lvl < 25) {
+		} else if (lvl < 25) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop_lvl3_", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur_lvl3_", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Minotaur_lvl3_", typeof(Transform)) as Transform);
+		} else {
+			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop_lvl3_", typeof(Transform)) as Transform);
+			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur_lvl3_", typeof(Transform)) as Transform);
+			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Minotaur_lvl3_", typeof(Transform)) as Transform);
+			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Hades", typeof(Transform)) as Transform);
 		}
 
 
