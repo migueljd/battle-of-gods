@@ -52,7 +52,7 @@ namespace Cards
 
 		private static bool startedOnce = false;
 
-		Vector3 baseScale = new Vector3 (0.30f, 0.42f, 0.42f);
+		public Vector3 baseScale = new Vector3 (0.30f, 0.42f, 0.42f);
 
 
 		void Awake ()
