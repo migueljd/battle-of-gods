@@ -10,7 +10,7 @@ namespace TBTK
 
 		private Unit unit;
 
-		public static float height;
+		public static float height = 1.5f;
 
 		
 		//public ParticleSystem particleIdle;
