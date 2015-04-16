@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 using TBTK;
 using Cards;
@@ -172,7 +173,8 @@ namespace TBTK{
 			yield return null;
 			
 			if(delay>0) yield return new WaitForSeconds(delay);
-			
+			Unit.gameStarted = true;
+
 			AbilityManagerFaction.StartCounter();	//for ability energy to start charging
 			
 			if(onGameStartE!=null) onGameStartE();
@@ -342,7 +344,18 @@ namespace TBTK{
 		public static IEnumerator PassLevel(){
 			MapController.level += 1;
 			CardsHandManager.Disattach ();
-			Debug.Log (Levels_DB.GetSceneLevel (MapController.level));
+
+			List<Unit> units = FactionManager.GetAllPlayerUnits ();
+
+			foreach (Unit u in units) {
+				if(u.transform.name.Equals("Achilles")){
+					Unit.AchillesHP = (int)u.HP ;
+				}else if(u.transform.name.Equals ("Archer")){
+					Unit.AtalantaHP = (int)u.HP;
+				}else if(u.transform.name.Equals ("Hercules")){
+					Unit.HerculesHP = (int)u.HP;
+				}			}
+
 
 			Application.LoadLevel (Levels_DB.GetSceneLevel(MapController.level));
 			yield return null;

@@ -21,7 +21,6 @@ public class SelectorAnimator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (unit != null) {
-			Debug.Log ("here");
 			Vector3 screenPos = Camera.main.WorldToScreenPoint (unit.transform.position);
 			transform.localPosition = (screenPos + new Vector3 (-10, 120, 0)) / UI.GetScaleFactor ();
 //			if (increasing && Y < maxY) {

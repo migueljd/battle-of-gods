@@ -119,6 +119,10 @@ namespace TBTK{
 		public bool isStatic = false;
 
 		public Unit target;
+
+		public static int HerculesHP;
+		public static int AtalantaHP;
+		public static int AchillesHP;
 		
 		//********************************************************************************************************************************
 		//these section are functions that get active stats of unit
@@ -601,7 +605,7 @@ namespace TBTK{
 		
 		
 		
-		
+		public static bool gameStarted = false;
 		
 		[HideInInspector] public Transform thisT;
 		[HideInInspector] public GameObject thisObj;
@@ -623,7 +627,17 @@ namespace TBTK{
 		}
 		
 		void Start () {
-			HP=GetFullHP();
+			if (!gameStarted) {
+				HP = GetFullHP ();
+			} else {
+				if(this.transform.name.Equals("Achilles")){
+					HP = AchillesHP;
+				}else if(this.transform.name.Equals ("Archer")){
+					HP = AtalantaHP;
+				}else if(this.transform.name.Equals ("Hercules")){
+					HP = HerculesHP;
+				}
+			}
 			if(GameControl.RestoreUnitAPOnTurn()) AP=GetFullAP();
 		}
 		
