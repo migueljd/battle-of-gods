@@ -1108,7 +1108,7 @@ namespace TBTK{
 
 			OnUnitDestroyed(this);
 			
-			yield return new WaitForSeconds(delay);
+			yield return new WaitForSeconds(delay + 0.5f);
 			Destroy(thisObj);
 		}
 		

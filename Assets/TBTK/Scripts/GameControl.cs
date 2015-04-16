@@ -178,7 +178,7 @@ namespace TBTK{
 			if(onGameStartE!=null) onGameStartE();
 			
 			gamePhase=_GamePhase.Play;
-			CardsHandManager.ShuffleDeck ();
+//			CardsHandManager.ShuffleDeck ();
 			CardsHandManager.instance.GameStarted ();
 			TurnControl.EndTurn();	//this will initiate unit selection and start the game
 
@@ -339,10 +339,13 @@ namespace TBTK{
 			selectedTile = null;
 		}
 
-		public static void PassLevel(){
+		public static IEnumerator PassLevel(){
 			MapController.level += 1;
 			CardsHandManager.Disattach ();
+			Debug.Log (Levels_DB.GetSceneLevel (MapController.level));
+
 			Application.LoadLevel (Levels_DB.GetSceneLevel(MapController.level));
+			yield return null;
 		}
 		
 		
