@@ -85,7 +85,7 @@ namespace TBTK{
 				enemyImg.enabled = true;
 				enemyImg.sprite = enemy.iconSprite;
 				enemyHP.text = enemy.HP.ToString();
-				enemyAttack.text = (enemy.damageMin + unit.tile.tileAttack).ToString();
+				enemyAttack.text = ((int)(enemy.damageMin + unit.tile.tileAttack)).ToString();
 				enemyDefense.text = (enemy.GetEffectiveGuard() + unit.tile.tileDefense).ToString();
 			}
 		}
