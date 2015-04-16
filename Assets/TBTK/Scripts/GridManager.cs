@@ -714,7 +714,7 @@ namespace TBTK{
 
 					}
 					else{
-						GameControl.PassLevel();
+						StartCoroutine(GameControl.PassLevel());
 					}//in case the unit move into the destination and has insufficient ap to attack
 	//			#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
                     

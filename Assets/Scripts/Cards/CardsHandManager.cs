@@ -214,9 +214,9 @@ namespace Cards
 			_UpdateCardsPosition ();
 		}
 
-		public static void ShuffleDeck(){
-			instance._ShuffleDeck ();
-		}
+////		public static void ShuffleDeck(){
+//			instance._ShuffleDeck ();
+//		}
 
 		private void _ShuffleDeck(){
 			if (cardsInDiscard.list.Count > 0) {
