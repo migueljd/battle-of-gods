@@ -70,9 +70,9 @@ public class Levels_DB : MonoBehaviour {
 	}
 
 	public static string GetLevelName(int lvl){
-		if (lvl <= 8)
+		if (lvl <= 2)
 			return "Forest";
-		else if (lvl <= 16)
+		else if (lvl <= 3)
 			return "Desert";
 		else
 			return "Underworld";
