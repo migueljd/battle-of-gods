@@ -52,7 +52,7 @@ namespace TBTK{
 		public int value=5;
 		
 		public float moveSpeed=10;
-		[HideInInspector] private float rotateSpeed=3;
+		[HideInInspector] private float rotateSpeed=7;
 		
 		public DurationCounter stunCounter=new DurationCounter();
 		public int stunned=0;			//if >0, unit is stunned

@@ -369,7 +369,7 @@ public class MapController : MonoBehaviour {
 
 	private void createNewEnemy(Tile tile){
 		int enemyID = Random.Range (0, MapController.instance.enemyPrefabs.Count);
-		Transform newEnemy = (Transform) Instantiate ( MapController.instance.enemyPrefabs [enemyID], tile.GetPos(), Quaternion.identity);
+		Transform newEnemy = (Transform) Instantiate ( MapController.instance.enemyPrefabs [enemyID], tile.GetPos(), Quaternion.Euler(new Vector3(0, 180,0)));
 
 		Unit unit = newEnemy.GetComponent<Unit>();
 		unit.tile = tile;
