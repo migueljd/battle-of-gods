@@ -663,7 +663,7 @@ namespace TBTK{
 		//when player click on a particular tile
 		public static void OnTile(Tile tile){ instance._OnTile(tile); }
 		public void _OnTile(Tile tile){
-			if(!FactionManager.IsPlayerTurn()) return;
+			if(!FactionManager.IsPlayerTurn() || CardsHandManager.movingCard) return;
 			bool endTurn = false;
 			if(tile.unit!=null){
 				//select the unit if the unit belong's to current player in turn
