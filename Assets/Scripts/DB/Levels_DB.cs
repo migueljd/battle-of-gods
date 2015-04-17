@@ -188,6 +188,8 @@ public class Levels_DB : MonoBehaviour {
 
 		cardList.Add ("Athena's Touch",3 );
 		cardList.Add ("HeroicStrike", 2);
+		cardList.Add ("Zeus Thunder", 1);
+
 
 		return cardList;
 		
