@@ -96,8 +96,8 @@ namespace TBTK{
 				enemyAttack.text = ((int)(enemy.damageMin + unit.tile.tileAttack)).ToString();
 				enemyDefense.text = (enemy.GetEffectiveGuard() + unit.tile.tileDefense).ToString();
 
-				enemySelectedArrow.SetActive(true);
-				enemySelectedArrow.GetComponent<SelectorAnimator>().unit = unit;
+				//enemySelectedArrow.SetActive(true);
+				//enemySelectedArrow.GetComponent<SelectorAnimator>().unit = unit;
 			}
 		}
 
