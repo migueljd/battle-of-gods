@@ -76,10 +76,12 @@ namespace Cards
 
 		void OnEnable(){
 			Unit.onUnitDestroyedE += OnUnitDestroyed;
+			GameControl.onPassLevelE += PassLevel;
 		}
 
 		void OnDisable(){
 			Unit.onUnitDestroyedE -= OnUnitDestroyed;
+			GameControl.onPassLevelE -= PassLevel;
 		}
 
 		private void SetUpInstantiator(){
@@ -302,6 +304,10 @@ namespace Cards
 
 		public static void Disattach(){
 			instance.transform.parent = null;
+		}
+
+		public static void PassLevel(){
+			Disattach ();
 		}
 
 

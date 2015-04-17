@@ -32,6 +32,8 @@ namespace TBTK{
 		public delegate void GameOverHandler(int factionID);	
 		public static event GameOverHandler onGameOverE;	//listen by AudioManager and UI
 
+		public delegate void PassLevelHandler();
+		public static event PassLevelHandler onPassLevelE;
 		
 		
 		private static _GamePhase gamePhase=_GamePhase.Initialization;
@@ -342,20 +344,9 @@ namespace TBTK{
 		}
 
 		public static IEnumerator PassLevel(){
-			MapController.level += 1;
-			CardsHandManager.Disattach ();
 
-			List<Unit> units = FactionManager.GetAllPlayerUnits ();
-
-			foreach (Unit u in units) {
-				if(u.transform.name.Equals("Achilles")){
-					Unit.AchillesHP = (int)u.HP ;
-				}else if(u.transform.name.Equals ("Archer")){
-					Unit.AtalantaHP = (int)u.HP;
-				}else if(u.transform.name.Equals ("Hercules")){
-					Unit.HerculesHP = (int)u.HP;
-				}			}
-
+			if (onPassLevelE != null)
+				onPassLevelE ();
 
 			Application.LoadLevel (Levels_DB.GetSceneLevel(MapController.level));
 			yield return null;

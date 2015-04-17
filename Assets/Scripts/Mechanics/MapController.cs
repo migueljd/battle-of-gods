@@ -56,6 +56,14 @@ public class MapController : MonoBehaviour {
 		}
 	}
 
+	void OnEnable(){
+		GameControl.onPassLevelE += PassLevel;
+	}
+	
+	void OnDisable(){
+		GameControl.onPassLevelE -= PassLevel;
+	}
+
 	void OnLevelWasLoaded(int levelLoaded){
 		generatedTileList = new List<Transform> ();
 		
@@ -373,6 +381,10 @@ public class MapController : MonoBehaviour {
 
 		FactionManager.InsertUnit (unit, enemyFactionID);
 
+	}
+
+	public static void PassLevel(){
+		level += 1;
 	}
 
 

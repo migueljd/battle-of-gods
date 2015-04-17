@@ -741,7 +741,7 @@ namespace TBTK{
 			onHostileDeselectE();
 			GameControl.SelectTile(null);
 	
-			TurnControl.EndTurn();
+			GameControl.EndTurn();
 		}
 
 //		IEnumerator RevealArea(){

@@ -643,9 +643,11 @@ namespace TBTK{
 		
 		void OnEnable(){
 			AbilityManagerUnit.onIterateAbilityCooldownE += OnIterateAbilityCooldown;
+			GameControl.onPassLevelE += PassLevel;
 		}
 		void OnDisable(){
 			AbilityManagerUnit.onIterateAbilityCooldownE -= OnIterateAbilityCooldown;
+			GameControl.onPassLevelE -= PassLevel;
 		}
 		
 		void OnIterateAbilityCooldown(){
@@ -1230,6 +1232,23 @@ namespace TBTK{
 		//This method is necessary to get the stack of this unit card
 		public CardsStackManager getStack(){
 			return (CardsStackManager)transform.GetComponent<CardsStackManager> ();
+		}
+
+		//Method called on PassLevel of Game Control to save a few variables before passing
+
+		public static void PassLevel(){
+			List<Unit> units = FactionManager.GetAllPlayerUnits ();
+			
+			foreach (Unit u in units) {
+				if(u.transform.name.Equals("Achilles")){
+					AchillesHP = (int)u.HP ;
+				}else if(u.transform.name.Equals ("Archer")){
+					AtalantaHP = (int)u.HP;
+				}else if(u.transform.name.Equals ("Hercules")){
+					HerculesHP = (int)u.HP;
+				}	
+			}
+
 		}
 
 		
