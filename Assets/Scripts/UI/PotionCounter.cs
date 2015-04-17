@@ -53,7 +53,7 @@ public class PotionCounter : MonoBehaviour {
 
 	public void UsePotion(){
 		if (!usedPotionThisTurn && potionCount > 0 && FactionManager.IsPlayerTurn()) {
-			Unit healedUnit = GameControl.selectedUnit.HP;
+			Unit healedUnit = GameControl.selectedUnit;
 			healedUnit.HP = healedUnit.HP + PotionHPRecover > healedUnit.defaultHP? healedUnit.defaultHP : healedUnit.HP + PotionHPRecover;
 			potionCount -= 1;
 			usedPotionThisTurn = true;
