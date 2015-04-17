@@ -70,9 +70,9 @@ public class Levels_DB : MonoBehaviour {
 	}
 
 	public static string GetLevelName(int lvl){
-		if (lvl <1)
+		if (lvl <4)
 			return "Forest";
-		else if (lvl < 17)
+		else if (lvl <7)
 			return "Desert";
 		else
 			return "Underworld";
@@ -103,36 +103,36 @@ public class Levels_DB : MonoBehaviour {
 		List<Transform> enemyPrefabs = new List<Transform> ();
 		string levelName = GetLevelName (lvl);
 
-		if (lvl < 3) {
+		if (lvl < 2) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
-		} else if (lvl < 6) {
+		} else if (lvl < 3) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
-		} else if (lvl < 9) {
+		} else if (lvl < 4) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Minotaur", typeof(Transform)) as Transform);
-		} else if (lvl < 11) {
+		} else if (lvl < 5) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Forest/Centaur", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Forest/Minotaur", typeof(Transform)) as Transform);
-		} else if (lvl < 14) {
+		} else if (lvl < 6) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Forest/Minotaur", typeof(Transform)) as Transform);
-		} else if (lvl < 17) {
+		} else if (lvl < 7) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Minotaur", typeof(Transform)) as Transform);
-		} else if (lvl < 19) {
+		} else if (lvl < 8) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Desert/Centaur", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Desert/Minotaur", typeof(Transform)) as Transform);
-		} else if (lvl < 22) {
+		} else if (lvl < 9) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Desert/Minotaur", typeof(Transform)) as Transform);
-		} else if (lvl < 25) {
+		} else if (lvl < 9) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Minotaur", typeof(Transform)) as Transform);
