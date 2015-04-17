@@ -34,7 +34,9 @@ namespace TBTK{
 
 		public delegate void PassLevelHandler();
 		public static event PassLevelHandler onPassLevelE;
-		
+
+		public delegate void SelectUnitHandler ();
+		public static event SelectUnitHandler onUnitChosen;
 		
 		private static _GamePhase gamePhase=_GamePhase.Initialization;
 		public static _GamePhase GetGamePhase(){ return gamePhase; }
@@ -44,9 +46,12 @@ namespace TBTK{
 
 		public static Tile selectedTile; //the current selected tile
 		
+		public static bool isUnitChosen;
+
+		public static Unit chosenUnit; 
+		
 		public bool useGlobalSetting=true;
-		
-		
+
 		public bool enableManualUnitDeployment=true;
 		public static bool EnableManualUnitDeployment(){ return instance.enableManualUnitDeployment; }
 		
@@ -203,7 +208,7 @@ namespace TBTK{
 		private bool allowUnitSelect=true;	//lock unit select after a unit has been moved
 		public static bool AllowUnitSelect(){ return instance.allowUnitSelect; }
 		public static void LockUnitSelect(){
-			if(TurnControl.GetTurnMode()==_TurnMode.FactionUnitPerTurn) instance.allowUnitSelect=false;
+//			if(TurnControl.GetTurnMode()==_TurnMode.FactionUnitPerTurn) instance.allowUnitSelect=false;
 		}
 		public static void UnlockUnitSelect(){ instance.allowUnitSelect=true; }
 		
@@ -216,7 +221,10 @@ namespace TBTK{
 				AIManager.MoveUnit(unit);
 			}
 			else{
+
+				Debug.Log ("Selected unit");
 				ClearSelectedUnit();
+				if(!unit.usedThisTurn && !isUnitChosen) chosenUnit = unit;
 				selectedUnit=unit;
 				GridManager.Select(unit);
 				unit.Select();
@@ -287,9 +295,13 @@ namespace TBTK{
 		
 		//end the turn, called when EndTurn button are pressed or when a unit has used up all its move(in FactionUnitPerTurn & UnitPerTurn mode)
 		public static void EndTurn(){ 
+			if(chosenUnit != null)chosenUnit.usedThisTurn = true;
+
+			isUnitChosen = false;
+			chosenUnit = null;
 			if(onIterateTurnE!=null) onIterateTurnE();	//listen by EffectTracker and AbilityManager to iterate effect and cd duration
 																		//listen by tile in for tracking forceVisible(scan)
-			
+
 			Debug.Log("end turn");
 			
 			ClearSelectedUnit();
@@ -355,6 +367,21 @@ namespace TBTK{
 		
 		public static void DisplayMessage(string msg){ 
 			if(onGameMessageE!=null) onGameMessageE(msg);
+		}
+
+		
+		public static void ChooseSelectedUnit(){
+			if (!isUnitChosen) {
+				Debug.Log ("Chose unit");
+				isUnitChosen = true;
+				chosenUnit = selectedUnit;
+				selectedUnit.usedThisTurn = true;
+				selectedUnit.getStack ().updateDamageAndGuard ();
+
+				if (onUnitChosen != null)
+					onUnitChosen ();
+			}
+
 		}
 		
 	}

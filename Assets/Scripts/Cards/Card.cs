@@ -3,6 +3,8 @@ using System.Collections;
 
 using Cards;
 
+using TBTK;
+
 namespace Cards{
 	public class Card : MonoBehaviour{
 
@@ -123,6 +125,8 @@ namespace Cards{
 		}
 
 		public virtual bool CanUseCard(){
+			if (GameControl.chosenUnit == null && (GameControl.selectedUnit == null || GameControl.selectedUnit.usedThisTurn))
+				return false;
 			return true;
 		}
 

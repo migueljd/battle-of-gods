@@ -123,6 +123,8 @@ namespace TBTK{
 		public static int HerculesHP;
 		public static int AtalantaHP;
 		public static int AchillesHP;
+
+		public bool usedThisTurn = false;
 		
 		//********************************************************************************************************************************
 		//these section are functions that get active stats of unit
@@ -688,7 +690,8 @@ namespace TBTK{
 		
 		public void Move(Tile targetTile){
 			if(moveRemain<=0) return;
-			
+			if (FactionManager.IsPlayerTurn ())
+				GameControl.ChooseSelectedUnit ();
 			moveRemain-=1;
 			Debug.Log("moving "+name+" to "+targetTile);
 			GameControl.LockUnitSelect();
@@ -812,7 +815,11 @@ namespace TBTK{
 		
 		
 		public void Attack(Unit targetUnit){
+			//variable used to tell particles it can get ready to show
 			target = targetUnit;
+
+			//makes this unit used in case it wasn't already
+			usedThisTurn = true;
 			if(attackRemain==0) return;
 			if(AP<GetAttackAPCost()) return;
 			attackRemain-=1;
@@ -1250,6 +1257,7 @@ namespace TBTK{
 			}
 
 		}
+
 
 		
 		[HideInInspector] protected UnitParticles unitParticles;

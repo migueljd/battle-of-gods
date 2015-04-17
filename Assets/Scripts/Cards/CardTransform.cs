@@ -81,10 +81,12 @@ namespace Cards
 
 		private void activateCard(CardsStackManager stack){
 
-			if (this.transformCard.damageCard) 
-				stack.addDamageCard(this.transformCard);
-			if (this.transformCard.guardCard)
+			if (this.transformCard.damageCard) {
+				stack.addDamageCard (this.transformCard);
+			}
+			if (this.transformCard.guardCard) {
 				stack.addGuardCard (this.transformCard);
+			}
 			if (this.transformCard.moveCard)
 				stack.addMoveCard (this.transformCard);
 			if (this.transformCard.magicCard)
@@ -141,7 +143,8 @@ namespace Cards
 			float distance = Vector3.Distance (mousePos, this.transform.parent.position);
 			if(CardsHandManager.getInstance () != null && CardsHandManager.getInstance ().mode == CardsHandManager.modes._GameOn && cardHeld){
 				if(distance >= distanceToActivate && GameControl.selectedUnit != null && transformCard.CanUseCard()){
-					activateCard(GameControl.selectedUnit.getStack());
+					GameControl.ChooseSelectedUnit();
+					activateCard(GameControl.chosenUnit.getStack());
 				}
 				else if(!transformCard.CanUseCard()) zoomed = true;
 			}

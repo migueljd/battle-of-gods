@@ -6,27 +6,27 @@ using TBTK;
 using Cards;
 
 namespace TBTK{
-
+	
 	public class GridManager : MonoBehaviour {
 		
 		public delegate void HoverAttackableHandler(Tile tile);
-		public static event HoverAttackableHandler onHoverAttackableTileE;		//listen by UI only
+		public static event HoverAttackableHandler onHoverAttackableTileE;        //listen by UI only
 		
 		public delegate void ExitAttackableHandler();
-		public static event ExitAttackableHandler onExitAttackableTileE;			//listen by UI only
+		public static event ExitAttackableHandler onExitAttackableTileE;            //listen by UI only
 		
 		public delegate void HoverWalkableHandler(Tile tile);
-		public static event HoverWalkableHandler onHoverWalkableTileE;		//listen by UI only
+		public static event HoverWalkableHandler onHoverWalkableTileE;        //listen by UI only
 		
 		public delegate void ExitWalkableHandler();
-		public static event ExitWalkableHandler onExitWalkableTileE;			//listen by UI only
-
+		public static event ExitWalkableHandler onExitWalkableTileE;            //listen by UI only
+		
 		public delegate void SelectHostileUnit(Unit unit);
 		public static event SelectHostileUnit onHostileSelectE;
 		
 		public delegate void DeselectHostileUnit();
 		public static event DeselectHostileUnit onHostileDeselectE;
-
+		
 		public bool generateGridOnStart=false;
 		
 		public _TileType tileType=_TileType.Hex;
@@ -34,7 +34,7 @@ namespace TBTK{
 		
 		public enum _GridColliderType{ Master, Individual }
 		public _GridColliderType gridColliderType=_GridColliderType.Master;
-
+		
 		public int width=5;
 		public int length=5;
 		public float tileSize=1;
@@ -75,7 +75,7 @@ namespace TBTK{
 		public Transform sqSelected;
 		public Transform sqHostile;
 		//active cursor and indicator in used during runtime
-		private Transform indicatorCursor;	
+		private Transform indicatorCursor;    
 		private Transform indicatorSelected;
 		private Transform indicatorSelectedConfirmation;
 		private List<Transform> indicatorHostileList=new List<Transform>();
@@ -109,27 +109,27 @@ namespace TBTK{
 		public Material sqMatAbilityFriendly;
 		public Material sqMatInvisible;
 		
-		public static Material GetMatNormal(){ 		return instance._GetMatNormal(); }
-		public static Material GetMatSelected(){ 	return instance._GetMatSelected(); }
-		public static Material GetMatWalkable(){ 	return instance._GetMatWalkable(); }
+		public static Material GetMatNormal(){         return instance._GetMatNormal(); }
+		public static Material GetMatSelected(){     return instance._GetMatSelected(); }
+		public static Material GetMatWalkable(){     return instance._GetMatWalkable(); }
 		public static Material GetMatUnwalkable(){ return instance._GetMatUnwalkable(); }
-		public static Material GetMatHostile(){ 		return instance._GetMatHostile(); }
-		public static Material GetMatRange(){ 		return instance._GetMatRange(); }
-		public static Material GetMatAbilityAll(){ 	return instance._GetMatABAll(); }
-		public static Material GetMatAbilityHostile(){ 	return instance._GetMatABHostile(); }
+		public static Material GetMatHostile(){         return instance._GetMatHostile(); }
+		public static Material GetMatRange(){         return instance._GetMatRange(); }
+		public static Material GetMatAbilityAll(){     return instance._GetMatABAll(); }
+		public static Material GetMatAbilityHostile(){     return instance._GetMatABHostile(); }
 		public static Material GetMatAbilityFriendly(){ return instance._GetMatABFriendly(); }
-		public static Material GetMatInvisible(){ 	return instance._GetMatInvisible(); }
+		public static Material GetMatInvisible(){     return instance._GetMatInvisible(); }
 		
-		public Material _GetMatNormal(){ 		return tileType==_TileType.Hex ? hexMatNormal : sqMatNormal; }
-		public Material _GetMatSelected(){ 	return tileType==_TileType.Hex ? hexMatSelected : sqMatSelected; }
-		public Material _GetMatWalkable(){ 	return tileType==_TileType.Hex ? hexMatWalkable : sqMatWalkable; }
+		public Material _GetMatNormal(){         return tileType==_TileType.Hex ? hexMatNormal : sqMatNormal; }
+		public Material _GetMatSelected(){     return tileType==_TileType.Hex ? hexMatSelected : sqMatSelected; }
+		public Material _GetMatWalkable(){     return tileType==_TileType.Hex ? hexMatWalkable : sqMatWalkable; }
 		public Material _GetMatUnwalkable(){ return tileType==_TileType.Hex ? hexMatUnwalkable : sqMatUnwalkable; }
-		public Material _GetMatHostile(){ 		return tileType==_TileType.Hex ? hexMatHostile : sqMatHostile; }
-		public Material _GetMatRange(){ 		return tileType==_TileType.Hex ? hexMatRange : sqMatRange; }
-		public Material _GetMatABAll(){ 		return tileType==_TileType.Hex ? hexMatAbilityAll : sqMatAbilityAll; }
-		public Material _GetMatABHostile(){ 	return tileType==_TileType.Hex ? hexMatAbilityHostile : sqMatAbilityHostile; }
-		public Material _GetMatABFriendly(){ 	return tileType==_TileType.Hex ? hexMatAbilityFriendly : sqMatAbilityFriendly; }
-		public Material _GetMatInvisible(){ 	return tileType==_TileType.Hex ? hexMatInvisible : sqMatInvisible; }
+		public Material _GetMatHostile(){         return tileType==_TileType.Hex ? hexMatHostile : sqMatHostile; }
+		public Material _GetMatRange(){         return tileType==_TileType.Hex ? hexMatRange : sqMatRange; }
+		public Material _GetMatABAll(){         return tileType==_TileType.Hex ? hexMatAbilityAll : sqMatAbilityAll; }
+		public Material _GetMatABHostile(){     return tileType==_TileType.Hex ? hexMatAbilityHostile : sqMatAbilityHostile; }
+		public Material _GetMatABFriendly(){     return tileType==_TileType.Hex ? hexMatAbilityFriendly : sqMatAbilityFriendly; }
+		public Material _GetMatInvisible(){     return tileType==_TileType.Hex ? hexMatInvisible : sqMatInvisible; }
 		
 		
 		//the grid instance which contains the current grid in scene
@@ -143,14 +143,14 @@ namespace TBTK{
 		private static GridManager instance;
 		public static void SetInstance(){ if(instance==null) instance=(GridManager)FindObjectOfType(typeof(GridManager)); }
 		public static GridManager GetInstance(){ return instance; }
-
-
-
-
-
+		
+		
+		
+		
+		
 		void Awake(){
 			if(instance==null) instance=this;
-		}	
+		}    
 		
 		// initiate all the indicators and overlay
 		void Start () {
@@ -226,11 +226,11 @@ namespace TBTK{
 			if(GameControl.selectedUnit==null) return;
 			
 			Tile tile=unit.tile;
-			if(attackableTileList.Contains(tile)) attackableTileList.Remove(tile);	//remove from target tile
+			if(attackableTileList.Contains(tile)) attackableTileList.Remove(tile);    //remove from target tile
 			
 			int dist=GetDistance(tile, GameControl.selectedUnit.tile, true);
-					
-			if(dist>0 && dist<GameControl.selectedUnit.GetMoveRange()){	//if within walkable distance, add to walkable tile since the tile is now open
+			
+			if(dist>0 && dist<GameControl.selectedUnit.GetMoveRange()){    //if within walkable distance, add to walkable tile since the tile is now open
 				walkableTileList.Add(tile);
 				tile.SetState(_TileState.Walkable);
 			}
@@ -243,32 +243,32 @@ namespace TBTK{
 		private Vector3 cursorPosition;
 		void Update () {
 			#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-				if(Input.touchCount==1){
-					Touch touch=Input.touches[0];
-					
-					cursorPosition=touch.position;
-					
-					//if(touch.phase==TouchPhase.Ended && targetMode) ClearTargetMode();
-					if(touch.phase!=TouchPhase.Began) return;
-					
-					if(UIUtilities.IsCursorOnUI(0)){
-						if(hoveredTile!=null) _ClearHoveredTile();
-						return;
-					}
-				}
-				else return;
-			#else
-				cursorPosition=Input.mousePosition;
+			if(Input.touchCount==1){
+				Touch touch=Input.touches[0];
 				
-				if(Input.GetMouseButtonDown(1) && targetMode) _ClearTargetMode();
+				cursorPosition=touch.position;
 				
-				//if the grid uses individual collider on individual tile, then this section is not requred
-				if(gridColliderType==_GridColliderType.Individual) return;
+				//if(touch.phase==TouchPhase.Ended && targetMode) ClearTargetMode();
+				if(touch.phase!=TouchPhase.Began) return;
 				
-				if(UIUtilities.IsCursorOnUI()){
+				if(UIUtilities.IsCursorOnUI(0)){
 					if(hoveredTile!=null) _ClearHoveredTile();
 					return;
 				}
+			}
+			else return;
+			#else
+			cursorPosition=Input.mousePosition;
+			
+			if(Input.GetMouseButtonDown(1) && targetMode) _ClearTargetMode();
+			
+			//if the grid uses individual collider on individual tile, then this section is not requred
+			if(gridColliderType==_GridColliderType.Individual) return;
+			
+			if(UIUtilities.IsCursorOnUI()){
+				if(hoveredTile!=null) _ClearHoveredTile();
+				return;
+			}
 			#endif
 			
 			
@@ -278,9 +278,9 @@ namespace TBTK{
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit, Mathf.Infinity, mask)){
 				//Tile newTile=_GetTileOnPos(hit.point);
-
+				
 				Tile newTile = hit.collider.gameObject.GetComponent<Tile>();
-
+				
 				if(newTile==null || !newTile.walkable){
 					if(hoveredTile!=null) _ClearHoveredTile();
 					return;
@@ -292,32 +292,32 @@ namespace TBTK{
 				
 				if(FactionManager.IsPlayerTurn() || GameControl.GetGamePhase()==_GamePhase.UnitDeployment){
 					#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-						if(currentSelectTile==hoveredTile){
-							OnTileTouchDown();
-                    	}
+					if(currentSelectTile==hoveredTile){
+						OnTileTouchDown();
+					}
+					else{
+						if(attackableTileList.Contains(currentSelectTile))onHostileDeselectE ();
+						if(targetMode || hoveredTile.unit==null || attackableTileList.Contains(hoveredTile)){
+							currentSelectTile=hoveredTile;
+							if(attackableTileList.Contains(hoveredTile)) onHostileSelectE(hoveredTile.unit);
+						}
 						else{
-							if(attackableTileList.Contains(currentSelectTile))onHostileDeselectE ();
-							if(targetMode || hoveredTile.unit==null || attackableTileList.Contains(hoveredTile)){
-								currentSelectTile=hoveredTile;
-								if(attackableTileList.Contains(hoveredTile)) onHostileSelectE(hoveredTile.unit);
-                        	}
-                        	else{
-                            	OnTileTouchDown();
-							}
+							OnTileTouchDown();
 						}
+					}
 					#else
-						//command has been issue on the specific tile, either left or right mouse click on the tile
-						if(Input.GetMouseButtonDown(0)){
-
-							if(hoveredTile!=null ) _OnTileCursorDown(hoveredTile);
-						}
-						if(Input.GetMouseButtonDown(1)){
-							if(!targetMode && hoveredTile!=null) hoveredTile.OnTouchMouseDownAlt();
-						}
+					//command has been issue on the specific tile, either left or right mouse click on the tile
+					if(Input.GetMouseButtonDown(0)){
+						
+						if(hoveredTile!=null ) _OnTileCursorDown(hoveredTile);
+					}
+					if(Input.GetMouseButtonDown(1)){
+						if(!targetMode && hoveredTile!=null) hoveredTile.OnTouchMouseDownAlt();
+					}
 					#endif
 				}
 				
-				//FogOfWar.InLOS(hoveredTile, grid.tileList[0], true);	//los function test
+				//FogOfWar.InLOS(hoveredTile, grid.tileList[0], true);    //los function test
 			}
 			else{
 				if(hoveredTile!=null) _ClearHoveredTile();
@@ -326,20 +326,19 @@ namespace TBTK{
 		}
 		
 		#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-			//this is for touch input only
-			private Tile currentSelectTile;
+		//this is for touch input only
+		private Tile currentSelectTile;
 		
-			//for touch input, confirm when a tile has been selected
-			private void OnTileTouchDown(){
-				_OnTileCursorDown (hoveredTile);
-				_ClearHoveredTile ();
-
-			}
+		//for touch input, confirm when a tile has been selected
+		private void OnTileTouchDown(){
+			_OnTileCursorDown (hoveredTile);
+			_ClearHoveredTile ();
+			
+		}
 		#endif
 		
 		public static void OnTileCursorDown(Tile tile){ instance._OnTileCursorDown(tile); }
 		public void _OnTileCursorDown(Tile tile){
-			Debug.Log ("Aknowledged my mouse press");
 			if(targetMode && this.targetModeTileList.Contains(tile)) GameControl.SelectTile(tile);
 			else tile.OnTouchMouseDown();
 		}
@@ -381,11 +380,11 @@ namespace TBTK{
 			
 			
 			if(attackableTileList.Contains(tile) || (tile.unit != null && tile.unit.isAIUnit)){
-				if(TurnControl.ClearToProceed()){	//if the some unit is in action, dont show the overlay, the unit cant attack while someone is in action anyway
-					if(onHostileSelectE!=null) onHostileSelectE(tile.unit);	//show attack info on UI
+				if(TurnControl.ClearToProceed()){    //if the some unit is in action, dont show the overlay, the unit cant attack while someone is in action anyway
+					if(onHostileSelectE!=null) onHostileSelectE(tile.unit);    //show attack info on UI
 				}
 			}
-			else if(onHostileDeselectE!=null) onHostileDeselectE();	//hide attack info on UI
+			else if(onHostileDeselectE!=null) onHostileDeselectE();    //hide attack info on UI
 			
 			if(walkableTileList.Contains(tile)){
 				if(onHoverWalkableTileE!=null) onHoverWalkableTileE(tile);
@@ -425,7 +424,7 @@ namespace TBTK{
 			List<Tile> tempAttackableTileList=tile.GetHostileInRange();
 			for(int i=0; i<tempAttackableTileList.Count; i++){
 				if(!tempAttackableTileList[i].IsVisible()){
-					tempAttackableTileList.RemoveAt(i);	i-=1;
+					tempAttackableTileList.RemoveAt(i);    i-=1;
 				}
 				else tempAttackableTileList[i].SetMaterial(_GetMatHostile());
 			}
@@ -459,10 +458,10 @@ namespace TBTK{
 		
 		//function to initialize targetSelect mode
 		public static void AbilityTargetMode(int AOE, _TargetType type, TargetModeSelectedCallBack callBack){
-			instance._AbilityTargetMode(null, 0, AOE, type, callBack);	//for command ability
+			instance._AbilityTargetMode(null, 0, AOE, type, callBack);    //for command ability
 		}
 		public static void AbilityTargetMode(Tile tile, int range, int AOE, _TargetType type, TargetModeSelectedCallBack callBack){
-			instance._AbilityTargetMode(tile, range, AOE, type, callBack);	//for unit ability
+			instance._AbilityTargetMode(tile, range, AOE, type, callBack);    //for unit ability
 		}
 		public void _AbilityTargetMode(Tile tile, int range, int AOE, _TargetType type, TargetModeSelectedCallBack callBack){
 			
@@ -556,11 +555,11 @@ namespace TBTK{
 			if(!targetModeHoveredTileList.Contains(tile)) targetModeHoveredTileList.Add(tile);
 			
 			Material mat=null;
-			if(targetModeType==_TargetType.AllUnit) 			mat=_GetMatABAll();
-			if(targetModeType==_TargetType.HostileUnit) 	mat=_GetMatABHostile();
-			if(targetModeType==_TargetType.FriendlyUnit) 	mat=_GetMatABFriendly();
-			if(targetModeType==_TargetType.AllTile) 			mat=_GetMatABAll();
-			if(targetModeType==_TargetType.Tile) 				mat=_GetMatABAll();
+			if(targetModeType==_TargetType.AllUnit)             mat=_GetMatABAll();
+			if(targetModeType==_TargetType.HostileUnit)     mat=_GetMatABHostile();
+			if(targetModeType==_TargetType.FriendlyUnit)     mat=_GetMatABFriendly();
+			if(targetModeType==_TargetType.AllTile)             mat=_GetMatABAll();
+			if(targetModeType==_TargetType.Tile)                 mat=_GetMatABAll();
 			
 			for(int i=0; i<targetModeHoveredTileList.Count; i++) targetModeHoveredTileList[i].SetMaterial(mat);
 		}
@@ -591,11 +590,11 @@ namespace TBTK{
 				float spaceX=GridGenerator.spaceXHex*tileSize*gridToTileRatio;
 				float spaceZ=GridGenerator.spaceZHex*tileSize*gridToTileRatio;
 				
-				float offX=width%2==1 ? spaceX/2 : 0;			//depends on the with of the gird, set the offset of x-axis
+				float offX=width%2==1 ? spaceX/2 : 0;            //depends on the with of the gird, set the offset of x-axis
 				int column=(int)Mathf.Floor((point.x+offX)/spaceX)+gridOffsetX;
 				
-				float offZ=column%2==1 ? spaceZ : spaceZ/2;	//depends on the column, introduce a offset of half a tile (odd number column has more row)
-				if(length%2==1) offZ-=spaceZ/2;					//depends on the length of the grid, modify the offset
+				float offZ=column%2==1 ? spaceZ : spaceZ/2;    //depends on the column, introduce a offset of half a tile (odd number column has more row)
+				if(length%2==1) offZ-=spaceZ/2;                    //depends on the length of the grid, modify the offset
 				int row=(int)Mathf.Floor((point.z-offZ)/spaceZ)+gridOffsetZ;
 				
 				int tileID=column*length+row-column/2;
@@ -611,8 +610,8 @@ namespace TBTK{
 				float spaceX=tileSize*gridToTileRatio;
 				float spaceZ=tileSize*gridToTileRatio;
 				
-				float offX=width%2==1 ? spaceX/2 : 0;	//depends on the with of the gird, set the offset of x-axis
-				float offZ=length%2==1 ? spaceZ/2 : 0;	//depends on the length of the grid, introduce a offset of half a tile
+				float offX=width%2==1 ? spaceX/2 : 0;    //depends on the with of the gird, set the offset of x-axis
+				float offZ=length%2==1 ? spaceZ/2 : 0;    //depends on the length of the grid, introduce a offset of half a tile
 				
 				int column=(int)Mathf.Floor((point.x+offX)/spaceX)+gridOffsetX;
 				int row=(int)Mathf.Floor((point.z+offZ)/spaceZ)+gridOffsetZ;
@@ -639,7 +638,7 @@ namespace TBTK{
 			
 			if(factionManager!=null){
 				factionManager.ClearUnit();
-				factionManager.RecordSpawnTilePos();	//this is to record the tile of the spawn and deploy area
+				factionManager.RecordSpawnTilePos();    //this is to record the tile of the spawn and deploy area
 			}
 			
 			if(grid!=null) grid.ClearGrid();
@@ -654,7 +653,7 @@ namespace TBTK{
 			if(grid.gridObj!=null) grid.gridObj.transform.parent=transform.parent;
 			
 			if(factionManager!=null){
-				factionManager.SetStartingTileListBaseOnPos(tileSize);	//this is to set the tiles of the spawn and deploy area bsaed on the stored info earlier
+				factionManager.SetStartingTileListBaseOnPos(tileSize);    //this is to set the tiles of the spawn and deploy area bsaed on the stored info earlier
 				if(factionManager.generateUnitOnStart) factionManager._GenerateUnit();
 			}
 		}
@@ -663,11 +662,11 @@ namespace TBTK{
 		//when player click on a particular tile
 		public static void OnTile(Tile tile){ instance._OnTile(tile); }
 		public void _OnTile(Tile tile){
-			if(!FactionManager.IsPlayerTurn() || CardsHandManager.movingCard) return;
+			if(!FactionManager.IsPlayerTurn()) return;
 			bool endTurn = false;
 			if(tile.unit!=null){
 				//select the unit if the unit belong's to current player in turn
-				if(FactionManager.GetSelectedFactionID()==tile.unit.factionID && TurnControl.GetTurnMode()==_TurnMode.FactionPerTurn){
+				if(FactionManager.GetSelectedFactionID()==tile.unit.factionID ){
 					if(TurnControl.GetMoveOrder()!=_MoveOrder.Free) return;
 					if(TurnControl.GetTurnMode()==_TurnMode.UnitPerTurn) return;
 					if(!GameControl.AllowUnitSelect()) return;
@@ -676,78 +675,81 @@ namespace TBTK{
 					GameControl.SelectUnit(tile);
 					onHostileDeselectE();
 				}
-
+				
 				//if the unit in the tile can be attack by current selected unit, attack it
 				else if(attackableTileList.Contains(tile)){
 					/*#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-					if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile) ){
-					#endif*/
-						GameControl.selectedUnit.Attack(tile.unit);
-						endTurn = true;
-						//onHostileDeselectE();
+                    if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile) ){
+                    #endif*/
+					GameControl.ChooseSelectedUnit();
+					GameControl.selectedUnit.Attack(tile.unit);
+					endTurn = true;
+					//onHostileDeselectE();
 					//#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 					//}
 					//else {
-					//	GameControl.SelectTile(tile);
-						//onHostileSelectE(GameControl.selectedUnit);
+					//    GameControl.SelectTile(tile);
+					//onHostileSelectE(GameControl.selectedUnit);
 					//}
 					//#endif
 				} 
 			}
 			//if the tile is within the move range of current selected unit, try to select it, if it is already selected, move
 			else if(walkableTileList.Contains(tile)){
+				
+				//                #if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+				//              if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
+				//            #endif
+				if(!tile.isPortal){
 
-//				#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-  //              if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
-	//			#endif
-					if(!tile.isPortal){
-						
-						GameControl.selectedUnit.Move(tile);
-						int distance = GetDistance(tile, GameControl.selectedUnit.tile, true);
-						CardsStackManager.decreaseMovement(distance);
+					GameControl.ChooseSelectedUnit();
+					GameControl.selectedUnit.Move(tile);
 
-						if (tile.revealed != 3 && GameControl.selectedUnit.factionID == FactionManager.GetPlayerFactionID()[0])
-							MapController.RevealArea (tile);
-						if(onExitWalkableTileE!=null) onExitWalkableTileE();	//for clear UI move cost overlay
-						ClearWalkableHostileList();	
-						if(FactionManager.GetAllHostileUnit(GameControl.selectedUnit.factionID).Count == 0) endTurn = true;
-
-					}
-					else{
-						StartCoroutine(GameControl.PassLevel());
-					}//in case the unit move into the destination and has insufficient ap to attack
-	//			#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-                    
-      //          }
-		//		else {
-		//			onHostileDeselectE();
-		//			GameControl.SelectTile(tile);
-		//		}
-		//		#endif
+					int distance = GetDistance(tile, GameControl.selectedUnit.tile, true);
+					CardsStackManager.decreaseMovement(distance);
+					
+					if (tile.revealed != 3 && GameControl.selectedUnit.factionID == FactionManager.GetPlayerFactionID()[0])
+						MapController.RevealArea (tile);
+					if(onExitWalkableTileE!=null) onExitWalkableTileE();    //for clear UI move cost overlay
+					ClearWalkableHostileList();    
+					if(FactionManager.GetAllHostileUnit(GameControl.selectedUnit.factionID).Count == 0) endTurn = true;
+					
+				}
+				else{
+					StartCoroutine(GameControl.PassLevel());
+				}//in case the unit move into the destination and has insufficient ap to attack
+				//            #if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+				
+				//          }
+				//        else {
+				//            onHostileDeselectE();
+				//            GameControl.SelectTile(tile);
+				//        }
+				//        #endif
 			}
-
-			ClearHoveredTile();	//clear the hovered tile so all the UI overlay will be cleared
+			
+			ClearHoveredTile();    //clear the hovered tile so all the UI overlay will be cleared
 			if (endTurn && !(GameControl.selectedUnit.CanMove() || GameControl.selectedUnit.CanAttack())) {
 				StartCoroutine(EndTurn());
 			}
-
+			
 		}
-
+		
 		IEnumerator EndTurn(){
 			while(!TurnControl.ClearToProceed()){
 				yield return new WaitForSeconds(0.1f);
 			}
-//			Debug.Log ("Ending turn at " + Time.time);
+			//            Debug.Log ("Ending turn at " + Time.time);
 			onHostileDeselectE();
 			GameControl.SelectTile(null);
-	
+			
 			GameControl.EndTurn();
 		}
-
-//		IEnumerator RevealArea(){
-//			
-//		}
-			
+		
+		//        IEnumerator RevealArea(){
+		//            
+		//        }
+		
 		
 		//when player right-click on a particular tile
 		//only used to set unit, facing
@@ -757,33 +759,37 @@ namespace TBTK{
 			
 			//change the unit facing
 			/*
-			if(GameControl.selectedUnit!=null){
-				if(tile==GameControl.selectedUnit.tile) return;
-				
-				float x=GameControl.selectedUnit.tile.GetPos().x-tile.GetPos().x;
-				float z=GameControl.selectedUnit.tile.GetPos().z-tile.GetPos().z;
-				Vector2 dir=new Vector2(x, z);
-				
-				float angle=Utilities.Vector2ToAngle(dir);
-				
-				GameControl.selectedUnit.Rotate(Quaternion.Euler(0, 360-angle-90, 0));
-			}
-			*/
+            if(GameControl.selectedUnit!=null){
+                if(tile==GameControl.selectedUnit.tile) return;
+                
+                float x=GameControl.selectedUnit.tile.GetPos().x-tile.GetPos().x;
+                float z=GameControl.selectedUnit.tile.GetPos().z-tile.GetPos().z;
+                Vector2 dir=new Vector2(x, z);
+                
+                float angle=Utilities.Vector2ToAngle(dir);
+                
+                GameControl.selectedUnit.Rotate(Quaternion.Euler(0, 360-angle-90, 0));
+            }
+            */
 		}
 		
 		//select a unit, setup the walkable, attackable tiles and what not
 		public static void Select(Unit unit){
-			unit.tile.SetState(_TileState.Selected);
-			if(unit.CanMove()) instance.SetupWalkableTileList(unit);
-			if(unit.CanAttack()) instance.SetupAttackableTileList(unit);
-			instance.indicatorSelected.position=unit.tile.GetPos();
+			if ( (!unit.usedThisTurn && !GameControl.isUnitChosen) || GameControl.chosenUnit == unit) {
+				unit.tile.SetState (_TileState.Selected);
+				if (unit.CanMove ())
+					instance.SetupWalkableTileList (unit);
+				if (unit.CanAttack ())
+					instance.SetupAttackableTileList (unit);
+				instance.indicatorSelected.position = unit.tile.GetPos ();
+			}
 		}
-
+		
 		//select a given tile
 		public static void Select(Tile tile){
 			if(tile != null)instance.indicatorSelectedConfirmation.position=tile.GetPos();
 		}
-
+		
 		//function to setup and clear walkable tiles in range for current selected unit
 		private void ClearWalkableTileList(){
 			for(int i=0; i<walkableTileList.Count; i++){
@@ -822,13 +828,13 @@ namespace TBTK{
 			}
 			for(int i=0; i<attackableTileList.Count; i++){
 				attackableTileList[i].SetState(_TileState.Hostile);
-
+				
 			}
 			
 			ShowHostileIndicator(attackableTileList);
 		}
-
-
+		
+		
 		//given a unit and a list of tiles, setup the attackable tiles with that unit in each of those given tiles. the attackble tile list are stored in each corresponding tile
 		public static void SetupHostileInRangeforTile(Unit unit, Tile tile){ SetupHostileInRangeforTile(unit, new List<Tile>{ tile }); }
 		public static void SetupHostileInRangeforTile(Unit unit, List<Tile> tileList){
@@ -843,7 +849,7 @@ namespace TBTK{
 			
 			float range=unit.GetAttackRange();
 			int sight=unit.GetSight();
-
+			
 			
 			for(int i=0; i<tileList.Count; i++){
 				Tile srcTile=tileList[i];
@@ -852,9 +858,9 @@ namespace TBTK{
 				
 				for(int j=0; j<allHostileUnitList.Count; j++){
 					Tile targetTile=allHostileUnitList[j].tile;
-
+					
 					int distance = GridManager.GetDistance(srcTile, targetTile, false);
-
+					
 					if(distance>range) continue;
 					if(!GameControl.EnableFogOfWar() && !GameControl.AttackThroughObstacle()){
 						if(!FogOfWar.InLOS(srcTile, targetTile, 0)) continue;
@@ -888,19 +894,19 @@ namespace TBTK{
 		
 		//reset all selection, walkablelist and what not
 		public static void ClearAllTile(){
-			if(GameControl.selectedUnit!=null) GameControl.selectedUnit.tile.SetState(_TileState.Default);
-			if(GameControl.selectedTile!=null) GameControl.selectedTile.SetState(_TileState.Default);
+			if (GameControl.selectedUnit != null && GameControl.chosenUnit == null)	GameControl.selectedUnit.tile.SetState (_TileState.Default);
+			if(GameControl.selectedTile!=null && GameControl.chosenUnit == null) GameControl.selectedTile.SetState(_TileState.Default);
 			instance.ClearWalkableTileList();
 			instance.ClearAttackableTileList();
-			instance.indicatorSelected.position=new Vector3(0, 99999, 0);
+			if (GameControl.selectedUnit != null && GameControl.chosenUnit == null)	instance.indicatorSelected.position=new Vector3(0, 99999, 0);
 			instance.indicatorSelectedConfirmation.position=new Vector3(0, 99999, 0);
 			instance.ClearHostileIndicator();
 			instance.ClearWalkableHostileList();
 		}
-
+		
 		public static void ClearSelectedTile(){
 			instance.indicatorSelectedConfirmation.position=new Vector3(0, 99999, 0);
-
+			
 		}
 		
 		

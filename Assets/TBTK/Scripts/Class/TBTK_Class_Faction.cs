@@ -87,26 +87,52 @@ namespace TBTK{
 				TurnControl.EndTurn ();
 				return false;
 			}
-			selectedUnitID+=1;
-			if(selectedUnitID>=allUnitList.Count){
-				if(breakWhenExceedLimit){	//for FactionPerTurn mode, reset the ID
-					selectedUnitID=-1;
-					return true;
-				}
-				selectedUnitID=0;
-			}
-			allUnitList[selectedUnitID].ResetUnitTurnData();
-			GameControl.SelectUnit(allUnitList[selectedUnitID]);
-			if (GameControl.selectedUnit != null && FactionManager.IsPlayerFaction (GameControl.selectedUnit.factionID)) {
-				
-				//Update the card count for all cards in stack. 
-				//				if(CardsHandManager.instance.cardsInDeck.getCount() == 0){
-				//					CardsHandManager.ShuffleDeck();
-				//				}
-				
 
-				GameControl.selectedUnit.getStack().updateDamageAndGuard();
-				GameControl.selectedUnit.getStack().updateAttributesForLists();
+			if (!FactionManager.IsPlayerTurn ()) {
+				selectedUnitID += 1;
+				if (selectedUnitID >= allUnitList.Count) {
+					if (breakWhenExceedLimit) {	//for FactionPerTurn mode, reset the ID
+						selectedUnitID = -1;
+						return true;
+					}
+					selectedUnitID = 0;
+				}
+				allUnitList [selectedUnitID].ResetUnitTurnData ();
+				GameControl.SelectUnit (allUnitList [selectedUnitID]);
+			}
+			else {
+				int unitsUsedCount = 0;
+				foreach(Unit u in allUnitList){
+					if(u.IsStunned()){
+						u.usedThisTurn = true;
+					}
+
+					if(!u.usedThisTurn){
+						GameControl.SelectUnit (u);
+						break;
+					}
+					else unitsUsedCount++;
+				}
+
+				if(unitsUsedCount == allUnitList.Count){
+					foreach(Unit u in allUnitList){
+						u.ResetUnitTurnData();
+						u.usedThisTurn = false;
+					}
+					SelectNextUnitInQueue( breakWhenExceedLimit);
+				}
+
+//				if(GameControl.selectedUnit != null && FactionManager.IsPlayerFaction (GameControl.selectedUnit.factionID)){
+//					
+//					//Update the card count for all cards in stack. 
+//					//				if(CardsHandManager.instance.cardsInDeck.getCount() == 0){
+//					//					CardsHandManager.ShuffleDeck();
+//					//				}
+//					
+//
+//					GameControl.selectedUnit.getStack().updateDamageAndGuard();
+//					GameControl.selectedUnit.getStack().updateAttributesForLists();
+//				}
 			}
 			return false;
 		}

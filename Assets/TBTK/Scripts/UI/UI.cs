@@ -50,6 +50,7 @@ namespace TBTK{
 			GridManager.onHostileSelectE +=OnHostileSelected;
 			GridManager.onHostileDeselectE += OnHostileDeselect;
 			GameControl.onGameOverE += OnGameOver;
+			GameControl.onUnitChosen += OnUnitChosen;
 			OnHostileDeselect ();
 		}
 		void OnDisable(){
@@ -82,9 +83,18 @@ namespace TBTK{
 //				Vector3 screenPos = mainCam.WorldToScreenPoint(overlay.unit.thisT.position+new Vector3(0, 0, 0));
 //				overlay.rootT.localPosition=(screenPos+new Vector3(0, -20, 0))/UI.GetScaleFactor();
 
-				unitSelectedArrow.GetComponent<SelectorAnimator>().unit = unit;
+				if(!unit.usedThisTurn && !GameControl.isUnitChosen){
+					unitSelectedArrow.GetComponent<SelectorAnimator>().unit = unit;
+					unitSelectedArrow.SetActive(true);
+				}
+
 			}
 			else endTurnButtonObj.SetActive(false);
+		}
+
+		void OnUnitChosen(){
+			Debug.Log ("Unit arrow disbled");
+			unitSelectedArrow.SetActive(false);
 		}
 
 		private void OnHostileSelected(Unit unit){
@@ -123,6 +133,7 @@ namespace TBTK{
 		public void OnEndTurnButton(){
 			GameControl.EndTurn();
 		}
+
 
 
 
