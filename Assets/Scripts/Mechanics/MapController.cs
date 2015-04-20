@@ -274,6 +274,7 @@ public class MapController : MonoBehaviour {
 		List<Tile> tileList = new List<Tile> ();
 
 //		int enemyCount = 0;
+		Debug.Log (tilesT);
 		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
 		for (int a = tilesT.childCount - 1; a >=0; a--) {
 
