@@ -664,7 +664,7 @@ namespace TBTK{
 		public void _OnTile(Tile tile){
 			if(!FactionManager.IsPlayerTurn()) return;
 			bool endTurn = false;
-			if(tile.unit!=null){
+			if(tile.unit!=null && !CardsHandManager.movingCard){
 				//select the unit if the unit belong's to current player in turn
 				if(FactionManager.GetSelectedFactionID()==tile.unit.factionID ){
 					if(TurnControl.GetMoveOrder()!=_MoveOrder.Free) return;
