@@ -94,7 +94,7 @@ namespace TBTK{
 
 		void OnUnitChosen(){
 			Debug.Log ("Unit arrow disbled");
-			unitSelectedArrow.SetActive(false);
+			if(unitSelectedArrow != null)unitSelectedArrow.SetActive(false);
 		}
 
 		private void OnHostileSelected(Unit unit){

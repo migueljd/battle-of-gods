@@ -223,7 +223,6 @@ namespace TBTK{
 			}
 			else{
 
-				Debug.Log ("Selected unit");
 				ClearSelectedUnit();
 				if(!unit.usedThisTurn && !isUnitChosen) chosenUnit = unit;
 				selectedUnit=unit;

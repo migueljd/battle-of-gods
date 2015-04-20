@@ -34,22 +34,21 @@ public class MapController : MonoBehaviour {
 
 	public static int enemyFactionID;
 
-	private bool gameStarted = false;
+	private bool gameStarted;
 	
 
 	void Awake(){
 		if (instance == null) {
 			instance = this;
-		} else {
+		} else if(!instance.Equals(this)){
+			Debug.Log ("Destroying object with instance id: " + gameObject.GetInstanceID());
 			Destroy(this.gameObject);
 		}
 
-
-		DontDestroyOnLoad (this.gameObject);
 	}
 
 	void Start(){		
-		gameObject.SendMessage("OnLevelWasLoaded",Application.loadedLevel);
+		if(!gameStarted)gameObject.SendMessage("OnLevelWasLoaded",Application.loadedLevel);
 
 		foreach (Faction f in FactionManager.GetFactionList()) {
 			if (!FactionManager.IsPlayerFaction (f.ID)) {
@@ -67,7 +66,8 @@ public class MapController : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded(int levelLoaded){
-		gameStarted = false;
+		this.gameStarted = false;
+		Debug.Log ("Game Started is " + gameStarted + " and Id is " + GetInstanceID());
 		generatedTileList = new List<Transform> ();
 		
 		//setting all variables from the DB
@@ -95,6 +95,7 @@ public class MapController : MonoBehaviour {
 	}
 
 	private void SetupMap(string levelName){
+		Debug.Log (this.GetInstanceID ());
 		Tile initialTile = GameObject.FindGameObjectsWithTag("Tile_0")[0].GetComponent<Tile>();
 
 		List<Unit> playerUnits = FactionManager.GetAllPlayerUnits ();
@@ -147,7 +148,8 @@ public class MapController : MonoBehaviour {
 //				t.unit = unit;
 //				
 //				unit.transform.position = t.transform.position;
-				gameStarted = true;
+				this.gameStarted = true;
+				Debug.Log ("Game started? " + gameStarted);
 			}
 		}
 
@@ -274,8 +276,8 @@ public class MapController : MonoBehaviour {
 		List<Tile> tileList = new List<Tile> ();
 
 //		int enemyCount = 0;
-		Debug.Log (tilesT);
 		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
+		Debug.Log ("Enemy Count: " + enemyCount);
 		for (int a = tilesT.childCount - 1; a >=0; a--) {
 
 			if(!tilesT.GetChild(a).name.Contains("Tile")){
@@ -303,6 +305,8 @@ public class MapController : MonoBehaviour {
 					enemyCount --;
 					createNewEnemy(tile);
 					}
+			}else{
+				Debug.Log ("Something is wrong");
 			}
 
 			//----------------------------------- Spawn code end
