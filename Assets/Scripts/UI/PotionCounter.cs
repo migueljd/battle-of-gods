@@ -77,7 +77,7 @@ public class PotionCounter : MonoBehaviour {
 	}
 
 	public static void OnPassLevel(){
-		instance.transform.parent = null;
+		instance.transform.SetParent(null);
 	}
 
 	public static void OnUnitDestroyed(Unit unit){

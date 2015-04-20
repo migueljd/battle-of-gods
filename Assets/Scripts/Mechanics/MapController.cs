@@ -305,8 +305,6 @@ public class MapController : MonoBehaviour {
 					enemyCount --;
 					createNewEnemy(tile);
 					}
-			}else{
-				Debug.Log ("Something is wrong");
 			}
 
 			//----------------------------------- Spawn code end
