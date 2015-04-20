@@ -33,6 +33,8 @@ public class MapController : MonoBehaviour {
 	private int numberOfTiles = 30;
 
 	public static int enemyFactionID;
+
+	private bool gameStarted = false;
 	
 
 	void Awake(){
@@ -65,6 +67,7 @@ public class MapController : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded(int levelLoaded){
+		gameStarted = false;
 		generatedTileList = new List<Transform> ();
 		
 		//setting all variables from the DB
@@ -79,18 +82,75 @@ public class MapController : MonoBehaviour {
 		SetNewLevel (numberOfTiles, levelName);
 		populatePrefabList (levelName, tiles);
 
-		//setting up initial map
-		SetupMap (levelName);
-
+		
 		line = GridGenerator.spaceXHex * GridManager.GetInstance().tileSize * GridManager.GetInstance().gridToTileRatio/1.5f;
 		height = line * Mathf.Sin (Mathf.PI / 3);
+
+
+		//setting up initial map
+		SetupMap (levelName);
 
 
 
 	}
 
 	private void SetupMap(string levelName){
-		
+		Tile initialTile = GameObject.FindGameObjectsWithTag("Tile_0")[0].GetComponent<Tile>();
+
+		List<Unit> playerUnits = FactionManager.GetAllPlayerUnits ();
+
+		foreach(Tile t in initialTile.GetNeighbourList(true)){
+			if(t.tileNumber == 1){
+
+				_RevealArea(t);
+
+				Unit unit = playerUnits[0];
+
+				unit.tile.unit = null;
+				unit.tile = t;
+				t.unit = unit;
+
+				unit.transform.position = t.transform.position;
+	
+
+				foreach(Tile neighbour in t.GetNeighbourList(true)){
+				
+					if(neighbour.tileNumber == 5){
+						unit = playerUnits[1];
+						
+						unit.tile.unit = null;
+						unit.tile = neighbour;
+						neighbour.unit = unit;
+						
+						unit.transform.position = neighbour.transform.position;
+					}
+					else if(neighbour.tileNumber == 3){
+						unit = playerUnits[2];
+						
+						unit.tile.unit = null;
+						unit.tile = neighbour;
+						neighbour.unit = unit;
+						
+						unit.transform.position = neighbour.transform.position;
+					}
+				
+				}
+//
+//				
+//				
+//				List<Unit> playerUnits = FactionManager.GetAllPlayerUnits();
+//				
+//				Unit unit = playerUnits[1];
+//				
+//				unit.tile.unit = null;
+//				unit.tile = t;
+//				t.unit = unit;
+//				
+//				unit.transform.position = t.transform.position;
+				gameStarted = true;
+			}
+		}
+
 	}
 
 	private void populatePrefabList(string finalPath, Object[] tiles){
@@ -231,15 +291,17 @@ public class MapController : MonoBehaviour {
 
 
 
-			//it's necessary that an enemy is instantiated here
-			if((a-1) - (enemyCount) == 0 && tile.walkable && enemyCount > 0){
-				enemyCount --;
-				createNewEnemy(tile); 
-			}
-			//it it's possible that this tile has no enemy, toss a coin
-			else if(Random.Range(0,2) >1 && tile.walkable && enemyCount > 0){
-				enemyCount --;
-				createNewEnemy(tile);
+			if(gameStarted){
+				//it's necessary that an enemy is instantiated here
+				if((a-1) - (enemyCount) == 0 && tile.walkable && enemyCount > 0){
+					enemyCount --;
+					createNewEnemy(tile); 
+				}
+				//it it's possible that this tile has no enemy, toss a coin
+				else if(Random.Range(0,2) >1 && tile.walkable && enemyCount > 0){
+					enemyCount --;
+					createNewEnemy(tile);
+					}
 			}
 
 			//----------------------------------- Spawn code end
@@ -365,14 +427,16 @@ public class MapController : MonoBehaviour {
 		
 		Quaternion firstRotation = Quaternion.Euler (0, (-60 * (tile.tileNumber - 1)) - 90, 0);
 		Vector3 firstVector = firstRotation * new Vector3 (1, 0, 0) * height * 4;	
-		
+
+
+		Debug.Log (firstVector);
 		return firstVector;
 	}
 	
 	private Vector3 findSecondVector(Tile tile){
 		Quaternion secondRotation = Quaternion.Euler (0, (-60 * (tile.tileNumber - 1)), 0);
 		Vector3 secondVector = secondRotation * new Vector3 (1, 0, 0) * line * 3;
-		
+		Debug.Log (secondVector);
 		return secondVector;
 	}
 

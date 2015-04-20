@@ -59,12 +59,10 @@ namespace Cards
 		{
 			if (instance == null) {
 				instance = this;
-				Debug.Log("Is instance null? " + instance.gameObject.GetInstanceID());
 //				instance.cardsInDeck = new CardsList ();
 				instance.cardsInHand = new CardsList ();
 				instance.cardsInDiscard = new CardsList();
 				instantiator = new CardPrefabInstatiator ();
-				Debug.Log ("Instance not null");
 				SetUpInstantiator();
 				DontDestroyOnLoad (this.gameObject);
 			} else {

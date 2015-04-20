@@ -49,7 +49,7 @@ public class PotionCounter : MonoBehaviour {
 	}
 
 	public static void PositionPotionButton(){
-		instance.transform.parent = GameObject.FindGameObjectsWithTag ("AnchorBottonLeft")[0].transform;
+		instance.transform.SetParent(GameObject.FindGameObjectsWithTag ("AnchorBottonLeft")[0].transform);
 		instance.transform.localPosition = instance.basePosition;
 	}
 
