@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -189,6 +189,7 @@ namespace TBTK{
 			gamePhase=_GamePhase.Play;
 //			CardsHandManager.ShuffleDeck ();
 			CardsHandManager.instance.GameStarted ();
+			PotionCounter.PositionPotionButton ();
 			TurnControl.EndTurn();	//this will initiate unit selection and start the game
 
 			yield return null;

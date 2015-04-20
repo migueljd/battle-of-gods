@@ -21,10 +21,13 @@ public class PotionCounter : MonoBehaviour {
 
 	private Text potionText;
 
+	private Vector3 basePosition;
+
 	public void Awake(){
 		if (instance == null) {
 			DontDestroyOnLoad (this.gameObject);
 			instance = this;
+			basePosition=this.transform.localPosition;
 		}
 		else
 			Destroy (this.gameObject);
@@ -45,10 +48,15 @@ public class PotionCounter : MonoBehaviour {
 		Unit.onUnitDestroyedE -= OnUnitDestroyed;
 	}
 
+	public static void PositionPotionButton(){
+		instance.transform.parent = GameObject.FindGameObjectsWithTag ("AnchorBottonLeft")[0].transform;
+		instance.transform.localPosition = instance.basePosition;
+	}
+
 	private void GainPotion(int potionIncrease){
 		if(potionCount == 0) GetComponent<Image>().color = Color.white;
 		potionCount+=potionIncrease;
-		potionText.text = "Potion: " + potionCount;
+		potionText.text = potionCount.ToString();
 	}
 
 	public void UsePotion(){

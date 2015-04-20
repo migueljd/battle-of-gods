@@ -18,6 +18,8 @@ namespace TBTK{
 		public static _AIMode GetAIMode(){ return instance.mode; }
 		
 		private static AIManager instance;
+
+		private static int randomDistanceToAttack = 2;
 		
 		void Awake(){
 			instance=this;
@@ -192,13 +194,9 @@ namespace TBTK{
 				//then filter thru walkableTilesInRange, those that have a hostile in range will be add to a tilesWithHostileInRange
 				List<Tile> tilesWithHostileInRange=new List<Tile>();
 				GridManager.SetupHostileInRangeforTile(unit, walkableTilesInRange);
-				int closest = int.MaxValue;
 
 				for(int i=0; i<walkableTilesInRange.Count; i++){
-					if(walkableTilesInRange[i].GetHostileInRange().Count>0 && walkableTilesInRange[i].distance < closest) closest = walkableTilesInRange[i].distance;
-				}
-				for(int i=0; i<walkableTilesInRange.Count; i++){
-					if(walkableTilesInRange[i].GetHostileInRange().Count>0 && walkableTilesInRange[i].distance == closest ) tilesWithHostileInRange.Add(walkableTilesInRange[i]);
+					if(walkableTilesInRange[i].GetHostileInRange().Count>0 && walkableTilesInRange[i].distance <= randomDistanceToAttack ) tilesWithHostileInRange.Add(walkableTilesInRange[i]);
 				}
 				
 				//if the tilesWithHostileInRange is not empty after the process, means there's tiles which the unit can move into and attack

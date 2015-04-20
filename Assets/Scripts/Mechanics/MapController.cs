@@ -74,14 +74,23 @@ public class MapController : MonoBehaviour {
 		instance.enemyPrefabs = Levels_DB.GetEnemyPrefabsForLevel(level);
 
 
+
 		//Setting class variables that will be necessary for each run
 		SetNewLevel (numberOfTiles, levelName);
 		populatePrefabList (levelName, tiles);
-		
+
+		//setting up initial map
+		SetupMap (levelName);
+
 		line = GridGenerator.spaceXHex * GridManager.GetInstance().tileSize * GridManager.GetInstance().gridToTileRatio/1.5f;
 		height = line * Mathf.Sin (Mathf.PI / 3);
-		
 
+
+
+	}
+
+	private void SetupMap(string levelName){
+		
 	}
 
 	private void populatePrefabList(string finalPath, Object[] tiles){
