@@ -148,9 +148,9 @@ public class Levels_DB : MonoBehaviour {
 	}
 
 	public static int GetSceneLevel(int lvl){
-		if (lvl < 9)
+		if (lvl < 4)
 			return 0;
-		else if (lvl < 17)
+		else if (lvl < 7)
 			return 1;
 		else 
 			return 2;

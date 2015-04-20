@@ -428,15 +428,12 @@ public class MapController : MonoBehaviour {
 		Quaternion firstRotation = Quaternion.Euler (0, (-60 * (tile.tileNumber - 1)) - 90, 0);
 		Vector3 firstVector = firstRotation * new Vector3 (1, 0, 0) * height * 4;	
 
-
-		Debug.Log (firstVector);
 		return firstVector;
 	}
 	
 	private Vector3 findSecondVector(Tile tile){
 		Quaternion secondRotation = Quaternion.Euler (0, (-60 * (tile.tileNumber - 1)), 0);
 		Vector3 secondVector = secondRotation * new Vector3 (1, 0, 0) * line * 3;
-		Debug.Log (secondVector);
 		return secondVector;
 	}
 
