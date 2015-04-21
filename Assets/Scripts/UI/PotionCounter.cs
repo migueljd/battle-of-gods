@@ -54,7 +54,7 @@ public class PotionCounter : MonoBehaviour {
 	}
 
 	private void GainPotion(int potionIncrease){
-		if(potionCount == 0) GetComponent<Image>().color = Color.white;
+		if(potionCount == 0) GetComponent<Button>().interactable = true;
 		potionCount+=potionIncrease;
 		potionText.text = potionCount.ToString();
 	}
@@ -65,15 +65,15 @@ public class PotionCounter : MonoBehaviour {
 			healedUnit.HP = healedUnit.HP + PotionHPRecover > healedUnit.defaultHP? healedUnit.defaultHP : healedUnit.HP + PotionHPRecover;
 			potionCount -= 1;
 			usedPotionThisTurn = true;
-			GetComponent<Image>().color = Color.black;
+			GetComponent<Button>().interactable = false;
 			potionText.text = "Potion: " + potionCount;
 		}
 	}
 
 	public static void PassTurn(){
 			instance.usedPotionThisTurn = false;	
-			if(instance.potionCount == 0) instance.GetComponent<Image>().color = Color.black;
-			else instance.GetComponent<Image>().color = Color.white;
+		if(instance.potionCount == 0) instance.GetComponent<Button>().interactable = false;
+		else instance.GetComponent<Button>().interactable = true;
 	}
 
 	public static void OnPassLevel(){
