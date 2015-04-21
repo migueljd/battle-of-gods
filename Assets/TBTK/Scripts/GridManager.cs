@@ -729,22 +729,23 @@ namespace TBTK{
 			}
 			
 			ClearHoveredTile();    //clear the hovered tile so all the UI overlay will be cleared
-			if (endTurn && !(GameControl.selectedUnit.CanMove() || GameControl.selectedUnit.CanAttack())) {
-				StartCoroutine(EndTurn());
-			}
+//			if (endTurn && !(GameControl.selectedUnit.CanMove() || GameControl.selectedUnit.CanAttack())) {
+////				StartCoroutine(EndTurn());
+//			}
 			
 		}
 		
-		IEnumerator EndTurn(){
-			while(!TurnControl.ClearToProceed()){
-				yield return new WaitForSeconds(0.1f);
-			}
-			//            Debug.Log ("Ending turn at " + Time.time);
-			onHostileDeselectE();
-			GameControl.SelectTile(null);
-			
-			GameControl.EndTurn();
-		}
+//		IEnumerator EndTurn(){
+//			while(!TurnControl.ClearToProceed()){
+//				yield return new WaitForSeconds(0.1f);
+//			}
+//			//            Debug.Log ("Ending turn at " + Time.time);
+//			onHostileDeselectE();
+//			GameControl.SelectTile(null);
+//			Debug.Log ("End turn called by Grid Manager");
+//
+////			GameControl.EndTurn();
+//		}
 		
 		//        IEnumerator RevealArea(){
 		//            

@@ -190,6 +190,7 @@ namespace TBTK{
 //			CardsHandManager.ShuffleDeck ();
 			CardsHandManager.instance.GameStarted ();
 			PotionCounter.PositionPotionButton ();
+
 			TurnControl.EndTurn();	//this will initiate unit selection and start the game
 
 			yield return null;
@@ -296,6 +297,7 @@ namespace TBTK{
 		//end the turn, called when EndTurn button are pressed or when a unit has used up all its move(in FactionUnitPerTurn & UnitPerTurn mode)
 		public static void EndTurn(){ 
 			if(chosenUnit != null)chosenUnit.usedThisTurn = true;
+
 
 			isUnitChosen = false;
 			chosenUnit = null;

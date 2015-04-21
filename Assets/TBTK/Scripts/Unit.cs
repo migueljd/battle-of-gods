@@ -960,7 +960,6 @@ namespace TBTK{
 			target = null;
 			if (unitParticles != null)
 				unitParticles.EndAttack ();
-			Debug.Log ("Attack has come to an end");
 		}
 		
 		
@@ -1033,7 +1032,7 @@ namespace TBTK{
 		void FinishAction(){
 			if(isAIUnit) return;
 			
-			if(!IsAllActionCompleted() || FactionManager.IsPlayerTurn()) GameControl.SelectUnit(this);
+			if(!IsAllActionCompleted()) GameControl.SelectUnit(this);
 			else{
 				FactionManager.UnitMoveDepleted(this);
 				TurnControl.NextUnit();
@@ -1172,7 +1171,7 @@ namespace TBTK{
 		
 		public bool IsAllActionCompleted(){
 			if(stunned>0) return true;
-			if (FactionManager.IsPlayerTurn ()) return false;
+//			if (FactionManager.IsPlayerTurn ()) return false;
 			if(attackRemain>0 && AP>=GetAttackAPCost()) return false;
 			if(moveRemain>0 && AP>=GetMoveAPCost()) return false;
 			return true;

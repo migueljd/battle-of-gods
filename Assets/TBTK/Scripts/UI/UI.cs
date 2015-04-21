@@ -131,6 +131,7 @@ namespace TBTK{
 		
 		
 		public void OnEndTurnButton(){
+
 			GameControl.EndTurn();
 		}
 

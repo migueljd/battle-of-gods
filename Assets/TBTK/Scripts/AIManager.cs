@@ -53,7 +53,7 @@ namespace TBTK{
 				yield return new WaitForSeconds(0.25f);
 				if(GameControl.GetGamePhase()==_GamePhase.Over) yield break;
 			}
-			
+
 			GameControl.EndTurn();
 		}
 		//move a single unit only
@@ -66,7 +66,7 @@ namespace TBTK{
 				while(movingUnit) yield return null;
 				yield return new WaitForSeconds(0.25f);
 			}
-			
+
 			GameControl.EndTurn();
 		}
 		
@@ -76,6 +76,7 @@ namespace TBTK{
 			while(!TurnControl.ClearToProceed()){
 				yield return null;
 			}
+
 			GameControl.EndTurn();
 		}
 		
