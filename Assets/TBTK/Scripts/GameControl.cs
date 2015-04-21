@@ -180,11 +180,11 @@ namespace TBTK{
 			yield return null;
 			
 			if(delay>0) yield return new WaitForSeconds(delay);
-			Unit.gameStarted = true;
 
 			AbilityManagerFaction.StartCounter();	//for ability energy to start charging
 			
 			if(onGameStartE!=null) onGameStartE();
+			Unit.gameStarted = true;
 			
 			gamePhase=_GamePhase.Play;
 //			CardsHandManager.ShuffleDeck ();

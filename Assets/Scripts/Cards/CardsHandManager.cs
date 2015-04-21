@@ -264,7 +264,11 @@ namespace Cards
 
 		private void OnUnitDestroyed(Unit unit){
 			Debug.Log ("Tried to get a card");
-
+			Debug.Log (unit.factionID);
+			Debug.Log (FactionManager.GetPlayerFactionID () [0]);
+			Debug.Log ("Faction Man: " + !FactionManager.IsPlayerFaction (unit.factionID));
+			Debug.Log ("cardsInHand: " + (cardsInHand == null));
+			Debug.Log ("Unit: " + unit);
 			if (!FactionManager.IsPlayerFaction (unit.factionID) && cardsInHand.getCount () < handSize) {
 				float getCard = Random.Range (0, 100);
 				Debug.Log ("GetCard was" + getCard);

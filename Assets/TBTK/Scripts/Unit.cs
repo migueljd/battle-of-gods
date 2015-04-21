@@ -628,7 +628,7 @@ namespace TBTK{
 			if(turretObject==null) turretObject=thisT;
 		}
 		
-		void Start () {
+		void GameStart () {
 			if (!gameStarted) {
 				HP = GetFullHP ();
 			} else {
@@ -639,6 +639,7 @@ namespace TBTK{
 				}else if(this.transform.name.Equals ("Hercules")){
 					HP = HerculesHP;
 				}
+				if(HP <=0) StartCoroutine(Dead());
 			}
 			if(GameControl.RestoreUnitAPOnTurn()) AP=GetFullAP();
 		}
@@ -646,10 +647,13 @@ namespace TBTK{
 		void OnEnable(){
 			AbilityManagerUnit.onIterateAbilityCooldownE += OnIterateAbilityCooldown;
 			GameControl.onPassLevelE += PassLevel;
+			GameControl.onGameStartE += GameStart;
 		}
 		void OnDisable(){
 			AbilityManagerUnit.onIterateAbilityCooldownE -= OnIterateAbilityCooldown;
 			GameControl.onPassLevelE -= PassLevel;
+			GameControl.onGameStartE -= GameStart;
+
 		}
 		
 		void OnIterateAbilityCooldown(){
