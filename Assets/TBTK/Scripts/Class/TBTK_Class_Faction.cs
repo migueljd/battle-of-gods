@@ -84,7 +84,6 @@ namespace TBTK{
 		//for FactionUnitPerTurn mode, breakWhenExceedLimit is set to false, where selectUnitID loops forever
 		public bool SelectNextUnitInQueue(bool breakWhenExceedLimit=false){
 			if (allUnitList.Count == 0) {
-				Debug.Log ("End turn called by Select Next Unit in Queue");
 				TurnControl.EndTurn ();
 				return false;
 			}

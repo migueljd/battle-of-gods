@@ -67,7 +67,6 @@ public class MapController : MonoBehaviour {
 
 	void OnLevelWasLoaded(int levelLoaded){
 		this.gameStarted = false;
-		Debug.Log ("Game Started is " + gameStarted + " and Id is " + GetInstanceID());
 		generatedTileList = new List<Transform> ();
 		
 		//setting all variables from the DB
@@ -95,7 +94,6 @@ public class MapController : MonoBehaviour {
 	}
 
 	private void SetupMap(string levelName){
-		Debug.Log (this.GetInstanceID ());
 		Tile initialTile = GameObject.FindGameObjectsWithTag("Tile_0")[0].GetComponent<Tile>();
 
 		List<Unit> playerUnits = FactionManager.GetAllPlayerUnits ();

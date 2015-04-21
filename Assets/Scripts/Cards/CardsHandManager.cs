@@ -64,15 +64,25 @@ namespace Cards
 				instance.cardsInDiscard = new CardsList();
 				instantiator = new CardPrefabInstatiator ();
 				SetUpInstantiator();
+				Debug.Log ("Instance is null");
 				DontDestroyOnLoad (this.gameObject);
 			} else {
+				
+				Debug.Log ("Instance is not null");
 				Destroy (this.gameObject);
 			}
 
 
 		}
 
+
+		void OnLevelWasLoaded(int lvl){
+			OnEnable ();
+		}
+
 		void OnEnable(){
+			enabled = true;
+			Debug.Log ("On Enable called");
 			Unit.onUnitDestroyedE += OnUnitDestroyed;
 			GameControl.onPassLevelE += PassLevel;
 		}
@@ -99,7 +109,6 @@ namespace Cards
 
 			transform.localPosition = instance.managerPosition;
 			transform.localRotation = Quaternion.Euler (instance.managerRotation);
-
 //			Debug.Log ("Position is " + transform.position);
 //			Debug.Log ("Rotation is " + transform.rotation);
 
@@ -113,6 +122,7 @@ namespace Cards
 			} else if (startedOnce) {
 				_UpdateCardsPosition ();
 			}
+			Debug.Log ("There currently are " + cardsInHand.getCount () + " cards in hand");
 
 		}
 
@@ -301,6 +311,7 @@ namespace Cards
 		}
 
 		public static void Disattach(){
+			Debug.Log ("Disataching");
 			instance.transform.parent = null;
 		}
 

@@ -90,8 +90,6 @@ namespace TBTK{
 				FactionManager.SelectNextUnitInFaction();
 			}
 			else if(instance.turnMode==_TurnMode.FactionUnitPerTurn){
-				Debug.Log ("End turn called by Next Unit");
-
 				EndTurn();
 			}
 			else if(instance.turnMode==_TurnMode.UnitPerTurn){
