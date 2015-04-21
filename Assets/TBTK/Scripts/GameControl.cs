@@ -114,6 +114,8 @@ namespace TBTK{
 		
 		private static GameControl instance;
 
+		private int actionsAtStart = 0;
+
 		public static float delayPerAction = 0.5f;
 
 
@@ -184,8 +186,12 @@ namespace TBTK{
 			AbilityManagerFaction.StartCounter();	//for ability energy to start charging
 			
 			if(onGameStartE!=null) onGameStartE();
+			yield return new WaitForSeconds (0.2f);
 			Unit.gameStarted = true;
-			
+			while (actionsAtStart !=0)
+				yield return null;
+			LoadingScreen.FadeOut ();
+
 			gamePhase=_GamePhase.Play;
 //			CardsHandManager.ShuffleDeck ();
 			CardsHandManager.instance.GameStarted ();
@@ -362,6 +368,7 @@ namespace TBTK{
 			if (onPassLevelE != null)
 				onPassLevelE ();
 
+			yield return new WaitForSeconds (LoadingScreen.staticSecondsToFadeIn + 0.2f);
 
 			Application.LoadLevel (Levels_DB.GetSceneLevel(MapController.level));
 			yield return null;
@@ -370,6 +377,14 @@ namespace TBTK{
 		
 		public static void DisplayMessage(string msg){ 
 			if(onGameMessageE!=null) onGameMessageE(msg);
+		}
+
+		public static void AddActionAtStart(){
+			instance.actionsAtStart ++;
+		}
+
+		public static void CompleteActionAtStart(){
+			instance.actionsAtStart--;
 		}
 
 		
@@ -386,6 +401,8 @@ namespace TBTK{
 			}
 
 		}
+
+
 		
 	}
 

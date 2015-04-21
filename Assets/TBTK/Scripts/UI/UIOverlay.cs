@@ -62,6 +62,7 @@ namespace TBTK {
 		}
 		
 		void OnGameStart(){
+			GameControl.AddActionAtStart ();
 			int totalUnitCount=FactionManager.GetTotalUnitCount();
 			if(unitOverlayList.Count<totalUnitCount){
 				while(unitOverlayList.Count<totalUnitCount){
@@ -93,6 +94,7 @@ namespace TBTK {
 				//if(unitOverlayList[i].unit==null) 
 					unitOverlayList[i].rootObj.SetActive(unitOverlayList[i].unit!=null);
 			}
+			GameControl.CompleteActionAtStart ();
 		}
 		
 		void OnAddUnit(Unit unit){ 

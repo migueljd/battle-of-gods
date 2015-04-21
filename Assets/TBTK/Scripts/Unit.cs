@@ -629,6 +629,7 @@ namespace TBTK{
 		}
 		
 		void GameStart () {
+			GameControl.AddActionAtStart ();
 			if (!gameStarted) {
 				HP = GetFullHP ();
 			} else {
@@ -642,6 +643,7 @@ namespace TBTK{
 				if(HP <=0) StartCoroutine(Dead());
 			}
 			if(GameControl.RestoreUnitAPOnTurn()) AP=GetFullAP();
+			GameControl.CompleteActionAtStart ();
 		}
 		
 		void OnEnable(){
@@ -1126,6 +1128,8 @@ namespace TBTK{
 		
 		public GameObject destroyEffectObj;
 		protected virtual IEnumerator Dead(){
+			if (gameStarted && !this.isAIUnit) 
+				GameControl.AddActionAtStart ();
 			if(destroyEffectObj!=null) Instantiate(destroyEffectObj, GetTargetT().position, Quaternion.identity);
 			
 			float delay=0.5f;
@@ -1133,8 +1137,10 @@ namespace TBTK{
 			if(unitAnim!=null) delay=Mathf.Max(delay, unitAnim.Destroy());
 
 			OnUnitDestroyed(this);
-			
+
 			yield return new WaitForSeconds(delay + 0.7f);
+			if (gameStarted && !this.isAIUnit) 
+				GameControl.CompleteActionAtStart ();
 			Destroy(thisObj);
 		}
 		
