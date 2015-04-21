@@ -1092,9 +1092,9 @@ namespace TBTK{
 				if(GameControl.selectedUnit != null)UI.UpdateUnitInfo(GameControl.selectedUnit);
 				if(GameControl.selectedTile != null)UI.UpdateEnemyInfo(GameControl.selectedTile.unit);
 			}
-			if (totalHP <=0)
+			if (totalHP <=0){
 			//It's important to do some sort of animation in case the unit didn't die
-				if(playerUnit){
+//				if(playerUnit){
 
 					//this will be used to decrease the total life of the player
 //					if(source != null){
@@ -1103,9 +1103,9 @@ namespace TBTK{
 //						if(FactionManager.playerHP <= 0){//GameOver
 //						}
 //					}
-				}
+//				}
 					//if its an enemy unit, the enemy should just disappear and give exp/money/etc
-				else{
+//				else{
 					HP=0;
 				
 					StartCoroutine(Dead());
