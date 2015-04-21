@@ -176,6 +176,9 @@ namespace TBTK{
 		//start the game, this is called after unit deployment is complete, or after initialization if no deployment is required
 		public static void StartGame(){ instance.StartCoroutine(instance.DelayStartGame(0.5f)); }
 		IEnumerator DelayStartGame(float delay=0.5f){
+
+			LoadingScreen.ShowLoadingScreen ();
+
 			yield return null;
 			FactionManager.SetupFaction();
 			GridManager.SetupGridForFogOfWar();
@@ -194,8 +197,6 @@ namespace TBTK{
 
 			gamePhase=_GamePhase.Play;
 //			CardsHandManager.ShuffleDeck ();
-			CardsHandManager.instance.GameStarted ();
-			PotionCounter.PositionPotionButton ();
 
 			TurnControl.EndTurn();	//this will initiate unit selection and start the game
 

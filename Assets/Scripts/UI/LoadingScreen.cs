@@ -20,13 +20,17 @@ public class LoadingScreen : MonoBehaviour {
 	private bool fadeIn;
 
 	public Image fadeImage;
+	public Text levelText;
+	public float hideLevelNameDuration;
 
 	private static LoadingScreen instance;
+	private float timeToHide;
 
 	void Awake(){
 		instance = this;
 		staticSecondsToFadeIn = this.secondsToFadeIn;
 		staticSecondsToFadeOut = this.secondsToFadeOut;
+		timeToHide = Mathf.Infinity;
 	}
 
 	// Update is called once per frame
@@ -34,6 +38,8 @@ public class LoadingScreen : MonoBehaviour {
 		if (fadeIn || fadeOut) {
 			UpdateAlpha();
 		}
+		if (Time.time >= timeToHide)
+			HideLoadingScreen ();
 	}
 
 	private void UpdateAlpha(){
@@ -55,6 +61,7 @@ public class LoadingScreen : MonoBehaviour {
 	public static void FadeOut(){
 		instance.fadeOut = true;
 		instance.initialTime = Time.time;
+		instance.timeToHide = Time.time + instance.hideLevelNameDuration + staticSecondsToFadeOut;
 	}
 
 	public static void FadeIn(){
@@ -62,5 +69,14 @@ public class LoadingScreen : MonoBehaviour {
 		instance.initialTime = Time.time;
 		instance.fadeImage.enabled = true;
 
+	}
+
+	public static void ShowLoadingScreen(){
+		instance.levelText.enabled = true;
+		instance.levelText.text = "Level " + MapController.level.ToString ();
+	}
+
+	public static void HideLoadingScreen(){
+		instance.levelText.enabled = false;
 	}
 }

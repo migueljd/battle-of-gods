@@ -85,11 +85,14 @@ namespace Cards
 			Debug.Log ("On Enable called");
 			Unit.onUnitDestroyedE += OnUnitDestroyed;
 			GameControl.onPassLevelE += PassLevel;
+			GameControl.onGameStartE += GameStarted;
 		}
 
 		void OnDisable(){
 			Unit.onUnitDestroyedE -= OnUnitDestroyed;
 			GameControl.onPassLevelE -= PassLevel;
+			GameControl.onGameStartE -= GameStarted;
+
 		}
 
 		private void SetUpInstantiator(){
@@ -104,6 +107,7 @@ namespace Cards
 		}
 
 		public void GameStarted (){
+			GameControl.AddActionAtStart ();
 
 			transform.SetParent (GameObject.FindWithTag("CardsCamera").transform);
 
@@ -123,7 +127,7 @@ namespace Cards
 				_UpdateCardsPosition ();
 			}
 			Debug.Log ("There currently are " + cardsInHand.getCount () + " cards in hand");
-
+			GameControl.CompleteActionAtStart ();
 		}
 
 

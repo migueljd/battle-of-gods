@@ -39,6 +39,7 @@ public class PotionCounter : MonoBehaviour {
 	
 	void OnEnable(){
 		GameControl.onPassLevelE += OnPassLevel;
+		GameControl.onGameStartE += PositionPotionButton;
 		Unit.onUnitDestroyedE += OnUnitDestroyed;
 		GameControl.onIterateTurnE += PassTurn;
 	}
@@ -46,11 +47,15 @@ public class PotionCounter : MonoBehaviour {
 	void OnDisable(){
 		GameControl.onPassLevelE -= OnPassLevel;
 		Unit.onUnitDestroyedE -= OnUnitDestroyed;
+		GameControl.onGameStartE -= PositionPotionButton;
+
 	}
 
 	public static void PositionPotionButton(){
+		GameControl.AddActionAtStart ();
 		instance.transform.SetParent(GameObject.FindGameObjectsWithTag ("AnchorBottonLeft")[0].transform);
 		instance.transform.localPosition = instance.basePosition;
+		GameControl.CompleteActionAtStart ();
 	}
 
 	private void GainPotion(int potionIncrease){
