@@ -66,7 +66,7 @@ public class PotionCounter : MonoBehaviour {
 			potionCount -= 1;
 			usedPotionThisTurn = true;
 			GetComponent<Button>().interactable = false;
-			potionText.text = "Potion: " + potionCount;
+			potionText.text = potionCount.ToString();
 		}
 	}
 
