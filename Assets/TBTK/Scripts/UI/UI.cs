@@ -45,8 +45,8 @@ namespace TBTK{
 			heroHP.enabled = false;
 			heroAttack.enabled = false;
 			heroDefense.enabled = false;
-			endTurnButtonObj.SetActive(false);
-			
+			endTurnButtonObj.GetComponent<Button>().interactable = false;
+
 			if(disablePerkMenu) UIPerkMenu.Disable();
 		}
 		
@@ -85,7 +85,7 @@ namespace TBTK{
 				heroHP.enabled = true;
 				heroAttack.enabled = true;
 				heroDefense.enabled = true;
-				endTurnButtonObj.SetActive (true);
+				endTurnButtonObj.GetComponent<Button>().interactable = true;
 
 
 				heroImg.sprite = unit.iconSprite;
@@ -101,7 +101,7 @@ namespace TBTK{
 				}
 
 			} else {
-				endTurnButtonObj.SetActive (false);
+				endTurnButtonObj.GetComponent<Button>().interactable = false;
 				heroImg.enabled = false;
 				heroHP.enabled = false;
 				heroAttack.enabled = false;

@@ -36,18 +36,27 @@ public class PotionCounter : MonoBehaviour {
 	public void Start(){
 		potionText = transform.GetChild (0).GetComponent<Text> ();
 	}
+
+	void OnLevelWasLoaded(int lvl){
+		if(instance == this)
+			OnEnable ();
+	}
 	
 	void OnEnable(){
-		GameControl.onPassLevelE += OnPassLevel;
-		GameControl.onGameStartE += PositionPotionButton;
-		Unit.onUnitDestroyedE += OnUnitDestroyed;
-		GameControl.onIterateTurnE += PassTurn;
+		if (instance == this) {
+			GameControl.onPassLevelE += OnPassLevel;
+			GameControl.onGameStartE += PositionPotionButton;
+			Unit.onUnitDestroyedE += OnUnitDestroyed;
+			GameControl.onIterateTurnE += PassTurn;
+		}
 	}
 
 	void OnDisable(){
-		GameControl.onPassLevelE -= OnPassLevel;
-		Unit.onUnitDestroyedE -= OnUnitDestroyed;
-		GameControl.onGameStartE -= PositionPotionButton;
+		if (instance == this) {
+			GameControl.onPassLevelE -= OnPassLevel;
+			Unit.onUnitDestroyedE -= OnUnitDestroyed;
+			GameControl.onGameStartE -= PositionPotionButton;
+		}
 
 	}
 
