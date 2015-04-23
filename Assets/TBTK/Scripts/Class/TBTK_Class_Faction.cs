@@ -107,8 +107,12 @@ namespace TBTK{
 						u.usedThisTurn = true;
 					}
 
-					if(!u.usedThisTurn){
+					if(!u.usedThisTurn && GameControl.HasGameStarted()){
 						GameControl.SelectUnit (u);
+						break;
+					}
+					else if(!GameControl.HasGameStarted()){
+						GameControl.GameStarted();
 						break;
 					}
 					else unitsUsedCount++;

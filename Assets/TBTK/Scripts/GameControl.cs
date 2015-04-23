@@ -118,6 +118,7 @@ namespace TBTK{
 
 		public static float delayPerAction = 0.5f;
 
+		public bool gameStarted = false;
 
 		public static void fastFowardTo(float speed){
 			Time.timeScale = speed;
@@ -390,7 +391,7 @@ namespace TBTK{
 
 		
 		public static void ChooseSelectedUnit(){
-			if (!isUnitChosen) {
+			if (!isUnitChosen && selectedUnit != null) {
 				Debug.Log ("Chose unit");
 				isUnitChosen = true;
 				chosenUnit = selectedUnit;
@@ -402,6 +403,14 @@ namespace TBTK{
 					onUnitChosen ();
 			}
 
+		}
+
+		public static bool HasGameStarted(){
+			return instance.gameStarted;
+		}
+
+		public static void GameStarted(){
+			instance.gameStarted = true;
 		}
 
 

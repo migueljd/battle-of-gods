@@ -38,7 +38,13 @@ namespace TBTK{
 		}
 		
 		// Use this for initialization
-		void Start () {
+		void Start () {				
+
+			unitSelectedArrow.SetActive (false);
+			heroImg.enabled = false;
+			heroHP.enabled = false;
+			heroAttack.enabled = false;
+			heroDefense.enabled = false;
 			endTurnButtonObj.SetActive(false);
 			
 			if(disablePerkMenu) UIPerkMenu.Disable();
@@ -75,21 +81,32 @@ namespace TBTK{
 		
 		void OnUnitSelected(Unit unit){
 			if (unit != null) {
+				heroImg.enabled = true;
+				heroHP.enabled = true;
+				heroAttack.enabled = true;
+				heroDefense.enabled = true;
 				endTurnButtonObj.SetActive (true);
+
+
 				heroImg.sprite = unit.iconSprite;
-				heroHP.text = unit.HP.ToString();
-				heroAttack.text = (unit.GetEffectiveDamage()+ unit.tile.tileAttack).ToString();
-				heroDefense.text = (unit.GetEffectiveGuard() + unit.tile.tileDefense).ToString();
+				heroHP.text = unit.HP.ToString ();
+				heroAttack.text = (unit.GetEffectiveDamage () + unit.tile.tileAttack).ToString ();
+				heroDefense.text = (unit.GetEffectiveGuard () + unit.tile.tileDefense).ToString ();
 //				Vector3 screenPos = mainCam.WorldToScreenPoint(overlay.unit.thisT.position+new Vector3(0, 0, 0));
 //				overlay.rootT.localPosition=(screenPos+new Vector3(0, -20, 0))/UI.GetScaleFactor();
 
-				if(!unit.usedThisTurn && !GameControl.isUnitChosen){
-					unitSelectedArrow.GetComponent<SelectorAnimator>().unit = unit;
-					unitSelectedArrow.SetActive(true);
+				if (!unit.usedThisTurn && !GameControl.isUnitChosen) {
+					unitSelectedArrow.SetActive (true);
+					unitSelectedArrow.GetComponent<SelectorAnimator> ().unit = unit;
 				}
 
+			} else {
+				endTurnButtonObj.SetActive (false);
+				heroImg.enabled = false;
+				heroHP.enabled = false;
+				heroAttack.enabled = false;
+				heroDefense.enabled = false;
 			}
-			else endTurnButtonObj.SetActive(false);
 		}
 
 		void OnUnitChosen(){

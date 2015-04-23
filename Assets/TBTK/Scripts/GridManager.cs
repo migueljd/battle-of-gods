@@ -662,15 +662,18 @@ namespace TBTK{
 		//when player click on a particular tile
 		public static void OnTile(Tile tile){ instance._OnTile(tile); }
 		public void _OnTile(Tile tile){
+			Debug.Log (!FactionManager.IsPlayerTurn ());
 			if(!FactionManager.IsPlayerTurn()) return;
 			bool endTurn = false;
+			Debug.Log (CardsHandManager.movingCard);
 			if(tile.unit!=null && !CardsHandManager.movingCard){
+				Debug.Log (FactionManager.GetSelectedFactionID()==tile.unit.factionID);
 				//select the unit if the unit belong's to current player in turn
 				if(FactionManager.GetSelectedFactionID()==tile.unit.factionID ){
 					if(TurnControl.GetMoveOrder()!=_MoveOrder.Free) return;
 					if(TurnControl.GetTurnMode()==_TurnMode.UnitPerTurn) return;
 					if(!GameControl.AllowUnitSelect()) return;
-					if(GameControl.selectedUnit.tile==tile) return;
+					if(GameControl.selectedUnit != null && GameControl.selectedUnit.tile==tile) return;
 					
 					GameControl.SelectUnit(tile);
 					onHostileDeselectE();
