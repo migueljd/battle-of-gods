@@ -131,7 +131,7 @@ namespace TBTK{
 		
 		
 		public void OnEndTurnButton(){
-
+			GameControl.ChooseSelectedUnit ();
 			GameControl.EndTurn();
 		}
 

@@ -1086,13 +1086,13 @@ namespace TBTK{
 
 			float g = this.GetEffectiveGuard ();
 
+
 			this.HP-= dmg - g >0? dmg - g : 0;
 			float totalHP = this.HP + this.tile.tileDefense;
 
 
 			if (playerUnit) {
-				getStack ().decreaseGuard ((int)dmg);
-				totalHP += this.getStack ().getGuard ();
+				this.getStack ().decreaseGuard ((int)dmg);
 				if(GameControl.selectedUnit != null)UI.UpdateUnitInfo(GameControl.selectedUnit);
 			} else {
 				if(GameControl.selectedUnit != null)UI.UpdateUnitInfo(GameControl.selectedUnit);

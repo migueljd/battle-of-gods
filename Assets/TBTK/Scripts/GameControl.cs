@@ -395,8 +395,9 @@ namespace TBTK{
 				isUnitChosen = true;
 				chosenUnit = selectedUnit;
 				selectedUnit.usedThisTurn = true;
+				Debug.Log ("Updating info");
 				selectedUnit.getStack ().updateDamageAndGuard ();
-
+				selectedUnit.getStack().updateAttributesForLists();
 				if (onUnitChosen != null)
 					onUnitChosen ();
 			}

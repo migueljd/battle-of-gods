@@ -110,13 +110,13 @@ namespace Cards
 		}
 
 		public void decreaseAttribute(int decrease, bool damage = false, bool guard = false, bool move = false){
-
 			if (damage)
-				damageCount = Mathf.Max(0, guardCount -decrease);
+				damageCount = Mathf.Max(0, damageCount -decrease);
 			if (guard)
 				guardCount = Mathf.Max(0, guardCount -decrease);
 			if (move)
-				movementCount = Mathf.Max(0, guardCount -decrease);
+				movementCount = Mathf.Max(0, movementCount -decrease);
+
 		}
 
 

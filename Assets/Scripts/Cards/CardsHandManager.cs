@@ -77,22 +77,28 @@ namespace Cards
 
 
 		void OnLevelWasLoaded(int lvl){
-			OnEnable ();
+			if(instance == this)
+				OnEnable ();
 		}
 
 		void OnEnable(){
-			enabled = true;
-			Debug.Log ("On Enable called");
-			Unit.onUnitDestroyedE += OnUnitDestroyed;
-			GameControl.onPassLevelE += PassLevel;
-			GameControl.onGameStartE += GameStarted;
+			if (instance == this) {
+
+				enabled = true;
+				Debug.Log ("On Enable called");
+				Unit.onUnitDestroyedE += OnUnitDestroyed;
+				GameControl.onPassLevelE += PassLevel;
+				GameControl.onGameStartE += GameStarted;
+			}
 		}
 
 		void OnDisable(){
-			Unit.onUnitDestroyedE -= OnUnitDestroyed;
-			GameControl.onPassLevelE -= PassLevel;
-			GameControl.onGameStartE -= GameStarted;
+			if (instance == this) {
 
+				Unit.onUnitDestroyedE -= OnUnitDestroyed;
+				GameControl.onPassLevelE -= PassLevel;
+				GameControl.onGameStartE -= GameStarted;
+			}
 		}
 
 		private void SetUpInstantiator(){
@@ -126,7 +132,6 @@ namespace Cards
 			} else if (startedOnce) {
 				_UpdateCardsPosition ();
 			}
-			Debug.Log ("There currently are " + cardsInHand.getCount () + " cards in hand");
 			GameControl.CompleteActionAtStart ();
 		}
 

@@ -64,7 +64,7 @@ namespace Cards{
 		}
 		
 		public void decreaseGuard(int decrease){
-			damageCards.decreaseAttribute (decrease, false, true);
+			guardCards.decreaseAttribute (decrease, false, true);
 		}
 
 		public static void decreaseMovement(int decrease){
