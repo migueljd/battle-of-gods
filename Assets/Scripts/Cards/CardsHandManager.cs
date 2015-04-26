@@ -11,6 +11,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine.UI;
+
 
 using TBTK;
 
@@ -53,6 +55,9 @@ namespace Cards
 		private static bool startedOnce = false;
 
 		public Vector3 baseScale = new Vector3 (0.30f, 0.42f, 0.42f);
+
+		public float cardbackMaxHeight;
+		public float cardbackYSpeed;
 
 
 		void Awake ()
@@ -272,55 +277,78 @@ namespace Cards
 		}
 
 		private void OnUnitDestroyed(Unit unit){
-			Debug.Log ("Tried to get a card");
-			Debug.Log (unit.factionID);
-			Debug.Log (FactionManager.GetPlayerFactionID () [0]);
-			Debug.Log ("Faction Man: " + !FactionManager.IsPlayerFaction (unit.factionID));
-			Debug.Log ("cardsInHand: " + (cardsInHand == null));
-			Debug.Log ("Unit: " + unit);
 			if (!FactionManager.IsPlayerFaction (unit.factionID) && cardsInHand.getCount () < handSize) {
 				float getCard = Random.Range (0, 100);
 				Debug.Log ("GetCard was" + getCard);
 				if (getCard <= DropCardChance) {
-					Debug.Log ("Received a card");
-
-					Dictionary<int, string> cards = Levels_DB.GetCardsForLevel (MapController.level);
-
-					int card = Random.Range (0, 101);
-
-					string cardName = "";
-					int lowestDifference = int.MaxValue;
-					int final = 0;
-					foreach (int key in cards.Keys) {
-						if (key >= card && lowestDifference > key - card) {
-							lowestDifference = key - card;
-							final = key;
-						}
-					}
-
-					cards.TryGetValue (final, out cardName);
-
-					Card won = null;
-
-					foreach (Card c in cardsInDiscard.list) {
-						if (c.name.Equals (cardName + "(Clone)")) {
-							won = c;
-						}
-					}
-					if (won != null)
-						cardsInDiscard.removeCard (won);
-					else
-						won = (Instantiate (Resources.Load ("Prefabs/Cards/" + cardName), cardsLimbo, Quaternion.identity) as GameObject).GetComponent<Card>();
-
-					won.transform.parent = this.transform;
-
-					won.transform.localScale= baseScale;
-					CardTransform.baseScale = baseScale;
-
-					cardsInHand.addCard(won);
-					_UpdateCardsPosition();
+					StartCoroutine(CardbackRoutine(unit));
 				}
 			}
+		}
+
+		IEnumerator CardbackRoutine(Unit unit){
+			Vector3 cameraPoint = Camera.main.WorldToScreenPoint(unit.transform.position);
+			Vector2 basePosition = new Vector3 (cameraPoint.x, cameraPoint.y + 10);
+			Vector2 finalPosition = basePosition + new Vector2 (0, cardbackMaxHeight);
+			Image cardback = UI.GetCardBack ();
+			cardback.rectTransform.anchoredPosition = basePosition;
+			cardback.gameObject.SetActive(true);
+			Debug.Log ("Card enabled");
+			Debug.Log (basePosition);
+			Debug.Log (finalPosition);
+
+			float interpolate = 0;
+			while (interpolate <= 1) {
+				cardback.rectTransform.anchoredPosition = Vector2.Lerp(basePosition, finalPosition, interpolate);
+				interpolate += cardbackYSpeed;
+				yield return null;
+				Debug.Log ("Card moving");
+			}
+			Debug.Log ("Card moved");
+			cardback.gameObject.SetActive(false);
+
+			StartCoroutine (SpawnCardAtHand());
+			yield return null;
+		}
+
+		IEnumerator SpawnCardAtHand(){
+			Dictionary<int, string> cards = Levels_DB.GetCardsForLevel (MapController.level);
+			
+			int card = Random.Range (0, 101);
+			
+			string cardName = "";
+			int lowestDifference = int.MaxValue;
+			int final = 0;
+			foreach (int key in cards.Keys) {
+				if (key >= card && lowestDifference > key - card) {
+					lowestDifference = key - card;
+					final = key;
+				}
+			}
+			
+			cards.TryGetValue (final, out cardName);
+			
+			Card won = null;
+			
+			foreach (Card c in cardsInDiscard.list) {
+				if (c.name.Equals (cardName + "(Clone)")) {
+					won = c;
+				}
+			}
+			if (won != null)
+				cardsInDiscard.removeCard (won);
+			else
+				won = (Instantiate (Resources.Load ("Prefabs/Cards/" + cardName), cardsLimbo, Quaternion.identity) as GameObject).GetComponent<Card>();
+			
+			won.transform.parent = this.transform;
+			
+			won.transform.localScale= baseScale;
+			CardTransform.baseScale = baseScale;
+			
+			cardsInHand.addCard(won);
+			_UpdateCardsPosition();
+
+			yield return null;
 		}
 
 		public static void Disattach(){

@@ -665,7 +665,6 @@ namespace TBTK{
 			Debug.Log (!FactionManager.IsPlayerTurn ());
 			if(!FactionManager.IsPlayerTurn()) return;
 			bool endTurn = false;
-			Debug.Log (CardsHandManager.movingCard);
 			if(tile.unit!=null && !CardsHandManager.movingCard){
 				Debug.Log (FactionManager.GetSelectedFactionID()==tile.unit.factionID);
 				//select the unit if the unit belong's to current player in turn

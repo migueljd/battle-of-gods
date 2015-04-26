@@ -392,11 +392,9 @@ namespace TBTK{
 		
 		public static void ChooseSelectedUnit(){
 			if (!isUnitChosen && selectedUnit != null) {
-				Debug.Log ("Chose unit");
 				isUnitChosen = true;
 				chosenUnit = selectedUnit;
 				selectedUnit.usedThisTurn = true;
-				Debug.Log ("Updating info");
 				selectedUnit.getStack ().updateDamageAndGuard ();
 				selectedUnit.getStack().updateAttributesForLists();
 				if (onUnitChosen != null)

@@ -32,6 +32,8 @@ namespace TBTK{
 
 		public float height;
 
+		public Image cardback;
+
 		void Awake(){
 			instance=this;
 			transform.position=Vector3.zero;
@@ -162,12 +164,9 @@ namespace TBTK{
 			UIGameOver.Show(factionID);
 		}
 		
-		
-		// Update is called once per frame
-		void Update () {
-		
+		public static Image GetCardBack(){
+			return instance.cardback;
 		}
-		
 	}
 
 }
