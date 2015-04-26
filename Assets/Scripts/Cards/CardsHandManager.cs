@@ -43,7 +43,7 @@ namespace Cards
 		public CardPrefabInstatiator instantiator;
 
 		//this position is used to store the cards that won't be used
-		public Vector3 cardsLimbo = new Vector3(9999,9999,9999);
+		public Vector3 cardsLimbo = new Vector3(0,0,0);
 
 		public Vector3 managerPosition;
 		public Vector3 managerRotation;

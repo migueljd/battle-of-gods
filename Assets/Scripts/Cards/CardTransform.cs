@@ -93,7 +93,7 @@ namespace Cards
 					this.transformCard.ActivateMagic ();
 			
 			if (transformCard.particles != null && transformCard.particles.transform != null)
-				StartCoroutine (transformCard.PlayParticle (GameControl.selectedUnit.transform.position));
+				StartCoroutine (transformCard.PlayParticle (GameControl.chosenUnit.transform.position));
 
 			GameControl.SelectUnit (GameControl.selectedUnit);
 

@@ -112,10 +112,12 @@ namespace Cards{
 		}
 
 		public virtual IEnumerator PlayParticle(Vector3 position){
+			particles.enableEmission = true;
 			particles.transform.position = position + new Vector3(0,height,0);
+
 			particles.Play ();
 			float timeToEnd = Time.time + particles.duration;
-			while(Time.time > timeToEnd) yield return null;
+			while(Time.time < timeToEnd) yield return null;
 
 			particles.Stop ();
 		}
