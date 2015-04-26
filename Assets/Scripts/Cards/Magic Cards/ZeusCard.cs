@@ -9,6 +9,7 @@ namespace Cards
 	public class ZeusCard : Card
 	{
 		public int turnsStunned;
+		public int appliedDamage;
 		
 		void Awake(){
 			base.BaseAwake ();
@@ -23,7 +24,7 @@ namespace Cards
 			stun.stun = 1;
 			stun.duration = turnsStunned;
 			GameControl.selectedTile.unit.ApplyEffect (stun);
-
+			GameControl.selectedTile.unit.ApplyDamage (appliedDamage);
 		}
 		
 		public override IEnumerator PlayParticle(Vector3 position){

@@ -81,17 +81,18 @@ namespace Cards
 
 		private void activateCard(CardsStackManager stack){
 
-			if (this.transformCard.damageCard) {
-				stack.addDamageCard (this.transformCard);
-			}
-			if (this.transformCard.guardCard) {
-				stack.addGuardCard (this.transformCard);
-			}
-			if (this.transformCard.moveCard)
-				stack.addMoveCard (this.transformCard);
 			if (this.transformCard.magicCard)
-					this.transformCard.ActivateMagic ();
-			
+				this.transformCard.ActivateMagic ();
+			else {
+				if (this.transformCard.damageCard) {
+					stack.addDamageCard (this.transformCard);
+				}
+				if (this.transformCard.guardCard) {
+					stack.addGuardCard (this.transformCard);
+				}
+				if (this.transformCard.moveCard)
+					stack.addMoveCard (this.transformCard);
+			}
 			if (transformCard.particles != null && transformCard.particles.transform != null)
 				StartCoroutine (transformCard.PlayParticle (GameControl.chosenUnit.transform.position));
 
