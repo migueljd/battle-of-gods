@@ -47,6 +47,7 @@ namespace Cards{
 			if (particles != null) {
 				particles = (ParticleSystem) Instantiate(particles, this.transform.position, this.transform.rotation);
 				particles.enableEmission = false;
+				particles.transform.SetParent(this.transform);
 			}
 			DontDestroyOnLoad (this.gameObject);
 		}
@@ -113,6 +114,7 @@ namespace Cards{
 
 		public virtual IEnumerator PlayParticle(Vector3 position){
 			particles.enableEmission = true;
+			particles.transform.SetParent (null);
 			particles.transform.position = position + new Vector3(0,height,0);
 
 			particles.Play ();
@@ -120,6 +122,8 @@ namespace Cards{
 			while(Time.time < timeToEnd) yield return null;
 
 			particles.Stop ();
+			particles.transform.SetParent (this.transform);
+			Debug.Log ("parent set");
 		}
 
 
