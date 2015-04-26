@@ -665,26 +665,30 @@ namespace TBTK{
 			Debug.Log (!FactionManager.IsPlayerTurn ());
 			if(!FactionManager.IsPlayerTurn()) return;
 			bool endTurn = false;
-			if(tile.unit!=null && !CardsHandManager.movingCard){
-				Debug.Log (FactionManager.GetSelectedFactionID()==tile.unit.factionID);
+			if (tile.unit != null && !CardsHandManager.movingCard) {
+				Debug.Log (FactionManager.GetSelectedFactionID () == tile.unit.factionID);
 				//select the unit if the unit belong's to current player in turn
-				if(FactionManager.GetSelectedFactionID()==tile.unit.factionID ){
-					if(TurnControl.GetMoveOrder()!=_MoveOrder.Free) return;
-					if(TurnControl.GetTurnMode()==_TurnMode.UnitPerTurn) return;
-					if(!GameControl.AllowUnitSelect()) return;
-					if(GameControl.selectedUnit != null && GameControl.selectedUnit.tile==tile) return;
+				if (FactionManager.GetSelectedFactionID () == tile.unit.factionID) {
+					if (TurnControl.GetMoveOrder () != _MoveOrder.Free)
+						return;
+					if (TurnControl.GetTurnMode () == _TurnMode.UnitPerTurn)
+						return;
+					if (!GameControl.AllowUnitSelect ())
+						return;
+					if (GameControl.selectedUnit != null && GameControl.selectedUnit.tile == tile)
+						return;
 					
-					GameControl.SelectUnit(tile);
-					onHostileDeselectE();
+					GameControl.SelectUnit (tile);
+					onHostileDeselectE ();
 				}
 				
 				//if the unit in the tile can be attack by current selected unit, attack it
-				else if(attackableTileList.Contains(tile)){
+				else if (attackableTileList.Contains (tile)) {
 					/*#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
                     if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile) ){
                     #endif*/
-					GameControl.ChooseSelectedUnit();
-					GameControl.selectedUnit.Attack(tile.unit);
+					GameControl.ChooseSelectedUnit ();
+					GameControl.selectedUnit.Attack (tile.unit);
 					endTurn = true;
 					//onHostileDeselectE();
 					//#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
@@ -697,28 +701,29 @@ namespace TBTK{
 				} 
 			}
 			//if the tile is within the move range of current selected unit, try to select it, if it is already selected, move
-			else if(walkableTileList.Contains(tile)){
+			else if (walkableTileList.Contains (tile)) {
 				
 				//                #if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 				//              if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
 				//            #endif
-				if(!tile.isPortal){
+				if (!tile.isPortal) {
 
-					GameControl.ChooseSelectedUnit();
-					GameControl.selectedUnit.Move(tile);
+					GameControl.ChooseSelectedUnit ();
+					GameControl.selectedUnit.Move (tile);
 
-					int distance = GetDistance(tile, GameControl.selectedUnit.tile, true);
-					CardsStackManager.decreaseMovement(distance);
+					int distance = GetDistance (tile, GameControl.selectedUnit.tile, true);
+					CardsStackManager.decreaseMovement (distance);
 					
-					if (tile.revealed != 3 && GameControl.selectedUnit.factionID == FactionManager.GetPlayerFactionID()[0])
+					if (tile.revealed != 3 && GameControl.selectedUnit.factionID == FactionManager.GetPlayerFactionID () [0])
 						MapController.RevealArea (tile);
-					if(onExitWalkableTileE!=null) onExitWalkableTileE();    //for clear UI move cost overlay
-					ClearWalkableHostileList();    
-					if(FactionManager.GetAllHostileUnit(GameControl.selectedUnit.factionID).Count == 0) endTurn = true;
+					if (onExitWalkableTileE != null)
+						onExitWalkableTileE ();    //for clear UI move cost overlay
+					ClearWalkableHostileList ();    
+					if (FactionManager.GetAllHostileUnit (GameControl.selectedUnit.factionID).Count == 0)
+						endTurn = true;
 					
-				}
-				else{
-					StartCoroutine(GameControl.PassLevel());
+				} else {
+					StartCoroutine (GameControl.PassLevel ());
 				}//in case the unit move into the destination and has insufficient ap to attack
 				//            #if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 				
@@ -728,6 +733,9 @@ namespace TBTK{
 				//            GameControl.SelectTile(tile);
 				//        }
 				//        #endif
+			} else if (tile.isPortal && FactionManager.GetAllHostileUnit(FactionManager.GetPlayerFactionID()[0]).Count == 0) {
+				StartCoroutine (GameControl.PassLevel ());
+
 			}
 			
 			ClearHoveredTile();    //clear the hovered tile so all the UI overlay will be cleared

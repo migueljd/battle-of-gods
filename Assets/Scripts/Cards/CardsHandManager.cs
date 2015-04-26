@@ -287,6 +287,8 @@ namespace Cards
 		}
 
 		IEnumerator CardbackRoutine(Unit unit){
+			yield return new WaitForSeconds (1);
+
 			Vector3 cameraPoint = Camera.main.WorldToScreenPoint(unit.transform.position);
 			Vector2 basePosition = new Vector3 (cameraPoint.x, cameraPoint.y + 10);
 			Vector2 finalPosition = basePosition + new Vector2 (0, cardbackMaxHeight);
