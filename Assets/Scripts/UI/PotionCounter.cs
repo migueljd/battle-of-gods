@@ -81,16 +81,18 @@ public class PotionCounter : MonoBehaviour {
 			usedPotionThisTurn = true;
 			GetComponent<Button>().interactable = false;
 			potionText.text = potionCount.ToString();
+			GameControl.ChooseSelectedUnit();
 		}
 	}
 
 	public static void PassTurn(){
-			instance.usedPotionThisTurn = false;	
+		instance.usedPotionThisTurn = false;	
 		if(instance.potionCount == 0) instance.GetComponent<Button>().interactable = false;
 		else instance.GetComponent<Button>().interactable = true;
 	}
 
 	public static void OnPassLevel(){
+		instance.OnDisable ();
 		instance.transform.SetParent(null);
 	}
 

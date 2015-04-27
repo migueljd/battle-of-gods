@@ -149,11 +149,11 @@ public class Levels_DB : MonoBehaviour {
 
 	public static int GetSceneLevel(int lvl){
 		if (lvl < 4)
-			return 0;
-		else if (lvl < 7)
 			return 1;
-		else 
+		else if (lvl < 7)
 			return 2;
+		else 
+			return 3;
 	}
 
 	public static Dictionary<int, string> GetCardsForLevel(int lvl){
@@ -164,18 +164,11 @@ public class Levels_DB : MonoBehaviour {
 			cardList.Add (80, "HeroicStrike");
 			cardList.Add (100, "Zeus Thunder");
 
-		} else if (lvl < 9) {
-			cardList.Add (30, "Athena's Touch");
-			cardList.Add (60, "HeroicStrike");
-			cardList.Add (85, "Zeus Thunder");
-			cardList.Add (100, "Afrodite's Blessing");
-
 		} else {
 			cardList.Add (25, "Athena's Touch");
 			cardList.Add (50, "HeroicStrike");
-			cardList.Add (65, "Zeus Thunder");
-			cardList.Add (80, "Hefestus Curse");
-			cardList.Add (95, "Afrodite's Blessing");
+			cardList.Add (70, "Zeus Thunder");
+			cardList.Add (85, "Hefestus Curse");
 			cardList.Add (100, "Ares Wrath");
 		}
 
@@ -188,6 +181,7 @@ public class Levels_DB : MonoBehaviour {
 
 		cardList.Add ("Athena's Touch",3 );
 		cardList.Add ("HeroicStrike", 2);
+		cardList.Add ("Zeus Thunder", 1);
 
 		return cardList;
 		

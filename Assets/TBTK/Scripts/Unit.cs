@@ -635,12 +635,18 @@ namespace TBTK{
 			} else {
 				if(this.transform.name.Equals("Achilles")){
 					HP = AchillesHP;
+					usedThisTurn = false;
 				}else if(this.transform.name.Equals ("Archer")){
 					HP = AtalantaHP;
+					usedThisTurn = false;
 				}else if(this.transform.name.Equals ("Hercules")){
 					HP = HerculesHP;
+					usedThisTurn = false;
 				}
-				if(HP <=0) StartCoroutine(Dead());
+				if(HP <=0){
+					StartCoroutine(Dead());
+					Debug.Log("Called by gamestart");
+				}
 			}
 			if(GameControl.RestoreUnitAPOnTurn()) AP=GetFullAP();
 			GameControl.CompleteActionAtStart ();
@@ -1090,7 +1096,6 @@ namespace TBTK{
 			this.HP-= dmg - g >0? dmg - g : 0;
 			float totalHP = this.HP + this.tile.tileDefense;
 
-
 			if (playerUnit) {
 				this.getStack ().decreaseGuard ((int)dmg);
 				if(GameControl.selectedUnit != null)UI.UpdateUnitInfo(GameControl.selectedUnit);
@@ -1113,7 +1118,8 @@ namespace TBTK{
 					//if its an enemy unit, the enemy should just disappear and give exp/money/etc
 //				else{
 					HP=0;
-				
+					Debug.Log("Called by Apply damage");
+
 					StartCoroutine(Dead());
 				
 					ClearVisibleTile();
@@ -1136,6 +1142,7 @@ namespace TBTK{
 			if(unitAudio!=null) delay=Mathf.Max (delay,unitAudio.Destroy());
 			if(unitAnim!=null) delay=Mathf.Max(delay, unitAnim.Destroy());
 
+			Debug.Log ("Dead called once");
 			OnUnitDestroyed(this);
 
 			yield return new WaitForSeconds(delay + 0.7f);

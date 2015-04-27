@@ -295,18 +295,12 @@ namespace Cards
 			Image cardback = UI.GetCardBack ();
 			cardback.rectTransform.anchoredPosition = basePosition;
 			cardback.gameObject.SetActive(true);
-			Debug.Log ("Card enabled");
-			Debug.Log (basePosition);
-			Debug.Log (finalPosition);
-
 			float interpolate = 0;
 			while (interpolate <= 1) {
 				cardback.rectTransform.anchoredPosition = Vector2.Lerp(basePosition, finalPosition, interpolate);
 				interpolate += cardbackYSpeed;
 				yield return null;
-				Debug.Log ("Card moving");
 			}
-			Debug.Log ("Card moved");
 			cardback.gameObject.SetActive(false);
 
 			StartCoroutine (SpawnCardAtHand());
@@ -314,6 +308,7 @@ namespace Cards
 		}
 
 		IEnumerator SpawnCardAtHand(){
+			Debug.Log ("Card added");
 			Dictionary<int, string> cards = Levels_DB.GetCardsForLevel (MapController.level);
 			
 			int card = Random.Range (0, 101);
@@ -359,6 +354,7 @@ namespace Cards
 		}
 
 		public static void PassLevel(){
+			instance.OnDisable ();
 			Disattach ();
 		}
 
