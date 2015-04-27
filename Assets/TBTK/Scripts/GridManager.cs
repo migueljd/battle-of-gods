@@ -662,7 +662,6 @@ namespace TBTK{
 		//when player click on a particular tile
 		public static void OnTile(Tile tile){ instance._OnTile(tile); }
 		public void _OnTile(Tile tile){
-			Debug.Log (!FactionManager.IsPlayerTurn ());
 			if(!FactionManager.IsPlayerTurn()) return;
 			bool endTurn = false;
 			if (tile.unit != null && !CardsHandManager.movingCard) {

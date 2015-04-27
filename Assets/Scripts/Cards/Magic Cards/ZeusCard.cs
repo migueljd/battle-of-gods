@@ -28,12 +28,18 @@ namespace Cards
 		}
 		
 		public override IEnumerator PlayParticle(Vector3 position){
-			particles.transform.position = GameControl.selectedTile.transform.position + new Vector3(0, height,0);
+
+			particles.enableEmission = true;
+			particles.transform.SetParent (null);
+			particles.transform.position = GameControl.selectedTile.unit.transform.position + new Vector3(0,height,0);
+			
 			particles.Play ();
 			float timeToEnd = Time.time + particles.duration;
 			while(Time.time < timeToEnd) yield return null;
 			
 			particles.Stop ();
+			particles.transform.SetParent (this.transform);
+			Debug.Log ("parent set");
 		}
 
 		public override bool CanUseCard(){

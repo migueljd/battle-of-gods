@@ -112,7 +112,6 @@ namespace TBTK{
 		
 		//called to indicate that an action has been completed
 		public static void ActionCompleted(float delay=0){ 
-			Debug.Log ("Action completed");
 			instance.StartCoroutine(instance._ActionCompleted(delay));
 		}
 		IEnumerator _ActionCompleted(float delay=0){

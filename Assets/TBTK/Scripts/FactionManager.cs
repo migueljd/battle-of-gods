@@ -21,8 +21,6 @@ namespace TBTK{
 		
 		public bool generateUnitOnStart=false;
 		
-		
-		
 		public bool hasAIInGame=true;
 		public List<int> playerFactionIDList=new List<int>();
 		public static List<int> GetPlayerFactionID(){ return instance.playerFactionIDList; }

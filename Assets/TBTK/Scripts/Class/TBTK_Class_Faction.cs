@@ -119,9 +119,11 @@ namespace TBTK{
 				}
 
 				if(unitsUsedCount == allUnitList.Count){
+					Debug.Log ("Reseting units");
 					foreach(Unit u in allUnitList){
 						u.ResetUnitTurnData();
 						u.usedThisTurn = false;
+
 					}
 					SelectNextUnitInQueue( breakWhenExceedLimit);
 				}
