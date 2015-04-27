@@ -286,19 +286,21 @@ namespace TBTK{
 					return;
 				}
 				else{
-					if(hoveredTile!=newTile) _NewHoveredTile(newTile);
+					if(hoveredTile!=newTile){
+						_NewHoveredTile(newTile);
+					}
 					hoveredTile=newTile;
 				}
 				
 				if(FactionManager.IsPlayerTurn() || GameControl.GetGamePhase()==_GamePhase.UnitDeployment){
 					#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-					if(currentSelectTile==hoveredTile){
+					if(currentSelectedTile==hoveredTile){
 						OnTileTouchDown();
 					}
 					else{
-						if(attackableTileList.Contains(currentSelectTile))onHostileDeselectE ();
-						if(targetMode || hoveredTile.unit==null || attackableTileList.Contains(hoveredTile)){
-							currentSelectTile=hoveredTile;
+//						if(attackableTileList.Contains(currentSelectedTile))onHostileDeselectE ();
+						if(targetMode || attackableTileList.Contains(hoveredTile)){
+							currentSelectedTile=hoveredTile;
 							if(attackableTileList.Contains(hoveredTile)) onHostileSelectE(hoveredTile.unit);
 						}
 						else{
@@ -327,7 +329,7 @@ namespace TBTK{
 		
 		#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 		//this is for touch input only
-		private Tile currentSelectTile;
+		private Tile currentSelectedTile;
 		
 		//for touch input, confirm when a tile has been selected
 		private void OnTileTouchDown(){
@@ -382,6 +384,7 @@ namespace TBTK{
 			if(attackableTileList.Contains(tile) || (tile.unit != null && tile.unit.isAIUnit)){
 				if(TurnControl.ClearToProceed()){    //if the some unit is in action, dont show the overlay, the unit cant attack while someone is in action anyway
 					if(onHostileSelectE!=null) onHostileSelectE(tile.unit);    //show attack info on UI
+					Debug.Log ("Got in here");
 				}
 			}
 			else if(onHostileDeselectE!=null) onHostileDeselectE();    //hide attack info on UI
@@ -663,9 +666,10 @@ namespace TBTK{
 		public static void OnTile(Tile tile){ instance._OnTile(tile); }
 		public void _OnTile(Tile tile){
 			if(!FactionManager.IsPlayerTurn()) return;
+			Debug.Log ("Called OnTile");
 			bool endTurn = false;
+			Debug.Log ("Is tile in range? " + walkableTileList.Contains (tile));
 			if (tile.unit != null && !CardsHandManager.movingCard) {
-				Debug.Log (FactionManager.GetSelectedFactionID () == tile.unit.factionID);
 				//select the unit if the unit belong's to current player in turn
 				if (FactionManager.GetSelectedFactionID () == tile.unit.factionID) {
 					if (TurnControl.GetMoveOrder () != _MoveOrder.Free)
@@ -678,17 +682,26 @@ namespace TBTK{
 						return;
 					
 					GameControl.SelectUnit (tile);
-					onHostileDeselectE ();
 				}
 				
 				//if the unit in the tile can be attack by current selected unit, attack it
-				else if (attackableTileList.Contains (tile)) {
+				#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+				else if (attackableTileList.Contains (tile) && currentSelectedTile == tile) {
+				#else
+				else if (attackableTileList.Contains (tile) ) {
+				#endif
 					/*#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
                     if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile) ){
                     #endif*/
 					GameControl.ChooseSelectedUnit ();
 					GameControl.selectedUnit.Attack (tile.unit);
 					endTurn = true;
+					onHostileDeselectE ();
+					#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+
+					currentSelectedTile = null;
+					#endif
+
 					//onHostileDeselectE();
 					//#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 					//}
@@ -701,7 +714,7 @@ namespace TBTK{
 			}
 			//if the tile is within the move range of current selected unit, try to select it, if it is already selected, move
 			else if (walkableTileList.Contains (tile)) {
-				
+				Debug.Log ("it is walkable, execute");
 				//                #if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 				//              if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
 				//            #endif
@@ -787,8 +800,9 @@ namespace TBTK{
 		public static void Select(Unit unit){
 			if ( (!unit.usedThisTurn && !GameControl.isUnitChosen) || GameControl.chosenUnit == unit) {
 				unit.tile.SetState (_TileState.Selected);
-				if (unit.CanMove ())
+				if (unit.CanMove ()){
 					instance.SetupWalkableTileList (unit);
+				}
 				if (unit.CanAttack ())
 					instance.SetupAttackableTileList (unit);
 				instance.indicatorSelected.position = unit.tile.GetPos ();

@@ -22,7 +22,7 @@ public class SelectorAnimator : MonoBehaviour {
 	void Update () {
 		if (unit != null) {
 			Vector3 screenPos = Camera.main.WorldToScreenPoint (unit.transform.position);
-			transform.localPosition = (screenPos + new Vector3 (-10, 142, 0)) / UI.GetScaleFactor ();
+			transform.localPosition = (screenPos + new Vector3 (-10, 120, 0)) / UI.GetScaleFactor ();
 //			if (increasing && Y < maxY) {
 //				Y += changeYPerFrame;
 //				this.transform.localPosition += Camera.main.WorldToScreenPoint(unit.transform.position + new Vector3 (0, changeYPerFrame, 0));
