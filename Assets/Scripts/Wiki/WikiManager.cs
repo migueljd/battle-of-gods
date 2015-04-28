@@ -16,10 +16,8 @@ public class WikiManager : MonoBehaviour {
 
 	void Awake(){
 		if (instance == null) {
-			Debug.Log ("wtf?");
 			instance = this;
 		} else {
-			Debug.Log ("wtf 2?");
 			Destroy(this.gameObject);
 		}
 	

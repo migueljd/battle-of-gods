@@ -70,8 +70,8 @@ namespace Cards
 				instantiator = new CardPrefabInstatiator ();
 				SetUpInstantiator();
 				Debug.Log ("Instance is null");
-				baseScale.x *= (float)Screen.width/2048;
-				baseScale.y *= (float)Screen.height/1536;
+//				baseScale.x *= (float)Screen.width/2048;
+//				baseScale.y *= (float)Screen.height/1536;
 				Debug.Log (baseScale);
 				DontDestroyOnLoad (this.gameObject);
 			} else {

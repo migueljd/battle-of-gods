@@ -120,13 +120,15 @@ namespace TBTK {
 		
 		public UnitOverlay Clone(string name=""){
 			UnitOverlay newOverlay=new UnitOverlay();
+			Debug.Log (rootObj);
 			newOverlay.rootObj=(GameObject)MonoBehaviour.Instantiate(rootObj);
 			newOverlay.rootObj.name=name=="" ? rootObj.name+"(Clone)" : name;
 			newOverlay.Init();
 			
 			newOverlay.rootT.SetParent(rootT.parent);
 			newOverlay.rootT.localScale=rootT.localScale;
-			
+			newOverlay.rootT.localRotation = Quaternion.identity;
+//			Debug.Log (newOverlay.rootT.localRotation);
 			return newOverlay;
 		}
 	}
