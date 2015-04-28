@@ -54,7 +54,7 @@ namespace Cards
 
 		private static bool startedOnce = false;
 
-		public Vector3 baseScale = new Vector3 (0.30f, 0.42f, 0.42f);
+		public Vector3 baseScale = new Vector3 (1000, 1000, 1);
 
 		public float cardbackMaxHeight;
 		public float cardbackYSpeed;
@@ -70,6 +70,9 @@ namespace Cards
 				instantiator = new CardPrefabInstatiator ();
 				SetUpInstantiator();
 				Debug.Log ("Instance is null");
+				baseScale.x *= (float)Screen.width/2048;
+				baseScale.y *= (float)Screen.height/1536;
+				Debug.Log (baseScale);
 				DontDestroyOnLoad (this.gameObject);
 			} else {
 				

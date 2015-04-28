@@ -112,21 +112,22 @@ namespace TBTK{
 		}
 
 		void OnUnitChosen(){
-			Debug.Log ("Unit arrow disbled");
 			if(unitSelectedArrow != null)unitSelectedArrow.SetActive(false);
 		}
 
 		private void OnHostileSelected(Unit unit){
 			Unit enemy = unit;
-			if(enemy != null){
+			if (enemy != null) {
 				enemyImg.enabled = true;
 				enemyImg.sprite = enemy.iconSprite;
-				enemyHP.text = enemy.HP.ToString();
-				enemyAttack.text = ((int)(enemy.damageMin + unit.tile.tileAttack)).ToString();
-				enemyDefense.text = (enemy.GetEffectiveGuard() + unit.tile.tileDefense).ToString();
+				enemyHP.text = enemy.HP.ToString ();
+				enemyAttack.text = ((int)(enemy.damageMin + unit.tile.tileAttack)).ToString ();
+				enemyDefense.text = (enemy.GetEffectiveGuard () + unit.tile.tileDefense).ToString ();
 
-				//enemySelectedArrow.SetActive(true);
-				//enemySelectedArrow.GetComponent<SelectorAnimator>().unit = unit;
+				enemySelectedArrow.SetActive (true);
+				enemySelectedArrow.GetComponent<SelectorAnimator> ().unit = unit;
+			} else {
+				OnHostileDeselect();
 			}
 		}
 

@@ -59,6 +59,9 @@ namespace TBTK{
 		//move a single unit only
 		IEnumerator SingleUnitRoutine(Unit unit){
 			//GameControl.DisplayMessage("AI's Turn");
+
+			StartCoroutine (UpdateEnemyInfo ());
+
 			yield return new WaitForSeconds(0.5f);
 			
 			if(!unit.IsStunned()){
@@ -68,6 +71,12 @@ namespace TBTK{
 			}
 
 			GameControl.EndTurn();
+		}
+
+		IEnumerator UpdateEnemyInfo(){
+			yield return new WaitForSeconds(1f);
+			UI.UpdateEnemyInfo (null);
+			yield return null;
 		}
 		
 		

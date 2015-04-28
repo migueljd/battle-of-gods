@@ -1137,7 +1137,10 @@ namespace TBTK{
 			if (gameStarted && !this.isAIUnit) 
 				GameControl.AddActionAtStart ();
 			if(destroyEffectObj!=null) Instantiate(destroyEffectObj, GetTargetT().position, Quaternion.identity);
-			
+
+			if (this.transform.name == "Hades(Clone)")
+				MapController.HadesDied ();
+
 			float delay=0.5f;
 			if(unitAudio!=null) delay=Mathf.Max (delay,unitAudio.Destroy());
 			if(unitAnim!=null) delay=Mathf.Max(delay, unitAnim.Destroy());

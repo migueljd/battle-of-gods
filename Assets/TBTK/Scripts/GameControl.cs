@@ -309,6 +309,7 @@ namespace TBTK{
 
 			isUnitChosen = false;
 			chosenUnit = null;
+			UI.UpdateEnemyInfo (null);
 			if(onIterateTurnE!=null) onIterateTurnE();	//listen by EffectTracker and AbilityManager to iterate effect and cd duration
 																		//listen by tile in for tracking forceVisible(scan)
 
@@ -366,6 +367,8 @@ namespace TBTK{
 		}
 
 		public static IEnumerator PassLevel(){
+
+			isUnitChosen = false;
 
 			if (onPassLevelE != null)
 				onPassLevelE ();

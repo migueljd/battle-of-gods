@@ -98,6 +98,7 @@ namespace TBTK{
 					selectedUnitID = 0;
 				}
 				allUnitList [selectedUnitID].ResetUnitTurnData ();
+				UI.UpdateEnemyInfo(allUnitList [selectedUnitID]);
 				GameControl.SelectUnit (allUnitList [selectedUnitID]);
 			}
 			else {
