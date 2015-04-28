@@ -35,7 +35,8 @@ public class MapController : MonoBehaviour {
 	public static int enemyFactionID;
 
 	private bool gameStarted;
-	
+
+	private bool hadesAlive;
 
 	void Awake(){
 		if (instance == null) {
@@ -440,6 +441,10 @@ public class MapController : MonoBehaviour {
 
 	private void createNewEnemy(Tile tile){
 		int enemyID = Random.Range (0, MapController.instance.enemyPrefabs.Count);
+		if (hadesAlive && enemyID == 3)
+			Random.Range (0, MapController.instance.enemyPrefabs.Count - 1);
+		else if (enemyID == 3)
+			hadesAlive = true; 
 		Transform newEnemy = (Transform) Instantiate ( MapController.instance.enemyPrefabs [enemyID], tile.GetPos(), Quaternion.Euler(new Vector3(0, 180,0)));
 
 		Unit unit = newEnemy.GetComponent<Unit>();
@@ -458,6 +463,9 @@ public class MapController : MonoBehaviour {
 		level += 1;
 	}
 
+	public static void HadesDied(){
+		instance.hadesAlive = false;
+	}
 
 	private void SetNewLevel(int numberOfTiles, string LevelName){
 		this.numberOfTiles = numberOfTiles; 
