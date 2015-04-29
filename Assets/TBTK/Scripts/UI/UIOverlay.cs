@@ -172,13 +172,14 @@ namespace TBTK {
 						if(templeLifeInstantiated)continue;
 						else{
 							Vector3 screenPos = mainCam.WorldToScreenPoint(new Vector3(8f,0f,-11.8f)); 
-							overlay.rootT.localPosition=(screenPos+new Vector3(0, -20, 0))/UI.GetScaleFactor();
+							overlay.rootT.localPosition=(screenPos+new Vector3(-100, -100, 0))/UI.GetScaleFactor();
 						}
 						templeLifeInstantiated = true;
 					}
 					else{
 						Vector3 screenPos = mainCam.WorldToScreenPoint(overlay.unit.thisT.position+new Vector3(0, 0, 0));
 						overlay.rootT.localPosition=(screenPos+new Vector3(0, -20, 0))/UI.GetScaleFactor();
+						//						overlay.rootT.localPosition=(screenPos+new Vector3(0, -100, 0))/UI.GetScaleFactor();
 					}
 					
 					overlay.barHP.value=overlay.unit.GetHPRatio();

@@ -179,7 +179,8 @@ namespace TBTK{
 		IEnumerator DelayStartGame(float delay=0.5f){
 
 			LoadingScreen.ShowLoadingScreen ();
-
+//			AudioManager.Init ();
+//			AudioManager.m
 			yield return null;
 			FactionManager.SetupFaction();
 			GridManager.SetupGridForFogOfWar();

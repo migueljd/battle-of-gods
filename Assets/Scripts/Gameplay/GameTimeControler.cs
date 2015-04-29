@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
+using TBTK;
+
 public class GameTimeControler : MonoBehaviour {
 
 	public Image fastForwardButton;
@@ -11,6 +13,8 @@ public class GameTimeControler : MonoBehaviour {
 
 	private static GameTimeControler instance;
 
+	public AudioClip buttonAudio;
+
 	void Awake(){
 		if (instance == null)
 			instance = this;
@@ -19,6 +23,7 @@ public class GameTimeControler : MonoBehaviour {
 	}
 
 	public void buttonPress(){
+		AudioManager.PlaySound (buttonAudio);
 		if(buttonPressed) {
 			fastForwardButton.color = Color.white;
 			Time.timeScale = 1.0f;

@@ -18,6 +18,8 @@ namespace TBTK{
 		
 		private static UI instance;
 
+		public AudioClip buttonAudio;
+
 		public Image heroImg;
 		public Image enemyImg;
 		public Text heroAttack;
@@ -48,6 +50,8 @@ namespace TBTK{
 			heroAttack.enabled = false;
 			heroDefense.enabled = false;
 			endTurnButtonObj.GetComponent<Button>().interactable = false;
+
+//			scaleFactor = 
 
 			if(disablePerkMenu) UIPerkMenu.Disable();
 		}
@@ -151,6 +155,7 @@ namespace TBTK{
 		
 		
 		public void OnEndTurnButton(){
+			AudioManager.PlaySound (buttonAudio);
 			GameControl.ChooseSelectedUnit ();
 			GameControl.EndTurn();
 		}

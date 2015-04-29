@@ -11,7 +11,7 @@ namespace TBTK {
 		private List<AudioSource> audioSourceList=new List<AudioSource>();
 		
 		private static float musicVolume=.75f;
-		private static float sfxVolume=.75f;
+		private static float sfxVolume=0.05f;
 		
 		public List<AudioClip> musicList;
 		public bool playMusic=true;
@@ -75,6 +75,7 @@ namespace TBTK {
 		
 		
 		void Update(){
+			Debug.Log ("Here");
 			if(musicSource!=null && musicSource.isPlaying){
 				if(shuffle) musicSource.clip=musicList[Random.Range(0, musicList.Count)];
 				else{
@@ -157,6 +158,13 @@ namespace TBTK {
 			musicVolume=val;
 			if(instance && instance.musicSource) instance.musicSource.volume=val;
 		}
+
+//		public static void AddMusic(AudioClip audio){
+//			if (instance != null && !instance.musicSource.isPlaying) {
+//				instance.musicList.Add(audio);
+//				instance.musicSource.Play();
+//			}
+//		}
 		
 		public static float GetMusicVolume(){ return musicVolume; }
 		public static float GetSFXVolume(){ return sfxVolume; }

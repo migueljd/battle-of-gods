@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using TBTK;
 public class CloseWiki : MonoBehaviour {
+
+	public AudioClip clickAudio;
 
 
 
@@ -11,7 +14,8 @@ public class CloseWiki : MonoBehaviour {
 			Time.timeScale = GameTimeControler.GetFastTime ();
 		else
 			Time.timeScale = 1;
-		Debug.Log (transform.parent);
 		transform.parent.gameObject.SetActive (false);
+		AudioManager.PlaySound (clickAudio);
+
 	}
 }

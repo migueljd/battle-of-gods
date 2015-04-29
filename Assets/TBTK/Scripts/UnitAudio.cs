@@ -38,7 +38,12 @@ namespace TBTK {
 		public void Move(){ if(moveSound!=null)AudioManager.PlaySound(moveSound);	}
 		//public void StopMove(){ AudioManager.PlaySound(moveSound);	}
 		
-		public void Attack(){ if(attackSound!=null)AudioManager.PlaySound(attackSound);	}
+		public void Attack(){
+			if (attackSound != null) {
+				AudioManager.PlaySound (attackSound);
+				Debug.Log ("Playing audio");
+			}
+		}
 		
 		public void Hit(){ if(hitSound!=null)AudioManager.PlaySound(hitSound);	}
 		
