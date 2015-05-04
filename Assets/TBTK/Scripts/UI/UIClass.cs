@@ -75,52 +75,51 @@ namespace TBTK {
 		public Image iconMove;
 		public Image iconAttack;
 
-		public Text HPText;
+		public TextMesh HPText;
 		
 		public void Init(){
 			rootT=rootObj.transform;
 			
 			foreach(Transform child in rootT){
-				if(child.name=="APBar"){
-					barAP=child.GetComponent<Slider>();
-				}
-				else if(child.name=="HPBar"){
-					barHP=child.GetComponent<Slider>();
-				}
-				else if(child.name=="Icon"){
-					icon=child.GetComponent<Image>();
-					
-					foreach(Transform subChild in child){
-						if(subChild.name=="Text"){
-							lbText=subChild.GetComponent<Text>();
-						}
-						else if(subChild.name=="TextShadow"){
-							lbTextShadow=subChild.GetComponent<Text>();
-						}
-					}
-				}
-				else if(child.name=="IconCover"){
-					iconCover=child.GetComponent<Image>();
-				}
-				else if(child.name=="IconMove"){
-					iconMove=child.GetComponent<Image>();
-				}
-				else if(child.name=="IconAttack"){
-					iconAttack=child.GetComponent<Image>();
-				}
-				else if(child.name=="HP"){
-					HPText = child.GetComponent<Text>();
+//				if(child.name=="APBar"){
+//					barAP=child.GetComponent<Slider>();
+//				}
+//				else if(child.name=="HPBar"){
+//					barHP=child.GetComponent<Slider>();
+//				}
+//				else if(child.name=="Icon"){
+//					icon=child.GetComponent<Image>();
+//					
+//					foreach(Transform subChild in child){
+//						if(subChild.name=="Text"){
+//							lbText=subChild.GetComponent<Text>();
+//						}
+//						else if(subChild.name=="TextShadow"){
+//							lbTextShadow=subChild.GetComponent<Text>();
+//						}
+//					}
+//				}
+//				else if(child.name=="IconCover"){
+//					iconCover=child.GetComponent<Image>();
+//				}
+//				else if(child.name=="IconMove"){
+//					iconMove=child.GetComponent<Image>();
+//				}
+//				else if(child.name=="IconAttack"){
+//					iconAttack=child.GetComponent<Image>();
+//				}
+				if(child.name=="HP"){
+					HPText = child.GetComponent<TextMesh>();
 				}
 			}
 			
-			if(iconCover!=null) iconCover.enabled=false;
-			if(lbText!=null) lbText.text="";
-			if(lbTextShadow!=null) lbTextShadow.text="";
+//			if(iconCover!=null) iconCover.enabled=false;
+//			if(lbText!=null) lbText.text="";
+//			if(lbTextShadow!=null) lbTextShadow.text="";
 		}
 		
 		public UnitOverlay Clone(string name=""){
 			UnitOverlay newOverlay=new UnitOverlay();
-			Debug.Log (rootObj);
 			newOverlay.rootObj=(GameObject)MonoBehaviour.Instantiate(rootObj);
 			newOverlay.rootObj.name=name=="" ? rootObj.name+"(Clone)" : name;
 			newOverlay.Init();

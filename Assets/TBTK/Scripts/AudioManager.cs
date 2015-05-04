@@ -11,7 +11,7 @@ namespace TBTK {
 		private List<AudioSource> audioSourceList=new List<AudioSource>();
 		
 		private static float musicVolume=.75f;
-		private static float sfxVolume=0.05f;
+		private static float sfxVolume=0.70f;
 		
 		public List<AudioClip> musicList;
 		public bool playMusic=true;
@@ -45,14 +45,20 @@ namespace TBTK {
 			thisT=transform;
 			
 			DontDestroyOnLoad(thisObj);
-			
+
+			musicList = new List<AudioClip> ();
+
+			AddMusic (Levels_DB.GetLevelMusic (MapController.level));
+
 			if(playMusic && musicList!=null && musicList.Count>0){
 				musicSource=thisObj.AddComponent<AudioSource>();
-				musicSource.loop=false;
-				musicSource.playOnAwake=false;
+				musicSource.loop=true;
+				musicSource.playOnAwake=true;
 				musicSource.volume=musicVolume;
 				
 				musicSource.ignoreListenerVolume=true;
+
+
 			}
 			
 			audioSourceList=new List<AudioSource>();
@@ -75,8 +81,7 @@ namespace TBTK {
 		
 		
 		void Update(){
-			Debug.Log ("Here");
-			if(musicSource!=null && musicSource.isPlaying){
+			if(musicSource!=null && !musicSource.isPlaying){
 				if(shuffle) musicSource.clip=musicList[Random.Range(0, musicList.Count)];
 				else{
 					musicSource.clip=musicList[currentTrackID];
@@ -91,16 +96,22 @@ namespace TBTK {
 		
 		void OnEnable(){
 			GameControl.onGameOverE += OnGameOver;
+			GameControl.onGameRestartE += RestartGame;
 			
 			AbilityManagerFaction.onAbilityActivatedE += OnAbilityActivated;
 			AbilityManagerUnit.onAbilityActivatedE += OnAbilityActivated;
+
+			
 		}
 		
 		void OnDisable(){
 			GameControl.onGameOverE -= OnGameOver;
+			GameControl.onGameRestartE -= RestartGame;
+
 			
 			AbilityManagerFaction.onAbilityActivatedE -= OnAbilityActivated;
 			AbilityManagerUnit.onAbilityActivatedE -= OnAbilityActivated;
+
 		}
 		
 		
@@ -142,6 +153,7 @@ namespace TBTK {
 			
 			audioSourceList[ID].clip=clip;
 			audioSourceList[ID].Play();
+			Debug.Log (audioSourceList[ID].isPlaying);
 		}
 		
 		
@@ -159,15 +171,21 @@ namespace TBTK {
 			if(instance && instance.musicSource) instance.musicSource.volume=val;
 		}
 
-//		public static void AddMusic(AudioClip audio){
-//			if (instance != null && !instance.musicSource.isPlaying) {
-//				instance.musicList.Add(audio);
-//				instance.musicSource.Play();
-//			}
-//		}
+		private void AddMusic(AudioClip audio){
+			if (instance.musicList.Count != 0 && !instance.musicList[0].Equals(audio)) {
+				instance.musicSource.Stop();
+				instance.musicList[0] = null;
+			}
+			instance.musicList.Add(audio);
+		}
 		
 		public static float GetMusicVolume(){ return musicVolume; }
 		public static float GetSFXVolume(){ return sfxVolume; }
+
+		public static void RestartGame(){
+			instance.OnDisable ();
+			Destroy (instance.gameObject);
+		}
 	}
 
 

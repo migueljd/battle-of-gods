@@ -149,11 +149,11 @@ public class Levels_DB : MonoBehaviour {
 
 	public static int GetSceneLevel(int lvl){
 		if (lvl < 4)
-			return 1;
-		else if (lvl < 7)
-			return 2;
-		else 
 			return 3;
+		else if (lvl < 7)
+			return 4;
+		else 
+			return 5;
 	}
 
 	public static Dictionary<int, string> GetCardsForLevel(int lvl){
@@ -184,5 +184,16 @@ public class Levels_DB : MonoBehaviour {
 
 		return cardList;
 		
+	}
+
+	public static AudioClip GetLevelMusic(int lvl){
+
+		if (lvl < 4)
+			return (AudioClip)Resources.Load ("Audio/Rushing Wind");
+		else if (lvl <7)
+			return (AudioClip)Resources.Load ("Audio/Scorched Sands");
+		else
+			return (AudioClip)Resources.Load ("Audio/Forbidden Lands");
+
 	}
 }

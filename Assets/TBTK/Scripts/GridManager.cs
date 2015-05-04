@@ -918,7 +918,10 @@ namespace TBTK{
 		
 		//reset all selection, walkablelist and what not
 		public static void ClearAllTile(){
-			if (GameControl.selectedUnit != null && GameControl.chosenUnit == null)	GameControl.selectedUnit.tile.SetState (_TileState.Default);
+			if (GameControl.selectedUnit != null && GameControl.chosenUnit != null) {
+				GameControl.selectedUnit.tile.SetState (_TileState.Default);
+					Debug.Log ("Selected unit tile defaulted");
+				}
 			if(GameControl.selectedTile!=null && GameControl.chosenUnit == null) GameControl.selectedTile.SetState(_TileState.Default);
 			instance.ClearWalkableTileList();
 			instance.ClearAttackableTileList();

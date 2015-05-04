@@ -276,7 +276,6 @@ public class MapController : MonoBehaviour {
 
 //		int enemyCount = 0;
 		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
-		Debug.Log ("Enemy Count: " + enemyCount);
 		for (int a = tilesT.childCount - 1; a >=0; a--) {
 
 			if(!tilesT.GetChild(a).name.Contains("Tile")){
@@ -470,6 +469,10 @@ public class MapController : MonoBehaviour {
 	private void SetNewLevel(int numberOfTiles, string LevelName){
 		this.numberOfTiles = numberOfTiles; 
 		this.levelName = LevelName;
+	}
+
+	public static void RestartGame(){
+		level = 1;
 	}
 }
 		                          

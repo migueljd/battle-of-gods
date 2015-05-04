@@ -46,6 +46,7 @@ public class PotionCounter : MonoBehaviour {
 		if (instance == this) {
 			GameControl.onPassLevelE += OnPassLevel;
 			GameControl.onGameStartE += PositionPotionButton;
+			GameControl.onGameRestartE += RestartGame;
 			Unit.onUnitDestroyedE += OnUnitDestroyed;
 			GameControl.onIterateTurnE += PassTurn;
 		}
@@ -56,6 +57,8 @@ public class PotionCounter : MonoBehaviour {
 			GameControl.onPassLevelE -= OnPassLevel;
 			Unit.onUnitDestroyedE -= OnUnitDestroyed;
 			GameControl.onGameStartE -= PositionPotionButton;
+			GameControl.onGameRestartE -= RestartGame;
+
 		}
 
 	}
@@ -103,6 +106,11 @@ public class PotionCounter : MonoBehaviour {
 				instance.GainPotion (1);
 			}
 		}
+	}
+
+	public static void RestartGame(){
+		instance.OnDisable ();
+		Destroy (instance.gameObject);
 	}
 
 

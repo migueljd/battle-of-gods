@@ -19,6 +19,8 @@ namespace TBTK {
 		
 		
 		public static UIOverlay instance;
+
+		private Vector3 oldCanvasPosition;
 		
 		void Awake(){
 			instance=this;
@@ -39,6 +41,7 @@ namespace TBTK {
 				else unitOverlayList.Add(unitOverlayList[0].Clone());
 				unitOverlayList[i].rootObj.SetActive(false);
 			}
+			oldCanvasPosition = this.transform.parent.position; 
 			
 			mainCam=Camera.main;
 		}
@@ -80,14 +83,14 @@ namespace TBTK {
 				}
  				unitOverlayList[i].unit=unitList[i];
 			
-				for(int n=0; n<factionList.Count; n++){
-					if(unitList[i].factionID==factionList[n].ID){
-						unitOverlayList[i].icon.color=factionList[n].color;
-						((Image) unitOverlayList[i].barHP.transform.Find("Bar").GetComponent<Image>()).color = factionList[n].color;
-//						Image img = unitOverlayList[i]GetComponentInChildren<Image>();
-//						img.color=factionList[n].color;
-					}
-				}
+//				for(int n=0; n<factionList.Count; n++){
+//					if(unitList[i].factionID==factionList[n].ID){
+//						unitOverlayList[i].icon.color=factionList[n].color;
+////						((Image) unitOverlayList[i].barHP.transform.Find("Bar").GetComponent<Image>()).color = factionList[n].color;
+////						Image img = unitOverlayList[i]GetComponentInChildren<Image>();
+////						img.color=factionList[n].color;
+//					}
+//				}
 			}
 			
 			for(int i=0; i<unitOverlayList.Count; i++){
@@ -108,8 +111,8 @@ namespace TBTK {
 			
 			for(int i=0; i<unitOverlayList.Count; i++){
 				if(unitOverlayList[i].unit==null){
-					Faction fac=FactionManager.GetFaction(unit.factionID);
-					unitOverlayList[i].icon.color=fac.color;
+//					Faction fac=FactionManager.GetFaction(unit.factionID);
+//					unitOverlayList[i].icon.color=fac.color;
 					unitOverlayList[i].unit=unit;
 					break;
 				}
@@ -156,44 +159,37 @@ namespace TBTK {
 		}
 		
 	
-		
-		
-		void Update(){
+
+
+		public static void CallUpdate(){
 			if(GameControl.GetGamePhase()==_GamePhase.Play){
-				bool templeLifeInstantiated = false;
-				for(int i=0; i<unitOverlayList.Count; i++){
-					UnitOverlay overlay=unitOverlayList[i];
+				for(int i=0; i<instance.unitOverlayList.Count; i++){
+					UnitOverlay overlay=instance.unitOverlayList[i];
 					if(overlay.unit==null){
 						if(overlay.rootObj.activeInHierarchy) overlay.rootObj.SetActive(false);
 						continue;
 					}
 					
-					if(overlay.unit.tag == "Temple"){
-						if(templeLifeInstantiated)continue;
-						else{
-							Vector3 screenPos = mainCam.WorldToScreenPoint(new Vector3(8f,0f,-11.8f)); 
-							overlay.rootT.localPosition=(screenPos+new Vector3(-100, -100, 0))/UI.GetScaleFactor();
-						}
-						templeLifeInstantiated = true;
-					}
-					else{
-						Vector3 screenPos = mainCam.WorldToScreenPoint(overlay.unit.thisT.position+new Vector3(0, 0, 0));
-						overlay.rootT.localPosition=(screenPos+new Vector3(0, -20, 0))/UI.GetScaleFactor();
-						//						overlay.rootT.localPosition=(screenPos+new Vector3(0, -100, 0))/UI.GetScaleFactor();
-					}
+					//						Debug.Log (mainCam.WorldToScreenPoint(overlay.unit.thisT.position+new Vector3(0, 0, 0)));
 					
-					overlay.barHP.value=overlay.unit.GetHPRatio();
-					overlay.barAP.value=overlay.unit.GetAPRatio();
+					
+					
+					overlay.rootT.position = overlay.unit.thisT.position + new Vector3(0.5f, 0, 0);
+					//						overlay.rootT.localPosition+=new Vector3(2, 2, 2);
+					//						overlay.rootT.localPosition=(screenPos)/UI.GetScaleFactor();
+					
+					//					overlay.barHP.value=overlay.unit.GetHPRatio();
+					//					overlay.barAP.value=overlay.unit.GetAPRatio();
 					overlay.HPText.text = overlay.unit.HP.ToString();
-
-//					overlay.iconAttack.enabled = overlay.unit.attackRemain > 0 && overlay.unit.factionID !=1;
-//					overlay.iconMove.enabled = overlay.unit.moveRemain > 0 && overlay.unit.factionID !=1;
+					
+					//					overlay.iconAttack.enabled = overlay.unit.attackRemain > 0 && overlay.unit.factionID !=1;
+					//					overlay.iconMove.enabled = overlay.unit.moveRemain > 0 && overlay.unit.factionID !=1;
 					
 					//overlay.lbText.text=overlay.unit.GetEffectList().Count.ToString();
 					//overlay.lbTextShadow.text=overlay.unit.GetEffectList().Count.ToString();
 					
-					overlay.lbText.text=overlay.unit.factionID.ToString();
-					overlay.lbTextShadow.text=overlay.unit.factionID.ToString();
+					//					overlay.lbText.text=overlay.unit.factionID.ToString();
+					//					overlay.lbTextShadow.text=overlay.unit.factionID.ToString();
 					
 					if(overlay.unit.thisObj.layer==LayerManager.GetLayerUnitInvisible()){
 						if(overlay.rootObj.activeInHierarchy) overlay.rootObj.SetActive(false);
@@ -204,7 +200,6 @@ namespace TBTK {
 				}
 			}
 		}
-		
 		
 		
 		public void OnOverlayButton(GameObject overlayObj){

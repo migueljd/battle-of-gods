@@ -18,6 +18,8 @@ namespace TBTK {
 		
 		public GameObject pauseMenuObj;
 		public GameObject optionMenuObj;
+
+		public AudioClip click;
 		
 		
 		void Awake(){
@@ -32,8 +34,11 @@ namespace TBTK {
 		
 		// Use this for initialization
 		void Start () {
-			OnOptionBackButton();
+//			OnOptionBackButton();
+			optionMenuObj.SetActive (false);
 			Hide();
+			sliderMusicVolume.value = AudioManager.GetMusicVolume () * 100;
+			sliderSFXVolume.value = AudioManager.GetSFXVolume () * 100;
 		}
 		
 		
@@ -48,7 +53,9 @@ namespace TBTK {
 				//~ GameControl.PauseGame();
 				//~ UIPauseMenu.Show();
 			//~ }
-			
+
+			pauseMenuObj.SetActive (true);
+
 			if(isOn) Hide();
 			else Show();
 		}
@@ -60,8 +67,14 @@ namespace TBTK {
 		}
 		
 		public void OnOptionButton(){
-			pauseMenuObj.SetActive(false);
+
+			AudioManager.PlaySound (click);
+
+			if(isOn) Hide();
+			else Show();
+			pauseMenuObj.SetActive (false);
 			optionMenuObj.SetActive(true);
+
 		}
 		
 		public void OnMainMenuButton(){
@@ -79,24 +92,29 @@ namespace TBTK {
 		}
 		public static void Hide(){ instance._Hide(); }
 		public void _Hide(){
-			Time.timeScale=1;
+			Time.timeScale= GameTimeControler.IsButtonPressed()? GameTimeControler.GetFastTime(): 1.0f ;
 			isOn=false;
 			thisObj.SetActive(isOn);
 		}
 		
 		
 		public void OnMusicVolumeSlider(){
-			//if(Time.timeSinceLevelLoad>0.5f)
-				//AudioManager.SetMusicVolume(sliderMusicVolume.value/100);
+			if(Time.timeSinceLevelLoad>0.5f)
+				AudioManager.SetMusicVolume(sliderMusicVolume.value/100);
 		}
 		public void OnSFXVolumeSlider(){
-			//if(Time.timeSinceLevelLoad>0.5f)
-				//AudioManager.SetSFXVolume(sliderSFXVolume.value/100);
+			if(Time.timeSinceLevelLoad>0.5f)
+				AudioManager.SetSFXVolume(sliderSFXVolume.value/100);
 		}
 		
 		public void OnOptionBackButton(){
 			optionMenuObj.SetActive(false);
-			pauseMenuObj.SetActive(true);
+			AudioManager.PlaySound (click);
+			Hide ();
+		}
+
+		public void Restart(){
+			StartCoroutine(GameControl.RestartGame());
 		}
 	}
 

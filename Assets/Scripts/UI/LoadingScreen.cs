@@ -23,6 +23,10 @@ public class LoadingScreen : MonoBehaviour {
 	public Text levelText;
 	public float hideLevelNameDuration;
 
+	public Image parentPosition;
+
+	public float levelTextMoveSpeed = 0.1f;
+
 	private static LoadingScreen instance;
 	private float timeToHide;
 
@@ -31,6 +35,7 @@ public class LoadingScreen : MonoBehaviour {
 		staticSecondsToFadeIn = this.secondsToFadeIn;
 		staticSecondsToFadeOut = this.secondsToFadeOut;
 		timeToHide = Mathf.Infinity;
+		Debug.Log (gameObject);
 	}
 
 	// Update is called once per frame
@@ -77,6 +82,22 @@ public class LoadingScreen : MonoBehaviour {
 	}
 
 	public static void HideLoadingScreen(){
-		instance.levelText.enabled = false;
+		instance.levelText.rectTransform.SetParent(instance.parentPosition.rectTransform);
+		instance.levelText.transform.localScale = new Vector3 (1, 1, 1);
+		instance.StartCoroutine(instance.MoveLevelText());
+	}
+
+	private IEnumerator MoveLevelText(){
+
+		Vector2 initialPosition = instance.levelText.rectTransform.localPosition;
+
+
+		float interpolate = 0;
+		while (Vector2.Distance(instance.levelText.rectTransform.localPosition, Vector2.zero) > 0.01f) {
+			instance.levelText.rectTransform.localPosition = Vector2.Lerp(initialPosition, Vector2.zero, interpolate);
+			interpolate += levelTextMoveSpeed;
+			yield return null;
+		}
+		
 	}
 }

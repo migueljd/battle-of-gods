@@ -69,10 +69,8 @@ namespace Cards
 				instance.cardsInDiscard = new CardsList();
 				instantiator = new CardPrefabInstatiator ();
 				SetUpInstantiator();
-				Debug.Log ("Instance is null");
 //				baseScale.x *= (float)Screen.width/2048;
 //				baseScale.y *= (float)Screen.height/1536;
-				Debug.Log (baseScale);
 				DontDestroyOnLoad (this.gameObject);
 			} else {
 				
@@ -97,6 +95,7 @@ namespace Cards
 				Unit.onUnitDestroyedE += OnUnitDestroyed;
 				GameControl.onPassLevelE += PassLevel;
 				GameControl.onGameStartE += GameStarted;
+				GameControl.onGameRestartE += RestartGame;
 			}
 		}
 
@@ -106,6 +105,8 @@ namespace Cards
 				Unit.onUnitDestroyedE -= OnUnitDestroyed;
 				GameControl.onPassLevelE -= PassLevel;
 				GameControl.onGameStartE -= GameStarted;
+				GameControl.onGameRestartE += RestartGame;
+
 			}
 		}
 
@@ -359,6 +360,14 @@ namespace Cards
 		public static void PassLevel(){
 			instance.OnDisable ();
 			Disattach ();
+		}
+
+		public static void RestartGame(){
+			startedOnce = false;
+			movingCard = false;
+			instance.OnDisable ();
+			GameObject.Destroy (instance.gameObject);
+
 		}
 
 

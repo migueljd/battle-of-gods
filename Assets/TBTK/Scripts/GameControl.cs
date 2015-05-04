@@ -35,6 +35,9 @@ namespace TBTK{
 		public delegate void PassLevelHandler();
 		public static event PassLevelHandler onPassLevelE;
 
+		public delegate void RestartGameHandler();
+		public static event RestartGameHandler onGameRestartE;
+
 		public delegate void SelectUnitHandler ();
 		public static event SelectUnitHandler onUnitChosen;
 		
@@ -120,6 +123,8 @@ namespace TBTK{
 
 		public bool gameStarted = false;
 
+		private bool levelPassed  = false;
+
 		public static void fastFowardTo(float speed){
 			Time.timeScale = speed;
 		}
@@ -166,6 +171,7 @@ namespace TBTK{
 			defaultShootObject=Resources.Load("ScenePrefab/DefaultShootObject", typeof(GameObject)) as GameObject;
 			
 			gamePhase=_GamePhase.Initialization;
+			levelPassed = false;
 		}
 		
 		
@@ -179,8 +185,7 @@ namespace TBTK{
 		IEnumerator DelayStartGame(float delay=0.5f){
 
 			LoadingScreen.ShowLoadingScreen ();
-//			AudioManager.Init ();
-//			AudioManager.m
+			AudioManager.Init ();
 			yield return null;
 			FactionManager.SetupFaction();
 			GridManager.SetupGridForFogOfWar();
@@ -368,16 +373,46 @@ namespace TBTK{
 		}
 
 		public static IEnumerator PassLevel(){
+			if (!instance.levelPassed) {
+			
+				LoadingScreen.FadeIn();
 
-			isUnitChosen = false;
+				instance.levelPassed = true;
 
-			if (onPassLevelE != null)
-				onPassLevelE ();
+				isUnitChosen = false;
 
-			yield return new WaitForSeconds (LoadingScreen.staticSecondsToFadeIn + 0.2f);
+				if (onPassLevelE != null)
+					onPassLevelE ();
 
-			Application.LoadLevel (Levels_DB.GetSceneLevel(MapController.level));
+				Debug.Log(Time.time);
+			
+				yield return new WaitForSeconds (LoadingScreen.staticSecondsToFadeIn + 0.2f);
+				Debug.Log(Time.time);
+
+				Application.LoadLevel (Levels_DB.GetSceneLevel (MapController.level));
+			}
 			yield return null;
+		}
+
+		public static IEnumerator RestartGame(){
+
+			LoadingScreen.FadeIn ();
+
+			if (onGameRestartE != null)
+				onGameRestartE();
+			
+			Debug.Log (MapController.level);
+
+			Debug.Log(Time.time);
+			Time.timeScale = 1.0f;
+			yield return new WaitForSeconds (LoadingScreen.staticSecondsToFadeIn + 0.2f);
+			Debug.Log(Time.time);
+			Application.LoadLevel (Levels_DB.GetSceneLevel (MapController.level));
+
+		}
+
+		void OnDestroy(){
+			Debug.Log ("Destroying");
 		}
 		
 		
@@ -414,6 +449,8 @@ namespace TBTK{
 		public static void GameStarted(){
 			instance.gameStarted = true;
 		}
+
+
 
 
 		

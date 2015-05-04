@@ -73,6 +73,9 @@ namespace TBTK {
 		public static void Disable(){ if(instance!=null) instance.enabled=false; }
 		public static void Enable(){ if(instance!=null) instance.enabled=true; }
 
+		public static Vector3 cameraMovement;
+
+
 		void Awake(){
 			thisT=transform;
 			
@@ -130,8 +133,13 @@ namespace TBTK {
 				else lastTouchPos=new Vector3(9999, 9999, 9999);
 
 				Vector3 dir=thisT.InverseTransformDirection(camDir*moveDir)*moveMagnitude;
-				thisT.Translate (dir * panSpeed * deltaT);
+				cameraMovement = dir * panSpeed * deltaT;
 				
+				UIOverlay.CallUpdate();
+				
+				thisT.Translate (cameraMovement);
+				
+
 				moveMagnitude=moveMagnitude*(1-deltaT*10);
 			}
 			

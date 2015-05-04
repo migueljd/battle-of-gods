@@ -656,11 +656,13 @@ namespace TBTK{
 			AbilityManagerUnit.onIterateAbilityCooldownE += OnIterateAbilityCooldown;
 			GameControl.onPassLevelE += PassLevel;
 			GameControl.onGameStartE += GameStart;
+			GameControl.onGameRestartE += RestartGame;
 		}
 		void OnDisable(){
 			AbilityManagerUnit.onIterateAbilityCooldownE -= OnIterateAbilityCooldown;
 			GameControl.onPassLevelE -= PassLevel;
 			GameControl.onGameStartE -= GameStart;
+			GameControl.onGameRestartE -= RestartGame;
 
 		}
 		
@@ -713,8 +715,9 @@ namespace TBTK{
 			this.AP -= targetTile.distance;
 		}
 		public IEnumerator MoveRoutine(Tile targetTile){
-			tile.unit=null;
+			UIOverlay.CallUpdate ();
 			GridManager.ClearAllTile();
+			tile.unit=null;
 			
 			int allowedDistance = GetEffectiveMoveRange();
 			List<Tile> path=AStar.SearchWalkableTile(tile, targetTile);
@@ -1266,15 +1269,22 @@ namespace TBTK{
 			List<Unit> units = FactionManager.GetAllPlayerUnits ();
 			
 			foreach (Unit u in units) {
+				float HP = u.HP;
 				if(u.transform.name.Equals("Achilles")){
-					AchillesHP = (int)u.HP ;
+					AchillesHP = (int)HP ;
 				}else if(u.transform.name.Equals ("Archer")){
-					AtalantaHP = (int)u.HP;
+					AtalantaHP = (int)HP;
 				}else if(u.transform.name.Equals ("Hercules")){
-					HerculesHP = (int)u.HP;
+					HerculesHP = (int)HP;
 				}	
 			}
 
+		}
+
+		public static void RestartGame(){
+			AchillesHP = 30;
+			AtalantaHP = 30;
+			HerculesHP = 30;
 		}
 
 
