@@ -34,7 +34,7 @@ namespace TBTK{
 
 		public float height;
 
-		public Image cardback;
+		public GameObject cardback;
 
 		void Awake(){
 			instance=this;
@@ -170,7 +170,7 @@ namespace TBTK{
 			UIGameOver.Show(factionID);
 		}
 		
-		public static Image GetCardBack(){
+		public static GameObject GetCardBack(){
 			return instance.cardback;
 		}
 	}

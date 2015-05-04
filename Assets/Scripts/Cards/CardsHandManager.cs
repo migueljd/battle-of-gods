@@ -293,15 +293,14 @@ namespace Cards
 		IEnumerator CardbackRoutine(Unit unit){
 			yield return new WaitForSeconds (1);
 
-			Vector3 cameraPoint = Camera.main.WorldToScreenPoint(unit.transform.position);
-			Vector2 basePosition = new Vector3 (cameraPoint.x, cameraPoint.y + 10);
-			Vector2 finalPosition = basePosition + new Vector2 (0, cardbackMaxHeight);
-			Image cardback = UI.GetCardBack ();
-			cardback.rectTransform.anchoredPosition = basePosition;
+			GameObject cardback = UI.GetCardBack ();
+			cardback.transform.position = unit.transform.position;
+			Vector3 basePosition = unit.transform.position;
+			Vector3 finalPosition = basePosition + new Vector3 (0, 2,3);
 			cardback.gameObject.SetActive(true);
 			float interpolate = 0;
 			while (interpolate <= 1) {
-				cardback.rectTransform.anchoredPosition = Vector2.Lerp(basePosition, finalPosition, interpolate);
+				cardback.transform.position = Vector3.Lerp(basePosition, finalPosition, interpolate);
 				interpolate += cardbackYSpeed;
 				yield return null;
 			}
