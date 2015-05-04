@@ -107,7 +107,14 @@ namespace TBTK{
 		public string nextScene="";
 		public string mainMenu="";
 		public static void LoadNextScene(){ if(instance.nextScene!="") Load(instance.nextScene); }
-		public static void LoadMainMenu(){ if(instance.mainMenu!="") Load(instance.mainMenu); }
+		public static void LoadMainMenu(){ 
+
+			if (onGameRestartE != null)
+				onGameRestartE ();
+
+			if(instance.mainMenu!="") Load(instance.mainMenu); 
+		
+		}
 		public static void Load(string levelName){ Application.LoadLevel(levelName); }
 		
 		
