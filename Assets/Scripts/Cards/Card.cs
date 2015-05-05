@@ -39,6 +39,9 @@ namespace Cards{
 		private Vector3 initialScale;
 		private Vector3 finalScale;
 
+		public AudioClip cardActivatedSound;
+		public AudioClip cardSound;
+
 		protected void BaseAwake(){
 			Awake ();
 		}
@@ -113,6 +116,8 @@ namespace Cards{
 		}
 
 		public virtual IEnumerator PlayParticle(Vector3 position){
+			AudioManager.PlaySound (cardSound);
+
 			particles.enableEmission = true;
 			particles.transform.SetParent (null);
 			particles.transform.position = position + new Vector3(0,height,0);
