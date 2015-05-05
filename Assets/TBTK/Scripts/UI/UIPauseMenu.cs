@@ -68,7 +68,7 @@ namespace TBTK {
 			//GameControl.ResumeGame();
 		}
 
-		bool musicOn;
+		bool musicOn = true;
 
 		public Sprite musicOnSprite;
 
@@ -84,6 +84,15 @@ namespace TBTK {
 			else
 				button.GetComponent<Image>().sprite = musicOnSprite;
 			musicOn = !musicOn;
+
+			if (musicOn) {
+				AudioManager.SetMusicVolume (1);
+				AudioManager.SetSFXVolume (1);
+
+			} else {
+				AudioManager.SetMusicVolume (0);
+				AudioManager.SetSFXVolume (0);
+			}
 
 //			if(isOn) Hide();
 //			else Show();
