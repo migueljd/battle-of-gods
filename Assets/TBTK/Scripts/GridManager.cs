@@ -241,11 +241,18 @@ namespace TBTK{
 		// Update is called once per frame
 		private Tile hoveredTile;
 		private Vector3 cursorPosition;
+
+		private int touchEnded = 0;
+
+		private float touchStarted;
 		void Update () {
 			#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 			if(Input.touchCount==1){
 				Touch touch=Input.touches[0];
-				
+				if(touch.phase == TouchPhase.Began) {
+					touchStarted = Time.time;
+				}
+				touchEnded = 1;
 				cursorPosition=touch.position;
 				
 				//if(touch.phase==TouchPhase.Ended && targetMode) ClearTargetMode();
@@ -256,7 +263,6 @@ namespace TBTK{
 					return;
 				}
 			}
-			else return;
 			#else
 			cursorPosition=Input.mousePosition;
 			
@@ -273,8 +279,8 @@ namespace TBTK{
 			
 			
 			//check if the curosr is hover over the grid and show the appropriate indicator
-
-				Debug.Log ("Got in here");
+			if (Input.touchCount == 0 && touchEnded == 1 && (Time.time - touchStarted  <=0.5f)) {
+				touchEnded = 0;
 				LayerMask mask = 1 << LayerManager.GetLayerTile ();
 				Ray ray = Camera.main.ScreenPointToRay (cursorPosition);
 				RaycastHit hit;
@@ -325,6 +331,7 @@ namespace TBTK{
 					if (hoveredTile != null)
 						_ClearHoveredTile ();
 				}
+			}
 		}
 		
 		#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
@@ -485,7 +492,6 @@ namespace TBTK{
 				targetModeAbilityType = _AbilityType.Unit;
 				targetModeTileList = GetTilesWithinDistance (tile, range);
 				List<int> tilesToRemove = new List<int> (); 
-				Debug.Log ("Count: " + targetModeTileList.Count);
 				for (int a=0; a < targetModeTileList.Count; a++) {
 					if (type == _TargetType.FriendlyUnit && (targetModeTileList [a].unit == null 
 						|| !FactionManager.IsPlayerFaction (targetModeTileList [a].unit.factionID))) {
@@ -495,7 +501,6 @@ namespace TBTK{
 						tilesToRemove.Add (a);
 					}
 				}
-				Debug.Log ("Remove count: " + tilesToRemove.Count);
 				tilesToRemove.Reverse ();
 				foreach (int a in tilesToRemove) {
 					targetModeTileList.RemoveAt (a);
