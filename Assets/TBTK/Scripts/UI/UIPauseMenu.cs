@@ -67,15 +67,28 @@ namespace TBTK {
 			Hide();
 			//GameControl.ResumeGame();
 		}
-		
-		public void OnOptionButton(){
+
+		bool musicOn;
+
+		public Sprite musicOnSprite;
+
+		public Sprite musicOffSprite;
+
+		public void OnOptionButton(Button button){
 
 			AudioManager.PlaySound (click);
 
-			if(isOn) Hide();
-			else Show();
-			pauseMenuObj.SetActive (false);
-			optionMenuObj.SetActive(true);
+
+			if (musicOn)
+				button.GetComponent<Image>().sprite = musicOffSprite;
+			else
+				button.GetComponent<Image>().sprite = musicOnSprite;
+			musicOn = !musicOn;
+
+//			if(isOn) Hide();
+//			else Show();
+//			pauseMenuObj.SetActive (false);
+//			optionMenuObj.SetActive(true);
 
 		}
 		
