@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 using UnityEngine.UI;
 
@@ -19,7 +21,7 @@ public class LoadingScreen : MonoBehaviour {
 	private bool fadeOut;
 	private bool fadeIn;
 
-	public Image fadeImage;
+	public List<Image> fadeImages;
 	public Text levelText;
 	public float hideLevelNameDuration;
 
@@ -35,7 +37,6 @@ public class LoadingScreen : MonoBehaviour {
 		staticSecondsToFadeIn = this.secondsToFadeIn;
 		staticSecondsToFadeOut = this.secondsToFadeOut;
 		timeToHide = Mathf.Infinity;
-		Debug.Log (gameObject);
 	}
 
 	// Update is called once per frame
@@ -50,15 +51,17 @@ public class LoadingScreen : MonoBehaviour {
 	private void UpdateAlpha(){
 		if (fadeIn) {
 			float t = (Time.time - initialTime) / secondsToFadeIn;
-			fadeImage.color = Color.Lerp (new Color (0, 0, 0, 0), new Color (0, 0, 0, 1), t);
+			foreach(Image i in fadeImages) i.color = new Color(i.color.r, i.color.g, i.color.b, Mathf.Lerp ( 0, 1, t));
 			if (t >= 1)
 				fadeIn = false;
 		} else if (fadeOut) {
 			float t = (Time.time - initialTime) / secondsToFadeOut;
-			fadeImage.color = Color.Lerp (new Color (0, 0, 0, 1), new Color (0, 0, 0, 0), t);
+			foreach(Image i in fadeImages)
+				i.color = new Color(i.color.r, i.color.g, i.color.b,  Mathf.Lerp( 1, 0, t));
+
 			if (t >= 1){
 				fadeOut = false;
-				fadeImage.enabled = false;
+				foreach(Image i in fadeImages) i.enabled = false;
 			}
 		}
 	}
@@ -72,7 +75,7 @@ public class LoadingScreen : MonoBehaviour {
 	public static void FadeIn(){
 		instance.fadeIn = true;
 		instance.initialTime = Time.time;
-		instance.fadeImage.enabled = true;
+		foreach(Image i in instance.fadeImages) i.enabled = true;
 
 	}
 
@@ -84,6 +87,7 @@ public class LoadingScreen : MonoBehaviour {
 	public static void HideLoadingScreen(){
 		instance.levelText.rectTransform.SetParent(instance.parentPosition.rectTransform);
 		instance.levelText.transform.localScale = new Vector3 (1, 1, 1);
+		instance.levelText.fontSize = 30;
 		instance.StartCoroutine(instance.MoveLevelText());
 	}
 

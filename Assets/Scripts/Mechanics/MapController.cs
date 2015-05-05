@@ -148,7 +148,6 @@ public class MapController : MonoBehaviour {
 //				
 //				unit.transform.position = t.transform.position;
 				this.gameStarted = true;
-				Debug.Log ("Game started? " + gameStarted);
 			}
 		}
 

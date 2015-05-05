@@ -43,6 +43,7 @@ namespace TBTK {
 		
 		
 		public void OnPauseButton(){
+			AudioManager.PlaySound (click);
 			if(GameControl.GetGamePhase()==_GamePhase.Over) return;
 			
 			//~ if(gameState==_GameState.Pause){
@@ -62,6 +63,7 @@ namespace TBTK {
 		
 		
 		public void OnResumeButton(){
+			AudioManager.PlaySound (click);
 			Hide();
 			//GameControl.ResumeGame();
 		}
@@ -86,12 +88,15 @@ namespace TBTK {
 		public static bool isOn=true;
 		public static void Show(){ instance._Show(); }
 		public void _Show(){
+			Cards.CardsHandManager.movingCard = true;
 			Time.timeScale=0;
 			isOn=true;
 			thisObj.SetActive(isOn);
 		}
 		public static void Hide(){ instance._Hide(); }
 		public void _Hide(){
+			Cards.CardsHandManager.movingCard = false;
+
 			Time.timeScale= GameTimeControler.IsButtonPressed()? GameTimeControler.GetFastTime(): 1.0f ;
 			isOn=false;
 			thisObj.SetActive(isOn);

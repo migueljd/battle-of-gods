@@ -273,41 +273,42 @@ namespace TBTK{
 			
 			
 			//check if the curosr is hover over the grid and show the appropriate indicator
-			LayerMask mask=1<<LayerManager.GetLayerTile();
-			Ray ray = Camera.main.ScreenPointToRay(cursorPosition);
-			RaycastHit hit;
-			if(Physics.Raycast(ray, out hit, Mathf.Infinity, mask)){
-				//Tile newTile=_GetTileOnPos(hit.point);
+
+				Debug.Log ("Got in here");
+				LayerMask mask = 1 << LayerManager.GetLayerTile ();
+				Ray ray = Camera.main.ScreenPointToRay (cursorPosition);
+				RaycastHit hit;
+				if (Physics.Raycast (ray, out hit, Mathf.Infinity, mask)) {
+					//Tile newTile=_GetTileOnPos(hit.point);
 				
-				Tile newTile = hit.collider.gameObject.GetComponent<Tile>();
+					Tile newTile = hit.collider.gameObject.GetComponent<Tile> ();
 				
-				if(newTile==null || !newTile.walkable){
-					if(hoveredTile!=null) _ClearHoveredTile();
-					return;
-				}
-				else{
-					if(hoveredTile!=newTile){
-						_NewHoveredTile(newTile);
+					if (newTile == null || !newTile.walkable) {
+						if (hoveredTile != null)
+							_ClearHoveredTile ();
+						return;
+					} else {
+						if (hoveredTile != newTile) {
+							_NewHoveredTile (newTile);
+						}
+						hoveredTile = newTile;
 					}
-					hoveredTile=newTile;
-				}
 				
-				if(FactionManager.IsPlayerTurn() || GameControl.GetGamePhase()==_GamePhase.UnitDeployment){
-					#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-					if(currentSelectedTile==hoveredTile){
-						OnTileTouchDown();
-					}
-					else{
+					if (FactionManager.IsPlayerTurn () || GameControl.GetGamePhase () == _GamePhase.UnitDeployment) {
+						#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+						if (currentSelectedTile == hoveredTile) {
+							OnTileTouchDown ();
+						} else {
 //						if(attackableTileList.Contains(currentSelectedTile))onHostileDeselectE ();
-						if(targetMode || attackableTileList.Contains(hoveredTile)){
-							currentSelectedTile=hoveredTile;
-							if(attackableTileList.Contains(hoveredTile)) onHostileSelectE(hoveredTile.unit);
+							if (targetMode || attackableTileList.Contains (hoveredTile)) {
+								currentSelectedTile = hoveredTile;
+								if (attackableTileList.Contains (hoveredTile))
+									onHostileSelectE (hoveredTile.unit);
+							} else {
+								OnTileTouchDown ();
+							}
 						}
-						else{
-							OnTileTouchDown();
-						}
-					}
-					#else
+						#else
 					//command has been issue on the specific tile, either left or right mouse click on the tile
 					if(Input.GetMouseButtonDown(0)){
 						
@@ -316,15 +317,14 @@ namespace TBTK{
 					if(Input.GetMouseButtonDown(1)){
 						if(!targetMode && hoveredTile!=null) hoveredTile.OnTouchMouseDownAlt();
 					}
-					#endif
-				}
+						#endif
+					}
 				
-				//FogOfWar.InLOS(hoveredTile, grid.tileList[0], true);    //los function test
-			}
-			else{
-				if(hoveredTile!=null) _ClearHoveredTile();
-			}
-			
+					//FogOfWar.InLOS(hoveredTile, grid.tileList[0], true);    //los function test
+				} else {
+					if (hoveredTile != null)
+						_ClearHoveredTile ();
+				}
 		}
 		
 		#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
@@ -341,7 +341,8 @@ namespace TBTK{
 		
 		public static void OnTileCursorDown(Tile tile){ instance._OnTileCursorDown(tile); }
 		public void _OnTileCursorDown(Tile tile){
-			if(targetMode && this.targetModeTileList.Contains(tile)) GameControl.SelectTile(tile);
+			if(targetMode)targetModeTargetSelected(tile);
+
 			else tile.OnTouchMouseDown();
 		}
 		
@@ -480,33 +481,42 @@ namespace TBTK{
 			
 			ClearAllTile();
 			
-			if(tile!=null){
-				targetModeAbilityType=_AbilityType.Unit;
-				targetModeTileList=GetTilesWithinDistance(tile, range);
-				List<int> tilesToRemove = new List<int>(); 
+			if (tile != null) {
+				targetModeAbilityType = _AbilityType.Unit;
+				targetModeTileList = GetTilesWithinDistance (tile, range);
+				List<int> tilesToRemove = new List<int> (); 
 				Debug.Log ("Count: " + targetModeTileList.Count);
-				for(int a=0; a < targetModeTileList.Count; a++){
-					if(type == _TargetType.FriendlyUnit && (targetModeTileList[a].unit == null 
-					                                        || !FactionManager.IsPlayerFaction(targetModeTileList[a].unit.factionID))){
-						tilesToRemove.Add(a);
-					}
-					else if(type == _TargetType.HostileUnit && (targetModeTileList[a].unit == null 
-					                                            || FactionManager.IsPlayerFaction(targetModeTileList[a].unit.factionID))){
-						tilesToRemove.Add(a);
+				for (int a=0; a < targetModeTileList.Count; a++) {
+					if (type == _TargetType.FriendlyUnit && (targetModeTileList [a].unit == null 
+						|| !FactionManager.IsPlayerFaction (targetModeTileList [a].unit.factionID))) {
+						tilesToRemove.Add (a);
+					} else if (type == _TargetType.HostileUnit && (targetModeTileList [a].unit == null 
+						|| FactionManager.IsPlayerFaction (targetModeTileList [a].unit.factionID))) {
+						tilesToRemove.Add (a);
 					}
 				}
 				Debug.Log ("Remove count: " + tilesToRemove.Count);
-				tilesToRemove.Reverse();
-				foreach(int a in tilesToRemove){
-					targetModeTileList.RemoveAt(a);
+				tilesToRemove.Reverse ();
+				foreach (int a in tilesToRemove) {
+					targetModeTileList.RemoveAt (a);
 				}
-				for(int i=0; i<targetModeTileList.Count; i++) targetModeTileList[i].SetState(_TileState.Range);
+				for (int i=0; i<targetModeTileList.Count; i++)
+					targetModeTileList [i].SetState (_TileState.Range);
+			} else {
+				targetModeAbilityType = _AbilityType.Command;
+				if(type == _TargetType.HostileUnit){
+					foreach(Unit u in FactionManager.GetAllHostileUnit(FactionManager.GetPlayerFactionID()[0])){
+						targetModeTileList.Add(u.tile);
+					}
+					for (int i=0; i<targetModeTileList.Count; i++)
+						targetModeTileList [i].SetState (_TileState.Range);
+			    }
 			}
-			else targetModeAbilityType=_AbilityType.Command;
 		}
 		
 		//function called when a tile has been clicked on in target mode
 		private void targetModeTargetSelected(Tile tile){
+			Debug.Log (!targetModeTileList.Contains(tile));
 			if(!targetModeTileList.Contains(tile)) return;
 			int currentFacID=FactionManager.GetSelectedFactionID();
 			if(targetModeType==_TargetType.AllUnit || targetModeType==_TargetType.AllTile) TargetModeCallBack(tile);
@@ -666,9 +676,7 @@ namespace TBTK{
 		public static void OnTile(Tile tile){ instance._OnTile(tile); }
 		public void _OnTile(Tile tile){
 			if(!FactionManager.IsPlayerTurn()) return;
-			Debug.Log ("Called OnTile");
 			bool endTurn = false;
-			Debug.Log ("Is tile in range? " + walkableTileList.Contains (tile));
 			if (tile.unit != null && !CardsHandManager.movingCard) {
 				//select the unit if the unit belong's to current player in turn
 				if (FactionManager.GetSelectedFactionID () == tile.unit.factionID) {
@@ -920,7 +928,6 @@ namespace TBTK{
 		public static void ClearAllTile(){
 			if (GameControl.selectedUnit != null && GameControl.chosenUnit != null) {
 				GameControl.selectedUnit.tile.SetState (_TileState.Default);
-					Debug.Log ("Selected unit tile defaulted");
 				}
 			if(GameControl.selectedTile!=null && GameControl.chosenUnit == null) GameControl.selectedTile.SetState(_TileState.Default);
 			instance.ClearWalkableTileList();

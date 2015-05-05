@@ -91,7 +91,6 @@ namespace Cards
 			if (instance == this) {
 
 				enabled = true;
-				Debug.Log ("On Enable called");
 				Unit.onUnitDestroyedE += OnUnitDestroyed;
 				GameControl.onPassLevelE += PassLevel;
 				GameControl.onGameStartE += GameStarted;
@@ -151,7 +150,6 @@ namespace Cards
 		}
 
 		public static void changeModeToGameOn(){
-			Debug.Log ("mode changed");
 			instance.mode = modes._GameOn;
 		}
 
