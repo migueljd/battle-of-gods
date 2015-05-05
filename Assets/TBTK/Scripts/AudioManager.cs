@@ -153,7 +153,6 @@ namespace TBTK {
 			
 			audioSourceList[ID].clip=clip;
 			audioSourceList[ID].Play();
-			Debug.Log (audioSourceList[ID].isPlaying);
 		}
 		
 		

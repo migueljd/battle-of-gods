@@ -1148,7 +1148,6 @@ namespace TBTK{
 			if(unitAudio!=null) delay=Mathf.Max (delay,unitAudio.Destroy());
 			if(unitAnim!=null) delay=Mathf.Max(delay, unitAnim.Destroy());
 
-			Debug.Log ("Dead called once");
 			OnUnitDestroyed(this);
 
 			yield return new WaitForSeconds(delay + 0.7f);

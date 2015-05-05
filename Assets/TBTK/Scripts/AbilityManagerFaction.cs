@@ -157,10 +157,12 @@ namespace TBTK {
 					ability=abilityFactionList[i].facAbilityList[ID];
 				}
 			}
-			
+
+			Debug.Log (ability == null);
 			if(ability==null) return "error";
 			
 			string exception=ability.IsAvailable();
+			Debug.Log (exception);
 			if(exception!="") return exception;
 			
 			//Debug.Log("select    "+ability.name+"      "+selectedAbilityID+"    "+ability.requireTargetSelection);
@@ -213,6 +215,7 @@ namespace TBTK {
 		
 		//called from ActivateAbility, cast the ability, visual effect and actual effect goes here
 		public void CastAbility(FactionAbility ability, Tile tile=null){
+			Debug.Log (ability.effectObject != null);
 			if(ability.effectObject!=null && tile!=null){
 				ObjectPoolManager.Spawn(ability.effectObject, tile.GetPos(), Quaternion.identity);
 			}

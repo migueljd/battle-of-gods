@@ -418,9 +418,6 @@ namespace TBTK{
 
 		}
 
-		void OnDestroy(){
-			Debug.Log ("Destroying");
-		}
 		
 		
 		public static void DisplayMessage(string msg){ 

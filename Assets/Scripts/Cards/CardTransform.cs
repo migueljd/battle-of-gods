@@ -96,7 +96,8 @@ namespace Cards
 			if (transformCard.particles != null && transformCard.particles.transform != null)
 				StartCoroutine (transformCard.PlayParticle (GameControl.chosenUnit.transform.position));
 
-			GameControl.SelectUnit (GameControl.selectedUnit);
+			if(!transformCard.magicCard)
+				GameControl.SelectUnit (GameControl.selectedUnit);
 
 			//Do some sort of animation then destroy this card
 			this.transform.SetParent (null);
