@@ -73,6 +73,9 @@ public class PotionCounter : MonoBehaviour {
 	}
 
 	private void GainPotion(int potionIncrease){
+
+		StartCoroutine (GainPotion ());
+
 		if(potionCount == 0) GetComponent<Button>().interactable = true;
 		potionCount+=potionIncrease;
 		potionText.text = potionCount.ToString();
@@ -89,6 +92,37 @@ public class PotionCounter : MonoBehaviour {
 			potionText.text = potionCount.ToString();
 			GameControl.ChooseSelectedUnit();
 		}
+	}
+
+	IEnumerator GainPotion(){
+		Text child = this.transform.GetChild (0).GetComponent<Text>();
+
+		float interpolate = 0;
+
+		int initialFontSize = child.fontSize;
+		int finalFontSize = 50;
+
+		child.color = Color.green;
+
+		while (interpolate != 1) {
+
+			child.fontSize =(int) Mathf.Lerp(initialFontSize, finalFontSize, interpolate);
+			interpolate+=0.05f;
+
+			yield return null;
+		}
+
+		while (interpolate != 0) {
+			
+			child.fontSize =(int) Mathf.Lerp(finalFontSize, initialFontSize, interpolate);
+			interpolate-=0.05f;
+			
+			yield return null;
+		}
+
+		child.color = Color.white;
+
+
 	}
 
 	public static void PassTurn(){
