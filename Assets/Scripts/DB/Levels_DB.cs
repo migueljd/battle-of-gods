@@ -105,12 +105,12 @@ public class Levels_DB : MonoBehaviour {
 
 		if (lvl < 2) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
-			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Hades", typeof(Transform)) as Transform);
+			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Underworld"  + "/Hades", typeof(Transform)) as Transform);
 
 		} else if (lvl < 3) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
-			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Hades", typeof(Transform)) as Transform);
+			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Underworld" + "/Hades", typeof(Transform)) as Transform);
 
 		} else if (lvl < 4) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
@@ -172,7 +172,7 @@ public class Levels_DB : MonoBehaviour {
 			cardList.Add (25, "Athena's Touch");
 			cardList.Add (50, "HeroicStrike");
 			cardList.Add (70, "Zeus Thunder");
-			cardList.Add (85, "Hefestus Curse");
+			cardList.Add (85, "Hephaestus Curse");
 			cardList.Add (100, "Ares Wrath");
 		}
 
@@ -185,7 +185,7 @@ public class Levels_DB : MonoBehaviour {
 
 		cardList.Add ("Athena's Touch",3 );
 		cardList.Add ("HeroicStrike", 2);
-		cardList.Add ("Hefestus Curse",1);
+		cardList.Add ("Hephaestus Curse",1);
 
 		return cardList;
 		
