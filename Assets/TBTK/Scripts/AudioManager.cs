@@ -10,8 +10,8 @@ namespace TBTK {
 
 		private List<AudioSource> audioSourceList=new List<AudioSource>();
 		
-		private static float musicVolume=.75f;
-		private static float sfxVolume=0.70f;
+		private static float musicVolume=1f;
+		private static float sfxVolume=1f;
 		
 		public List<AudioClip> musicList;
 		public bool playMusic=true;

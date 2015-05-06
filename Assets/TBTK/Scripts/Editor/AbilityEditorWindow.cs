@@ -82,7 +82,8 @@ namespace TBTK {
 			cont=new GUIContent("HPMax:", "HitPoint (HP) value to be applied to the target HP. Damage when value is negative, heal when value is positive. Doesnt apply to tile");
 			EditorGUI.LabelField(new Rect(startX, startY+=spaceY, width, height), cont);
 			effect.HPMax=EditorGUI.FloatField(new Rect(startX+spaceX, startY, 40, height), effect.HPMax);
-			
+
+
 			startY+=8;
 			
 			cont=new GUIContent("APMin:", "ActionPoint (AP) value to be applied to the target AP. Damage when value is negative, restore when value is positive. Doesnt apply to tile");
@@ -235,7 +236,13 @@ namespace TBTK {
 			cont=new GUIContent("APPerTurn:", "Multiplier to be applied to the target. ie, 0.2 being increment by 20%, -0.1 being reduction by 10%");
 			EditorGUI.LabelField(new Rect(startX, startY+=spaceY, width, height), cont);
 			effect.unitStat.APPerTurn=EditorGUI.FloatField(new Rect(startX+spaceX, startY, 40, height), effect.unitStat.APPerTurn);
-			
+
+
+			cont=new GUIContent("Destroy Guard:", "Toggle if the guard should be 0 on the target, after the skill has been used");
+			EditorGUI.LabelField(new Rect(startX, startY+=spaceY, width, height), cont);
+			effect.destroyGuard = EditorGUI.Toggle(new Rect(startX+spaceX, startY, 40, height), effect.destroyGuard);
+
+
 			
 			return new Vector2(startX, startY);
 		}

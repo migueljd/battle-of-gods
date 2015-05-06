@@ -31,6 +31,8 @@ namespace TBTK{
 		public float APMax=0;
 		
 		public int stun=0;
+
+		public bool destroyGuard = false;
 		
 		public UnitStat unitStat=new UnitStat();
 		
