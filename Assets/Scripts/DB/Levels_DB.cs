@@ -105,9 +105,13 @@ public class Levels_DB : MonoBehaviour {
 
 		if (lvl < 2) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
+			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Hades", typeof(Transform)) as Transform);
+
 		} else if (lvl < 3) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
+			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Hades", typeof(Transform)) as Transform);
+
 		} else if (lvl < 4) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
