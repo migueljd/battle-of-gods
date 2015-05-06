@@ -176,7 +176,8 @@ namespace TBTK{
 			enableMoveAfterCast	=ability.enableMoveAfterCast;
 			enableAttackAfterCast	=ability.enableAttackAfterCast;
 			enableAbilityAfterCast	=ability.enableAbilityAfterCast;
-			
+
+			destroyGuard = ability.destroyGuard;
 			
 			if(useDefaultValue){		//for when application is not running or when it's loading from DB
 				duration		=ability.duration;

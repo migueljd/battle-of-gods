@@ -100,22 +100,26 @@ public class PotionCounter : MonoBehaviour {
 		float interpolate = 0;
 
 		int initialFontSize = child.fontSize;
-		int finalFontSize = 50;
+		int finalFontSize = 200;
 
 		child.color = Color.green;
 
-		while (interpolate != 1) {
+		while (interpolate <= 1) {
 
 			child.fontSize =(int) Mathf.Lerp(initialFontSize, finalFontSize, interpolate);
-			interpolate+=0.05f;
+			interpolate+=0.2f;
 
 			yield return null;
+			Debug.Log ("In");
+			Debug.Log (interpolate);
 		}
-
-		while (interpolate != 0) {
+		
+		Debug.Log ("Out");
+		interpolate = 0;
+		while (interpolate <= 1) {
 			
 			child.fontSize =(int) Mathf.Lerp(finalFontSize, initialFontSize, interpolate);
-			interpolate-=0.05f;
+			interpolate+=0.2f;
 			
 			yield return null;
 		}

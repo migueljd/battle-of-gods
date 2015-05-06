@@ -59,14 +59,11 @@ namespace Cards
 					if (screenHeightInInch < 3.1)
 					{
 						// it's a phone
-						Debug.Log ("Phone");
 						this.transform.position = mousePos + new Vector3(0,0, distanceFromCursorZZoomed + 0.2f) ;
 
 					}
 					else
 					{
-						Debug.Log ("Tablet");
-
 						// it's tablet
 						this.transform.position = mousePos + new Vector3(0,0, distanceFromCursorZZoomed) ;
 					}

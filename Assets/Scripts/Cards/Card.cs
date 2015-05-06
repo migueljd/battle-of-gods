@@ -128,7 +128,6 @@ namespace Cards{
 
 			particles.Stop ();
 			particles.transform.SetParent (this.transform);
-			Debug.Log ("parent set");
 		}
 
 

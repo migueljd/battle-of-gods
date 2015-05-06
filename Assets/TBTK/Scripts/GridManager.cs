@@ -392,7 +392,6 @@ namespace TBTK{
 			if(attackableTileList.Contains(tile) || (tile.unit != null && tile.unit.isAIUnit)){
 				if(TurnControl.ClearToProceed()){    //if the some unit is in action, dont show the overlay, the unit cant attack while someone is in action anyway
 					if(onHostileSelectE!=null) onHostileSelectE(tile.unit);    //show attack info on UI
-					Debug.Log ("Got in here");
 				}
 			}
 			else if(onHostileDeselectE!=null) onHostileDeselectE();    //hide attack info on UI

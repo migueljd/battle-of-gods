@@ -156,6 +156,7 @@ namespace TBTK {
 					//list=abilityFactionList[i].facAbilityList;
 					ability=abilityFactionList[i].facAbilityList[ID];
 				}
+				Debug.Log (abilityFactionList[i].facAbilityList[ID].destroyGuard);
 			}
 
 			if(ability==null) return "error";
@@ -168,7 +169,8 @@ namespace TBTK {
 			selectedAbilityID=ID;
 			currentAbility=ability;
 			requireTargetSelection=ability.requireTargetSelection;
-			
+
+
 			if(requireTargetSelection) 
 				GridManager.AbilityTargetMode(ability.GetAOERange(), ability.targetType, this.AbilityTargetSelected);
 			
@@ -196,7 +198,6 @@ namespace TBTK {
 				ClearSelectedAbility();
 				return;
 			}
-			
 			ActivateAbility(currentAbility, tile);
 		}
 		
@@ -206,14 +207,12 @@ namespace TBTK {
 			abilityFactionList[ability.factionIndex].energy-=ability.GetCost();
 			
 			if(onAbilityActivatedE!=null) onAbilityActivatedE();
-			
 			CastAbility(ability, tile);
 		}
 		
 		
 		//called from ActivateAbility, cast the ability, visual effect and actual effect goes here
 		public void CastAbility(FactionAbility ability, Tile tile=null){
-			Debug.Log (ability.effectObject != null);
 			if(ability.effectObject!=null && tile!=null){
 				ObjectPoolManager.Spawn(ability.effectObject, tile.GetPos(), Quaternion.identity);
 			}
