@@ -224,6 +224,8 @@ namespace TBTK{
 			if(HPVal>0) RestoreHP(HPVal);
 			else if(HPVal<0) ApplyDamage(-HPVal);
 			AP=Mathf.Clamp(AP+Mathf.Min(eff.APMin, eff.APMax), 0, GetFullAP());
+
+			guard = eff.destroyGuard ? 0 : guard;
 			
 			if(eff.stun>0 && stunned<eff.stun){
 				stunned=eff.stun;
