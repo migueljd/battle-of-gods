@@ -8,7 +8,7 @@ namespace TBTK{
 	public class SelfDeactivator : MonoBehaviour {
 		
 		public enum _Type{RealTime, TurnBased}
-		public _Type timerTrackType=_Type.RealTime;
+		public _Type timerTrackType=_Type.TurnBased;
 
 		public bool useObjectPool=true;
 		public float duration=1;
@@ -17,6 +17,7 @@ namespace TBTK{
 		
 		
 		void Start(){
+			Debug.Log (this.transform);
 			durationCounter.Count(duration);
 		}
 		
@@ -26,6 +27,7 @@ namespace TBTK{
 		}
 		
 		void OnEnable(){
+			Debug.Log (timerTrackType);
 			if(timerTrackType==_Type.RealTime) StartCoroutine(DeactivateRoutine());
 			else GameControl.onIterateTurnE += IterateDuration;
 		}
@@ -37,6 +39,7 @@ namespace TBTK{
 		
 		
 		void IterateDuration(){
+			Debug.Log ("Iterating");
 			durationCounter.Iterate();
 			
 			if(durationCounter.duration<=0){

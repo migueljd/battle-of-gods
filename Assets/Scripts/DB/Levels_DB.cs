@@ -105,7 +105,9 @@ public class Levels_DB : MonoBehaviour {
 
 		if (lvl < 2) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
-			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Underworld"  + "/Hades", typeof(Transform)) as Transform);
+			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Minotaur", typeof(Transform)) as Transform);
+			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Underworld" + "/Hades", typeof(Transform)) as Transform);
+
 
 		} else if (lvl < 3) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
@@ -186,6 +188,9 @@ public class Levels_DB : MonoBehaviour {
 		cardList.Add ("Athena's Touch",3 );
 		cardList.Add ("HeroicStrike", 2);
 		cardList.Add ("Hephaestus Curse",1);
+		cardList.Add ("Zeus Thunder", 1);
+
+
 
 		return cardList;
 		

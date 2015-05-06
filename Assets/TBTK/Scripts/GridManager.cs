@@ -521,7 +521,6 @@ namespace TBTK{
 		
 		//function called when a tile has been clicked on in target mode
 		private void targetModeTargetSelected(Tile tile){
-			Debug.Log (!targetModeTileList.Contains(tile));
 			if(!targetModeTileList.Contains(tile)) return;
 			int currentFacID=FactionManager.GetSelectedFactionID();
 			if(targetModeType==_TargetType.AllUnit || targetModeType==_TargetType.AllTile) TargetModeCallBack(tile);

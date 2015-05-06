@@ -158,11 +158,9 @@ namespace TBTK {
 				}
 			}
 
-			Debug.Log (ability == null);
 			if(ability==null) return "error";
 			
 			string exception=ability.IsAvailable();
-			Debug.Log (exception);
 			if(exception!="") return exception;
 			
 			//Debug.Log("select    "+ability.name+"      "+selectedAbilityID+"    "+ability.requireTargetSelection);

@@ -21,7 +21,14 @@ namespace TBTK{
 			instance._UnitStunned(unit, duration);
 		}
 		public void _UnitStunned(Unit unit, int duration){
-			Vector3 pos=unit.thisT.position+new Vector3(0, .9f, 0);
+			Vector3 pos = Vector3.zero;
+
+			if (unit.name.Contains ("Hades")) {
+				pos = unit.thisT.position + new Vector3 (.25f, 2.5f, 0);
+
+			} else {
+				pos = unit.thisT.position + new Vector3 (.2f, 2.5f, -0.5f);
+			}
 			GameObject obj=(GameObject)Instantiate(stunEffect, pos, Quaternion.identity);
 			obj.transform.parent=unit.thisT;
 			
