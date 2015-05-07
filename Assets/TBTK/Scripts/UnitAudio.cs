@@ -31,6 +31,16 @@ namespace TBTK {
 			if(unit!=null) unit.SetAudio(this);
 			//else DestroyImmediate(this);
 		}
+
+		void OnEnable(){
+			if(this.transform.GetChild (0) != null &&this.transform.GetChild (0).GetComponent<UnitAnimationEvents>() != null)
+				this.transform.GetChild (0).GetComponent<UnitAnimationEvents>().OnAttackEventE += Attack;
+		}
+
+		void OnDisable(){
+			if(this.transform.GetChild (0) != null &&this.transform.GetChild (0).GetComponent<UnitAnimationEvents>() != null) 
+				this.transform.GetChild (0).GetComponent<UnitAnimationEvents>().OnAttackEventE -= Attack;
+		}
 		
 		
 		public void Select(){ if(selectSound!=null) AudioManager.PlaySound(selectSound);	}
@@ -38,7 +48,7 @@ namespace TBTK {
 		public void Move(){ if(moveSound!=null)AudioManager.PlaySound(moveSound);	}
 		//public void StopMove(){ AudioManager.PlaySound(moveSound);	}
 		
-		public void Attack(){
+		public void Attack(Unit unit){
 			if (attackSound != null) {
 				AudioManager.PlaySound (attackSound);
 				Debug.Log ("Playing audio");

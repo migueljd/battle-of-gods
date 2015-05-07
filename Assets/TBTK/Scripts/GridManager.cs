@@ -257,8 +257,12 @@ namespace TBTK{
 				
 				//if(touch.phase==TouchPhase.Ended && targetMode) ClearTargetMode();
 				if(touch.phase!=TouchPhase.Began) return;
-				
-				if(UIUtilities.IsCursorOnUI(0)){
+
+				int pointerID = touch.fingerId;
+
+				Debug.Log (UIUtilities.IsCursorOnUI(pointerID));
+
+				if(UIUtilities.IsCursorOnUI(pointerID)){
 					if(hoveredTile!=null) _ClearHoveredTile();
 					return;
 				}
@@ -542,14 +546,15 @@ namespace TBTK{
 		public static void ClearTargetMode(){ instance._ClearTargetMode(false); }
 		private void _ClearTargetMode(bool clearSelectedAbility=true){
 			if(!targetMode) return;
-			
+
+
 			targetMode=false;
 			
 			ClearTargetModeHoveredTile();
 			ClearSelectedTile();
 			
+			for(int i=0; i<targetModeTileList.Count; i++) targetModeTileList[i].SetState(_TileState.Default);
 			if(targetModeAbilityType==_AbilityType.Unit){
-				for(int i=0; i<targetModeTileList.Count; i++) targetModeTileList[i].SetState(_TileState.Default);
 				targetModeTileList=new List<Tile>();
 				if(clearSelectedAbility) GameControl.selectedUnit.ClearSelectedAbility();
 			}
@@ -763,7 +768,7 @@ namespace TBTK{
 			
 			ClearHoveredTile();    //clear the hovered tile so all the UI overlay will be cleared
 //			if (endTurn && !(GameControl.selectedUnit.CanMove() || GameControl.selectedUnit.CanAttack())) {
-////				StartCoroutine(EndTurn());
+//				TurnCo;
 //			}
 			
 		}
@@ -939,6 +944,7 @@ namespace TBTK{
 			instance.indicatorSelectedConfirmation.position=new Vector3(0, 99999, 0);
 			instance.ClearHostileIndicator();
 			instance.ClearWalkableHostileList();
+				instance.ClearTargetModeHoveredTile ();
 		}
 		
 		public static void ClearSelectedTile(){

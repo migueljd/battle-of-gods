@@ -62,6 +62,7 @@ namespace Cards
 
 		void Awake ()
 		{
+			Debug.Log ("Wtf?");
 			if (instance == null) {
 				instance = this;
 //				instance.cardsInDeck = new CardsList ();
@@ -104,7 +105,7 @@ namespace Cards
 				Unit.onUnitDestroyedE -= OnUnitDestroyed;
 				GameControl.onPassLevelE -= PassLevel;
 				GameControl.onGameStartE -= GameStarted;
-				GameControl.onGameRestartE += RestartGame;
+				GameControl.onGameRestartE -= RestartGame;
 
 			}
 		}
@@ -122,6 +123,8 @@ namespace Cards
 
 		public void GameStarted (){
 			GameControl.AddActionAtStart ();
+			Debug.Log (transform);
+			Debug.Log (GameObject.FindWithTag ("CardsCamera"));
 
 			transform.SetParent (GameObject.FindWithTag("CardsCamera").transform);
 
@@ -360,11 +363,16 @@ namespace Cards
 		}
 
 		public static void RestartGame(){
+			Debug.Log ("Being called");
 			startedOnce = false;
 			movingCard = false;
 			instance.OnDisable ();
 			GameObject.Destroy (instance.gameObject);
 
+		}
+
+		void OnDestroy(){
+			Debug.Log ("Being dead");
 		}
 
 

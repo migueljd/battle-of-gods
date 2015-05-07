@@ -35,10 +35,10 @@ namespace TBTK {
 		// Use this for initialization
 		void Start () {
 //			OnOptionBackButton();
-			optionMenuObj.SetActive (false);
+			if(optionMenuObj != null)optionMenuObj.SetActive (false);
 			Hide();
-			sliderMusicVolume.value = AudioManager.GetMusicVolume () * 100;
-			sliderSFXVolume.value = AudioManager.GetSFXVolume () * 100;
+			if(sliderMusicVolume != null)sliderMusicVolume.value = AudioManager.GetMusicVolume () * 100;
+			if(sliderSFXVolume != null)sliderSFXVolume.value = AudioManager.GetSFXVolume () * 100;
 		}
 		
 		
@@ -117,6 +117,7 @@ namespace TBTK {
 		}
 		public static void Hide(){ instance._Hide(); }
 		public void _Hide(){
+			Debug.Log ("Hidden");
 			Cards.CardsHandManager.movingCard = false;
 
 			Time.timeScale= GameTimeControler.IsButtonPressed()? GameTimeControler.GetFastTime(): 1.0f ;
@@ -141,6 +142,7 @@ namespace TBTK {
 		}
 
 		public void Restart(){
+
 			StartCoroutine(GameControl.RestartGame());
 		}
 	}

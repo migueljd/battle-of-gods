@@ -104,24 +104,29 @@ namespace TBTK{
 			else {
 				int unitsUsedCount = 0;
 				foreach(Unit u in allUnitList){
+					Debug.Log ("Trying to select a unit "  + u.name);
 					if(u.IsStunned()){
 						u.usedThisTurn = true;
 					}
 
 					if(!u.usedThisTurn && GameControl.HasGameStarted()){
+						Debug.Log ("u wasnt used?");
 						GameControl.SelectUnit (u);
 						break;
 					}
 					else if(!GameControl.HasGameStarted()){
+						Debug.Log("whut? Game started?");
 						GameControl.GameStarted();
 						break;
 					}
 					else unitsUsedCount++;
 				}
 
+				Debug.Log (unitsUsedCount);
 				if(unitsUsedCount == allUnitList.Count){
 					Debug.Log ("Reseting units");
 					foreach(Unit u in allUnitList){
+						Debug.Log ("Reseting a unit " + u.name);
 						u.ResetUnitTurnData();
 						u.usedThisTurn = false;
 

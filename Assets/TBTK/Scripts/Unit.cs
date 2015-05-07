@@ -853,6 +853,7 @@ namespace TBTK{
 			StartCoroutine(AttackRoutine(targetUnit.tile, targetUnit, shootObj, attInstance));
 			
 			if(!GameControl.EnableActionAfterAttack()){
+				Debug.Log ("all used up");
 				moveRemain=0;
 				disableAbilities=1;
 			}
@@ -952,7 +953,7 @@ namespace TBTK{
 			if(unitAnim!=null) attackDelay = unitAnim.Attack();
 			//			if (unitParticles != null)
 			//				unitParticles.Attack (targetUnit);
-			if(unitAudio!=null) unitAudio.Attack();
+//			if(unitAudio!=null) unitAudio.Attack();
 			Debug.Log ("Attack delay is: " + attackDelay);
 			yield return new WaitForSeconds (attackDelay);
 
@@ -1005,7 +1006,7 @@ namespace TBTK{
 			float delayAttack = 0;
 
 			if(unitAnim!=null) delayAttack = unitAnim.Attack();
-			if(unitAudio!=null) unitAudio.Attack();
+//			if(unitAudio!=null) unitAudio.Attack();
 			
 			AttackInstance attInstance=new AttackInstance(this, targetUnit, true);
 			attInstance.Process();

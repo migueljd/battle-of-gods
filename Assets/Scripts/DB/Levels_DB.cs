@@ -70,7 +70,7 @@ public class Levels_DB : MonoBehaviour {
 	}
 
 	public static string GetLevelName(int lvl){
-		if (lvl <7)
+		if (lvl <4)
 			return "Forest";
 		else if (lvl <7)
 			return "Desert";
@@ -106,6 +106,7 @@ public class Levels_DB : MonoBehaviour {
 		if (lvl < 2) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 //			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Minotaur", typeof(Transform)) as Transform);
+//			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
 //			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Underworld" + "/Hades", typeof(Transform)) as Transform);
 
 
@@ -187,6 +188,7 @@ public class Levels_DB : MonoBehaviour {
 
 		cardList.Add ("Athena's Touch",3 );
 		cardList.Add ("HeroicStrike", 2);
+		cardList.Add ("Zeus Thunder", 1);
 
 
 

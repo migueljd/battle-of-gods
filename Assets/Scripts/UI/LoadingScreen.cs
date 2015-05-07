@@ -81,7 +81,7 @@ public class LoadingScreen : MonoBehaviour {
 
 	public static void ShowLoadingScreen(){
 		instance.levelText.enabled = true;
-		instance.levelText.text = "Level " + MapController.level.ToString ();
+		instance.levelText.text = "Level " + (MapController.instance != null? MapController.level.ToString () : "1");
 	}
 
 	public static void HideLoadingScreen(){

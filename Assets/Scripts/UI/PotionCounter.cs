@@ -110,11 +110,8 @@ public class PotionCounter : MonoBehaviour {
 			interpolate+=0.2f;
 
 			yield return null;
-			Debug.Log ("In");
-			Debug.Log (interpolate);
 		}
 		
-		Debug.Log ("Out");
 		interpolate = 0;
 		while (interpolate <= 1) {
 			

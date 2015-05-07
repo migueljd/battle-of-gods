@@ -208,6 +208,7 @@ namespace TBTK {
 			
 			if(onAbilityActivatedE!=null) onAbilityActivatedE();
 			CastAbility(ability, tile);
+			GridManager.ClearTargetMode ();
 		}
 		
 		

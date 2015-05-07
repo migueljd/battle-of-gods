@@ -31,7 +31,8 @@ namespace TBTK{
 		}
 		public void OnRestartButton(){
 			Time.timeScale=1;
-			Application.LoadLevel(Application.loadedLevelName);
+
+			StartCoroutine(GameControl.RestartGame ());
 		}
 		public void OnMainMenuButton(){
 			Time.timeScale=1;
@@ -41,7 +42,7 @@ namespace TBTK{
 		
 		void UpdateDisplay(int factionID){
 			Faction fac=FactionManager.GetFaction(factionID);
-			if(!fac.isPlayerFaction) labelTitle.text="Game Over";
+			if(!fac.isPlayerFaction) labelTitle.text="You have Fallen!";
 			else{
 				if(FactionManager.GetPlayerFactionCount()==1) labelTitle.text="Victory!";
 				else	labelTitle.text="Player "+factionID+" Wins!";
@@ -53,7 +54,7 @@ namespace TBTK{
 		public static void Show(int factionID){ instance._Show(factionID); }
 		public void _Show(int factionID){
 			UpdateDisplay(factionID);
-			GameObject.FindGameObjectWithTag("ObjectiveText").GetComponent<Text>().enabled = false;
+//			GameObject.FindGameObjectWithTag("ObjectiveText").GetComponent<Text>().enabled = false;
 			isOn=true;
 			thisObj.SetActive(isOn);
 		}

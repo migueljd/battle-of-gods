@@ -272,13 +272,14 @@ namespace TBTK{
 		
 		
 		public static void GameOver(int factionID){
+			Debug.Log ("Game Over called");
+			gamePhase=_GamePhase.Over;
 			if(FactionManager.IsPlayerFaction(factionID)){
 				PerkManager.GainPerkCurrencyOnVictory();
 			}
 			
-			if(onGameMessageE!=null) onGameMessageE("GameOver");
+//			if(onGameMessageE!=null) onGameMessageE("GameOver");
 			
-			gamePhase=_GamePhase.Over;
 			
 			FactionManager.GameOver();
 			
@@ -318,7 +319,6 @@ namespace TBTK{
 		//end the turn, called when EndTurn button are pressed or when a unit has used up all its move(in FactionUnitPerTurn & UnitPerTurn mode)
 		public static void EndTurn(){ 
 			if(chosenUnit != null)chosenUnit.usedThisTurn = true;
-
 
 			isUnitChosen = false;
 			chosenUnit = null;

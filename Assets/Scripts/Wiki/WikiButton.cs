@@ -10,6 +10,7 @@ public class WikiButton : MonoBehaviour {
 
 
 	public void ButtonPress(){
+		Time.timeScale = 0;
 		WikiManager.ButtonClicked (this.transform);
 	}
 }

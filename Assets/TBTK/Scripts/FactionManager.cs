@@ -216,11 +216,10 @@ namespace TBTK{
 			for(int i=0; i<factionList.Count; i++){
 				if(factionList[i].ID==unit.factionID){
 					factionList[i].RemoveUnit(unit);
-//					if(factionList[i].allUnitList.Count==0) factionList.RemoveAt(i);
+					if(factionList[i].allUnitList.Count==0 && factionList[i].isPlayerFaction) factionList.RemoveAt(i);
 					break;
 				}
 			}
-			
 			//if there's only 1 faction remain (since faction with no active unit will be removed), then faction has won the game
 			//if(factionList.Count==1) GameControl.GameOver(factionList[0].ID);
 			if(factionList.Count==1 && FactionManager.IsPlayerFaction(unit.factionID)) GameControl.GameOver(FactionManager.GetFactionList()[0].ID);

@@ -13,7 +13,9 @@ namespace TBTK{
 		//inputID=-1 - mouse cursor, 	inputID>=0 - touch finger index
 		public static bool IsCursorOnUI(int inputID=-1){
 			EventSystem eventSystem = EventSystem.current;
-			return ( eventSystem.IsPointerOverGameObject( inputID ) );
+			Debug.Log (inputID);
+			Debug.Log (eventSystem.IsPointerOverGameObject (inputID));
+			return ( eventSystem.IsPointerOverGameObject(inputID) );
 		}
 		
 	}

@@ -54,7 +54,7 @@ namespace TBTK{
 				if(GameControl.GetGamePhase()==_GamePhase.Over) yield break;
 			}
 
-			GameControl.EndTurn();
+			StartCoroutine (DelayEndTurn ());
 		}
 		//move a single unit only
 		IEnumerator SingleUnitRoutine(Unit unit){
@@ -70,7 +70,7 @@ namespace TBTK{
 				yield return new WaitForSeconds(0.25f);
 			}
 
-			GameControl.EndTurn();
+			StartCoroutine (DelayEndTurn ());
 		}
 
 		IEnumerator UpdateEnemyInfo(){
@@ -249,7 +249,7 @@ namespace TBTK{
 				}
 
 				if(attackableEnemies.Count > 0) return attackableEnemies[Random.Range(0, attackableEnemies.Count - 1)];
-
+				if(allHostile.Count ==0) return null;
 				return allHostile[nearestIndex].tile;
 			}
 			
