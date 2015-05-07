@@ -9,9 +9,22 @@ public class Startscreen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButton (0) || Input.touchCount > 0) {
-			LoadingScreen.FadeIn ();
-			AsyncOperation async = Application.LoadLevelAsync (3);
-		}
+//		if (Input.GetMouseButton (0) || Input.touchCount > 0) {
+////			LoadingScreen.FadeIn ();
+//			Application.LoadLevel(3);
+//		}
+	}
+
+	public void StartGame(){
+		LoadingScreen.FadeIn ();
+		Application.LoadLevel(3);
+	}
+
+	public void Credits(){
+		Application.LoadLevel(6);
+	}
+
+	public void GoBackToMainMenu(){
+		Application.LoadLevel (2);
 	}
 }
