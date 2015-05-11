@@ -16,8 +16,16 @@ public class Startscreen : MonoBehaviour {
 	}
 
 	public void StartGame(){
+		StartCoroutine (StartG());
+	}
+
+	IEnumerator StartG(){
 		LoadingScreen.FadeIn ();
+
+		yield return new WaitForSeconds (4.0f);
+
 		Application.LoadLevel(3);
+		yield return null;
 	}
 
 	public void Credits(){

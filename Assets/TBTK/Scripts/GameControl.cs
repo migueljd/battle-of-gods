@@ -318,6 +318,7 @@ namespace TBTK{
 		
 		//end the turn, called when EndTurn button are pressed or when a unit has used up all its move(in FactionUnitPerTurn & UnitPerTurn mode)
 		public static void EndTurn(){ 
+			UI.DisablePassTurnArrow ();
 			if(chosenUnit != null)chosenUnit.usedThisTurn = true;
 
 			isUnitChosen = false;

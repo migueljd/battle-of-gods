@@ -49,6 +49,7 @@ public class LoadingScreen : MonoBehaviour {
 	}
 
 	private void UpdateAlpha(){
+
 		if (fadeIn) {
 			float t = (Time.time - initialTime) / secondsToFadeIn;
 			foreach(Image i in fadeImages) i.color = new Color(i.color.r, i.color.g, i.color.b, Mathf.Lerp ( 0, 1, t));
@@ -75,7 +76,10 @@ public class LoadingScreen : MonoBehaviour {
 	public static void FadeIn(){
 		instance.fadeIn = true;
 		instance.initialTime = Time.time;
-		foreach(Image i in instance.fadeImages) i.enabled = true;
+		foreach (Image i in instance.fadeImages) {
+			Debug.Log (i);
+			i.enabled = true;
+		}
 
 	}
 

@@ -20,7 +20,9 @@ namespace TBTK{
 		
 		//public delegate void UnitMoveDepletedHandler(Unit unit);
 		//public static event UnitMoveDepletedHandler onMoveDepletedE;		//fire when the unit depleted all available action
-		
+
+		public delegate void UnitMovedHandler();
+		public static event UnitMovedHandler onUnitMoveE;
 		
 		public int prefabID;
 		public int instanceID;	
@@ -706,8 +708,13 @@ namespace TBTK{
 		
 		public void Move(Tile targetTile){
 			if(moveRemain<=0) return;
-			if (FactionManager.IsPlayerTurn ())
+
+
+
+			if (FactionManager.IsPlayerTurn ()) {
 				GameControl.ChooseSelectedUnit ();
+				if(onUnitMoveE != null)onUnitMoveE();
+			}
 			moveRemain-=1;
 			Debug.Log("moving "+name+" to "+targetTile);
 			GameControl.LockUnitSelect();

@@ -15,5 +15,6 @@ public class HUDWikiButton : MonoBehaviour {
 		Time.timeScale = 0;
 		wikiManager.gameObject.SetActive (true);
 		AudioManager.PlaySound (clickAudio);
+		UI.HideWikiArrow ();
 	}
 }

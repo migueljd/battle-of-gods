@@ -32,6 +32,10 @@ namespace TBTK{
 		public GameObject unitSelectedArrow;
 		public GameObject enemySelectedArrow;
 
+		public GameObject passTurnArrow;
+		public GameObject wikiArrow;
+
+
 		public float height;
 
 		public GameObject cardback;
@@ -61,8 +65,10 @@ namespace TBTK{
 			Unit.onUnitSelectedE += OnUnitSelected;
 			GridManager.onHostileSelectE +=OnHostileSelected;
 			GridManager.onHostileDeselectE += OnHostileDeselect;
+			GameControl.onGameStartE += ShowWikiArrow;
 			GameControl.onGameOverE += OnGameOver;
 			GameControl.onUnitChosen += OnUnitChosen;
+			Unit.onUnitMoveE += OnUnitMove;
 			OnHostileDeselect ();
 		}
 		void OnDisable(){
@@ -71,6 +77,8 @@ namespace TBTK{
 			GridManager.onHostileSelectE -=OnHostileSelected;
 			GridManager.onHostileDeselectE -= OnHostileDeselect;
 			GameControl.onGameOverE -= OnGameOver;
+			Unit.onUnitMoveE -= OnUnitMove;
+
 		}
 		
 		
@@ -160,8 +168,22 @@ namespace TBTK{
 			GameControl.EndTurn();
 		}
 
+		public void OnUnitMove(){
+			passTurnArrow.SetActive (true);
+		}
 
+		public static void DisablePassTurnArrow(){
+			instance.passTurnArrow.SetActive (false);
 
+		}
+
+		public static void ShowWikiArrow(){
+			if(MapController.level == 1) instance.wikiArrow.SetActive (true);
+		}
+
+		public static void HideWikiArrow(){
+			instance.wikiArrow.SetActive (false);
+		}
 
 		
 		public void OnGameOver(int factionID){ StartCoroutine(ShowGameOverScreen(factionID)); }
