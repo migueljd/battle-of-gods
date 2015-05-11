@@ -362,6 +362,7 @@ namespace TBTK{
 		//used in FactionUnitPerTurn mode only
 		public static void SelectNextUnitInNextFaction(){ instance._SelectNextUnitInNextFaction(); }
 		public void _SelectNextUnitInNextFaction(){
+			Debug.Log ("SelectNextUnitInNextFaction");
 			selectedFactionID+=1;
 			if(selectedFactionID>=factionList.Count) selectedFactionID=0;
 			factionList[selectedFactionID].SelectNextUnitInQueue();

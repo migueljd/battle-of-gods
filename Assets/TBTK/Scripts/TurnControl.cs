@@ -90,7 +90,7 @@ namespace TBTK{
 				FactionManager.SelectNextUnitInFaction();
 			}
 			else if(instance.turnMode==_TurnMode.FactionUnitPerTurn){
-				EndTurn();
+				GameControl.EndTurn();
 			}
 			else if(instance.turnMode==_TurnMode.UnitPerTurn){
 				EndTurn();
