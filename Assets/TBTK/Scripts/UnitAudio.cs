@@ -51,7 +51,6 @@ namespace TBTK {
 		public void Attack(Unit unit){
 			if (attackSound != null) {
 				AudioManager.PlaySound (attackSound);
-				Debug.Log ("Playing audio");
 			}
 		}
 		

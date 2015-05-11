@@ -1131,7 +1131,6 @@ namespace TBTK{
 					//if its an enemy unit, the enemy should just disappear and give exp/money/etc
 //				else{
 					HP=0;
-					Debug.Log("Called by Apply damage");
 
 					StartCoroutine(Dead());
 				

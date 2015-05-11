@@ -83,11 +83,12 @@ namespace TBTK{
 		//for FactionPerTurn mode, breakWhenExceedLimit is set to true, where selectUnitID resets when it reachs end
 		//for FactionUnitPerTurn mode, breakWhenExceedLimit is set to false, where selectUnitID loops forever
 		public bool SelectNextUnitInQueue(bool breakWhenExceedLimit=false){
+			Debug.Log ("Selecting next unit");
 			if (allUnitList.Count == 0) {
 				TurnControl.EndTurn ();
 				return false;
 			}
-
+			Debug.Log ("Skipping");
 			if (!FactionManager.IsPlayerTurn ()) {
 				selectedUnitID += 1;
 				if (selectedUnitID >= allUnitList.Count) {
@@ -110,6 +111,7 @@ namespace TBTK{
 
 					if(!u.usedThisTurn && GameControl.HasGameStarted()){
 						GameControl.SelectUnit (u);
+						Debug.Log (u);
 						break;
 					}
 					else if(!GameControl.HasGameStarted()){

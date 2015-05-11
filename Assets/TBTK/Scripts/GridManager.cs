@@ -711,6 +711,7 @@ namespace TBTK{
                     #endif*/
 					GameControl.ChooseSelectedUnit ();
 					GameControl.selectedUnit.Attack (tile.unit);
+					
 					endTurn = true;
 					onHostileDeselectE ();
 					#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY

@@ -284,7 +284,6 @@ namespace Cards
 		private void OnUnitDestroyed(Unit unit){
 			if (!FactionManager.IsPlayerFaction (unit.factionID) && cardsInHand.getCount () < handSize) {
 				float getCard = Random.Range (0, 100);
-				Debug.Log ("GetCard was" + getCard);
 				if (getCard <= DropCardChance) {
 					StartCoroutine(CardbackRoutine(unit));
 				}
@@ -312,7 +311,6 @@ namespace Cards
 		}
 
 		IEnumerator SpawnCardAtHand(){
-			Debug.Log ("Card added");
 			Dictionary<int, string> cards = Levels_DB.GetCardsForLevel (MapController.level);
 			
 			int card = Random.Range (0, 101);
@@ -354,11 +352,6 @@ namespace Cards
 				won = (Instantiate (Resources.Load ("Prefabs/Cards/" + cardName), cardsLimbo, Quaternion.identity) as GameObject).GetComponent<Card> ();
 			}
 			won.transform.SetParent(this.transform);
-
-			Debug.Log (won.gameObject.GetInstanceID ());
-			Debug.Log (won.transform);
-			Debug.Log (won.transform.parent);
-			Debug.Log (won.transform.position);
 
 			won.transform.localScale= baseScale;
 			CardTransform.baseScale = baseScale;

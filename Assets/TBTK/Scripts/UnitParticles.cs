@@ -55,7 +55,6 @@ namespace TBTK
 		}
 		
 		public void Attack(Unit targetUnit){
-			Debug.Log ("Called attack");
 			if (particleAttack != null) {
 				particleAttack.transform.position = targetUnit.transform.position + new Vector3 (0, height, 0);
 				particleAttack.Play ();
