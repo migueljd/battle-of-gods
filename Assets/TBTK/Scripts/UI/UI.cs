@@ -168,7 +168,7 @@ namespace TBTK{
 			GameControl.EndTurn();
 		}
 
-		public void OnUnitMove(){
+		public void OnUnitMove(Unit unit){
 			passTurnArrow.SetActive (true);
 		}
 
