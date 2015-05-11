@@ -21,7 +21,7 @@ namespace TBTK{
 		//public delegate void UnitMoveDepletedHandler(Unit unit);
 		//public static event UnitMoveDepletedHandler onMoveDepletedE;		//fire when the unit depleted all available action
 
-		public delegate void UnitMovedHandler(Unit unit);
+		public delegate void UnitMovedHandler();
 		public static event UnitMovedHandler onUnitMoveE;
 		
 		public int prefabID;
@@ -713,7 +713,7 @@ namespace TBTK{
 
 			if (FactionManager.IsPlayerTurn ()) {
 				GameControl.ChooseSelectedUnit ();
-				if(onUnitMoveE != null)onUnitMoveE(this);
+				if(onUnitMoveE != null && MapController.level == 1)onUnitMoveE();
 			}
 			moveRemain-=1;
 			Debug.Log("moving "+name+" to "+targetTile);
@@ -1152,7 +1152,14 @@ namespace TBTK{
 
 			if (this.transform.name == "Hades(Clone)")
 				MapController.HadesDied ();
-
+			else if (this.transform.name.Contains ("Hercules")) {
+				HerculesHP = 0;
+			} else if (this.transform.name.Contains ("Achilles")) {
+				AchillesHP = 0;
+			}
+			else if (this.transform.name.Contains ("Archer")) {
+				AtalantaHP = 0;
+			}
 			float delay=0.5f;
 			if(unitAudio!=null) delay=Mathf.Max (delay,unitAudio.Destroy());
 			if(unitAnim!=null) delay=Mathf.Max(delay, unitAnim.Destroy());

@@ -35,6 +35,7 @@ namespace TBTK{
 		public GameObject passTurnArrow;
 		public GameObject wikiArrow;
 
+		public bool passTurnArrowDone = false;
 
 		public float height;
 
@@ -168,8 +169,11 @@ namespace TBTK{
 			GameControl.EndTurn();
 		}
 
-		public void OnUnitMove(Unit unit){
-			passTurnArrow.SetActive (true);
+		public void OnUnitMove(){
+			if (!passTurnArrowDone) {
+				passTurnArrow.SetActive (true);
+				passTurnArrowDone = true;
+			}
 		}
 
 		public static void DisablePassTurnArrow(){
@@ -182,7 +186,7 @@ namespace TBTK{
 		}
 
 		public static void HideWikiArrow(){
-			instance.wikiArrow.SetActive (false);
+		   instance.wikiArrow.SetActive (false);
 		}
 
 		
