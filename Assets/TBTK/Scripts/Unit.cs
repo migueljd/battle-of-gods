@@ -716,7 +716,6 @@ namespace TBTK{
 				if(onUnitMoveE != null && MapController.level == 1)onUnitMoveE();
 			}
 			moveRemain-=1;
-			Debug.Log("moving "+name+" to "+targetTile);
 			GameControl.LockUnitSelect();
 
 
@@ -860,7 +859,6 @@ namespace TBTK{
 			StartCoroutine(AttackRoutine(targetUnit.tile, targetUnit, shootObj, attInstance));
 			
 			if(!GameControl.EnableActionAfterAttack()){
-				Debug.Log ("all used up");
 				moveRemain=0;
 				disableAbilities=1;
 			}
@@ -961,7 +959,6 @@ namespace TBTK{
 			//			if (unitParticles != null)
 			//				unitParticles.Attack (targetUnit);
 //			if(unitAudio!=null) unitAudio.Attack();
-			Debug.Log ("Attack delay is: " + attackDelay);
 			yield return new WaitForSeconds (attackDelay);
 
 			//shoot

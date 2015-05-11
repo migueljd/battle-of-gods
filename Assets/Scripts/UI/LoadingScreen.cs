@@ -77,7 +77,6 @@ public class LoadingScreen : MonoBehaviour {
 		instance.fadeIn = true;
 		instance.initialTime = Time.time;
 		foreach (Image i in instance.fadeImages) {
-			Debug.Log (i);
 			i.enabled = true;
 		}
 

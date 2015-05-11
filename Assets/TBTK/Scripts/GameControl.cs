@@ -392,10 +392,8 @@ namespace TBTK{
 				if (onPassLevelE != null)
 					onPassLevelE ();
 
-				Debug.Log(Time.time);
 			
 				yield return new WaitForSeconds (LoadingScreen.staticSecondsToFadeIn + 0.2f);
-				Debug.Log(Time.time);
 
 				Application.LoadLevel (Levels_DB.GetSceneLevel (MapController.level));
 			}

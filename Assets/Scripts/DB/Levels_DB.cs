@@ -186,8 +186,12 @@ public class Levels_DB : MonoBehaviour {
 	public static Dictionary<string, int> GetStartingCards(){
 		Dictionary<string, int> cardList = new Dictionary<string, int>();
 
-		cardList.Add ("Athena's Touch",3 );
-		cardList.Add ("HeroicStrike", 2);
+//		cardList.Add ("Athena's Touch",3 );
+//		cardList.Add ("HeroicStrike", 2);
+		cardList.Add ("Hephaestus Curse", 2);
+//		cardList.Add ("Zeus Thunder",3);
+
+		cardList.Add ("Ares Wrath", 3);
 //		cardList.Add ("Zeus Thunder", 5);
 
 

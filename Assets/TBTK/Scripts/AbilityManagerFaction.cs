@@ -239,7 +239,8 @@ namespace TBTK {
 		//called from ActivateAbility, cast the ability, visual effect and actual effect goes here
 		public void CastAbility(FactionAbility ability, Tile tile=null){
 			if(ability.effectObject!=null && tile!=null){
-				ObjectPoolManager.Spawn(ability.effectObject, tile.GetPos(), Quaternion.identity);
+				Debug.Log (tile.GetPos());
+				ObjectPoolManager.Spawn(ability.effectObject, tile.GetPos() + (ability.name.Contains("Hephaestus")? new Vector3(0,1.5f,0):Vector3.zero), Quaternion.identity);
 			}
 			
 			if(ability.useDefaultEffect){

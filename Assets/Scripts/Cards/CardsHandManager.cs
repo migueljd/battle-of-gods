@@ -62,7 +62,6 @@ namespace Cards
 
 		void Awake ()
 		{
-			Debug.Log ("Wtf?");
 			if (instance == null) {
 				instance = this;
 //				instance.cardsInDeck = new CardsList ();
@@ -75,7 +74,6 @@ namespace Cards
 				DontDestroyOnLoad (this.gameObject);
 			} else {
 				
-				Debug.Log ("Instance is not null");
 				Destroy (this.gameObject);
 			}
 
@@ -123,8 +121,6 @@ namespace Cards
 
 		public void GameStarted (){
 			GameControl.AddActionAtStart ();
-			Debug.Log (transform);
-			Debug.Log (GameObject.FindWithTag ("CardsCamera"));
 
 			transform.SetParent (GameObject.FindWithTag("CardsCamera").transform);
 
@@ -361,7 +357,6 @@ namespace Cards
 		}
 
 		public static void Disattach(){
-			Debug.Log ("Disataching");
 			instance.transform.parent = null;
 		}
 
@@ -371,7 +366,6 @@ namespace Cards
 		}
 
 		public static void RestartGame(){
-			Debug.Log ("Being called");
 			startedOnce = false;
 			movingCard = false;
 			instance.OnDisable ();
@@ -379,9 +373,6 @@ namespace Cards
 
 		}
 
-		void OnDestroy(){
-			Debug.Log ("Being dead");
-		}
 
 
 	}

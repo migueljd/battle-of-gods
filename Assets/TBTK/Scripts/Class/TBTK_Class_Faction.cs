@@ -119,7 +119,6 @@ namespace TBTK{
 					else unitsUsedCount++;
 				}
 
-				Debug.Log (unitsUsedCount);
 				if(unitsUsedCount == allUnitList.Count){
 					foreach(Unit u in allUnitList){
 						u.ResetUnitTurnData();

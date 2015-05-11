@@ -260,7 +260,6 @@ namespace TBTK{
 
 				int pointerID = touch.fingerId;
 
-				Debug.Log (UIUtilities.IsCursorOnUI(pointerID));
 
 				if(UIUtilities.IsCursorOnUI(pointerID)){
 					if(hoveredTile!=null) _ClearHoveredTile();
@@ -731,7 +730,6 @@ namespace TBTK{
 			}
 			//if the tile is within the move range of current selected unit, try to select it, if it is already selected, move
 			else if (walkableTileList.Contains (tile)) {
-				Debug.Log ("it is walkable, execute");
 				//                #if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 				//              if(GameControl.selectedTile != null && GameControl.selectedTile.Equals(tile)){
 				//            #endif

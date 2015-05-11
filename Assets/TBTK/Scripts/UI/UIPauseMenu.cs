@@ -117,7 +117,6 @@ namespace TBTK {
 		}
 		public static void Hide(){ instance._Hide(); }
 		public void _Hide(){
-			Debug.Log ("Hidden");
 			Cards.CardsHandManager.movingCard = false;
 
 			Time.timeScale= GameTimeControler.IsButtonPressed()? GameTimeControler.GetFastTime(): 1.0f ;

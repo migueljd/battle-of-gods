@@ -81,6 +81,7 @@ namespace TBTK {
 		
 		
 		void Update(){
+		
 			if(musicSource!=null && !musicSource.isPlaying){
 				if(shuffle) musicSource.clip=musicList[Random.Range(0, musicList.Count)];
 				else{
@@ -97,6 +98,7 @@ namespace TBTK {
 		void OnEnable(){
 			GameControl.onGameOverE += OnGameOver;
 			GameControl.onGameRestartE += RestartGame;
+			GameControl.onGameStartE += OnLevelStart;
 			
 			AbilityManagerFaction.onAbilityActivatedE += OnAbilityActivated;
 			AbilityManagerUnit.onAbilityActivatedE += OnAbilityActivated;
@@ -107,6 +109,7 @@ namespace TBTK {
 		void OnDisable(){
 			GameControl.onGameOverE -= OnGameOver;
 			GameControl.onGameRestartE -= RestartGame;
+			GameControl.onGameStartE -= OnLevelStart;
 
 			
 			AbilityManagerFaction.onAbilityActivatedE -= OnAbilityActivated;
@@ -171,11 +174,20 @@ namespace TBTK {
 		}
 
 		private void AddMusic(AudioClip audio){
+			Debug.Log (instance.musicList.Count);
+			Debug.Log (audio.name);
+			if(instance.musicList.Count > 0) Debug.Log (instance.musicList [0].name);
 			if (instance.musicList.Count != 0 && !instance.musicList[0].Equals(audio)) {
+				Debug.Log("Already one song");
 				instance.musicSource.Stop();
 				instance.musicList[0] = null;
+				Debug.Log (instance.musicList[0]);
+
+				Debug.Log (musicList.Count);
+				instance.musicList.Add(audio);
 			}
-			instance.musicList.Add(audio);
+			else if(instance.musicList.Count == 0 ) instance.musicList.Add(audio);
+
 		}
 		
 		public static float GetMusicVolume(){ return musicVolume; }
@@ -185,6 +197,12 @@ namespace TBTK {
 			instance.OnDisable ();
 			Destroy (instance.gameObject);
 		}
+
+
+		public static void OnLevelStart(){
+			instance.AddMusic (Levels_DB.GetLevelMusic (MapController.level));
+		}
+
 	}
 
 

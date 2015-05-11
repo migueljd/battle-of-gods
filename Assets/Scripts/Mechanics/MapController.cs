@@ -60,10 +60,12 @@ public class MapController : MonoBehaviour {
 
 	void OnEnable(){
 		GameControl.onPassLevelE += PassLevel;
+		GameControl.onGameRestartE += RestartGame;
 	}
 	
 	void OnDisable(){
 		GameControl.onPassLevelE -= PassLevel;
+		GameControl.onGameRestartE -= RestartGame;
 	}
 
 	void OnLevelWasLoaded(int levelLoaded){
