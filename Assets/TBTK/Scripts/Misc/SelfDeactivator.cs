@@ -27,7 +27,6 @@ namespace TBTK{
 		}
 		
 		void OnEnable(){
-			Debug.Log (timerTrackType);
 			if(timerTrackType==_Type.RealTime) StartCoroutine(DeactivateRoutine());
 			else GameControl.onIterateTurnE += IterateDuration;
 		}

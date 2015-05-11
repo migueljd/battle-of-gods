@@ -20,6 +20,8 @@ public class HephestusCurse : Card {
 	}
 	
 	public override void ActivateMagic(){
+
+		AbilityManagerFaction.SetMagicCard (this);
 		AbilityManagerFaction.SelectAbility (1);
 
 	}

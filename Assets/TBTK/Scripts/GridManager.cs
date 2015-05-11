@@ -230,7 +230,7 @@ namespace TBTK{
 			
 			int dist=GetDistance(tile, GameControl.selectedUnit.tile, true);
 			
-			if(dist>0 && dist<GameControl.selectedUnit.GetMoveRange()){    //if within walkable distance, add to walkable tile since the tile is now open
+			if(dist>0 && dist<GameControl.selectedUnit.GetMoveRange() && GameControl.selectedUnit.CanMove()){    //if within walkable distance, add to walkable tile since the tile is now open
 				walkableTileList.Add(tile);
 				tile.SetState(_TileState.Walkable);
 			}

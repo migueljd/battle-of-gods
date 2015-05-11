@@ -336,20 +336,35 @@ namespace Cards
 					won = c;
 				}
 			}
+
+			_AddCard (won);
+
+			yield return null;
+		}
+
+		public static void AddCard(Card card){
+			instance._AddCard (card);
+		}
+
+		private void _AddCard(Card won){
 			if (won != null)
 				cardsInDiscard.removeCard (won);
-			else
-				won = (Instantiate (Resources.Load ("Prefabs/Cards/" + cardName), cardsLimbo, Quaternion.identity) as GameObject).GetComponent<Card>();
-			
-			won.transform.parent = this.transform;
-			
+			else {
+				string cardName = won.name.Remove (won.name.Length - 6);
+				won = (Instantiate (Resources.Load ("Prefabs/Cards/" + cardName), cardsLimbo, Quaternion.identity) as GameObject).GetComponent<Card> ();
+			}
+			won.transform.SetParent(this.transform);
+
+			Debug.Log (won.gameObject.GetInstanceID ());
+			Debug.Log (won.transform);
+			Debug.Log (won.transform.parent);
+			Debug.Log (won.transform.position);
+
 			won.transform.localScale= baseScale;
 			CardTransform.baseScale = baseScale;
 			
 			cardsInHand.addCard(won);
 			_UpdateCardsPosition();
-
-			yield return null;
 		}
 
 		public static void Disattach(){

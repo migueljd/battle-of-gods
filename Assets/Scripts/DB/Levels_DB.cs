@@ -70,7 +70,7 @@ public class Levels_DB : MonoBehaviour {
 	}
 
 	public static string GetLevelName(int lvl){
-		if (lvl <4)
+		if (lvl <2)
 			return "Forest";
 		else if (lvl <7)
 			return "Desert";
@@ -155,7 +155,7 @@ public class Levels_DB : MonoBehaviour {
 	}
 
 	public static int GetSceneLevel(int lvl){
-		if (lvl < 4)
+		if (lvl < 2)
 			return 3;
 		else if (lvl < 7)
 			return 4;
@@ -186,9 +186,9 @@ public class Levels_DB : MonoBehaviour {
 	public static Dictionary<string, int> GetStartingCards(){
 		Dictionary<string, int> cardList = new Dictionary<string, int>();
 
-		cardList.Add ("Athena's Touch",3 );
-		cardList.Add ("HeroicStrike", 2);
-		cardList.Add ("Zeus Thunder", 1);
+//		cardList.Add ("Athena's Touch",3 );
+//		cardList.Add ("HeroicStrike", 2);
+		cardList.Add ("Zeus Thunder", 5);
 
 
 

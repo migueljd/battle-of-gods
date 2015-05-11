@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 using TBTK;
 
+using Cards;
+
 namespace TBTK {
 
 	[RequireComponent (typeof (EffectTracker))]
@@ -36,7 +38,10 @@ namespace TBTK {
 		
 		
 		private static AbilityManagerFaction instance;
-		
+
+		public Card lastMagic;
+		public bool magicUsed;
+
 		
 		void Awake(){
 			instance=this;
@@ -132,21 +137,28 @@ namespace TBTK {
 			#endif
 		}
 		
-		
+		public static void SetMagicCard(Card card){
+			ClearSelectedAbility ();
+			instance.lastMagic = card;
+		}
+
 		
 		//called by ability button from UI, select an ability
 		public static string SelectAbility(int ID){ return instance._SelectAbility(ID); }
 		public string _SelectAbility(int ID){
+			Debug.Log ("it got in the select ability");
 			if(GameControl.selectedUnit.GetSelectedAbilityID()>=0) GameControl.selectedUnit.ClearSelectedAbility();
 			
 			if(selectedAbilityID>=0){
+				Debug.Log ("It's already different from 0");
 				if(selectedAbilityID==ID){	//if the same ability has been selected, deselect it
 					if(!requireTargetSelection) ActivateAbility(currentAbility);
 					ClearSelectedAbility();
-					return "";
+//					return "";
 				}
 				else ClearSelectedAbility();
 			}
+
 			
 			
 			int facID=FactionManager.GetSelectedFactionID();
@@ -156,7 +168,6 @@ namespace TBTK {
 					//list=abilityFactionList[i].facAbilityList;
 					ability=abilityFactionList[i].facAbilityList[ID];
 				}
-				Debug.Log (abilityFactionList[i].facAbilityList[ID].destroyGuard);
 			}
 
 			if(ability==null) return "error";
@@ -185,6 +196,13 @@ namespace TBTK {
 		}
 		public static void ClearSelectedAbility(){ 
 			if(instance.selectedAbilityID<0) return;
+
+			Debug.Log ("Clearing ability, the last magic is " + instance.lastMagic);
+			if (!instance.magicUsed) {
+				CardsHandManager.AddCard (instance.lastMagic);
+			}
+			instance.magicUsed = false;
+			instance.lastMagic = null;
 			instance.selectedAbilityID=-1;
 			instance.currentAbility=null;
 			GridManager.ClearTargetMode();
@@ -194,7 +212,9 @@ namespace TBTK {
 		
 		//callback function for GridManager when a target has been selected for selected ability
 		public void AbilityTargetSelected(Tile tile){
+			Debug.Log ("Ability target selected");
 			if(tile==null){
+				Debug.Log ("Clearing");
 				ClearSelectedAbility();
 				return;
 			}
@@ -203,11 +223,15 @@ namespace TBTK {
 		
 		//called when an ability is fired, reduce the energy, start the cooldown and what not
 		public void ActivateAbility(FactionAbility ability, Tile tile=null){
+
+			magicUsed = true;
+
 			ability.Use();
 			abilityFactionList[ability.factionIndex].energy-=ability.GetCost();
 			
 			if(onAbilityActivatedE!=null) onAbilityActivatedE();
 			CastAbility(ability, tile);
+			ClearSelectedAbility ();
 			GridManager.ClearTargetMode ();
 		}
 		

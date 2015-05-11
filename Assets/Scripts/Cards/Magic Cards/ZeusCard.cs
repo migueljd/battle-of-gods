@@ -21,6 +21,7 @@ namespace Cards
 		
 		public override void ActivateMagic(){
 //			GridManager.TargetModeSelectedCallBack += PlayMagicParticle;
+			AbilityManagerFaction.SetMagicCard (this);
 			AbilityManagerFaction.SelectAbility (0);
 //			Effect stun = new Effect ();
 //			stun.stun = 1;
