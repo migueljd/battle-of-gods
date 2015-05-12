@@ -443,7 +443,7 @@ public class MapController : MonoBehaviour {
 	private void createNewEnemy(Tile tile){
 		int enemyID = Random.Range (0, MapController.instance.enemyPrefabs.Count);
 		if (hadesAlive && enemyID == 3)
-			Random.Range (0, MapController.instance.enemyPrefabs.Count - 1);
+			enemyID = Random.Range (0, MapController.instance.enemyPrefabs.Count - 1);
 		else if (enemyID == 3)
 			hadesAlive = true; 
 		Transform newEnemy = (Transform) Instantiate ( MapController.instance.enemyPrefabs [enemyID], tile.GetPos(), Quaternion.Euler(new Vector3(0, 180,0)));
