@@ -106,7 +106,7 @@ public class MapController : MonoBehaviour {
 
 				_RevealArea(t);
 
-				Unit unit = playerUnits[0];
+				Unit unit = playerUnits[1];
 
 				unit.tile.unit = null;
 				unit.tile = t;
