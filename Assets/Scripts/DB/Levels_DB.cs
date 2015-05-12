@@ -14,16 +14,16 @@ public class Levels_DB : MonoBehaviour {
 		Object[] tiles;
 
 
-		if(lvl <25){
-			if (lvl % 8 == 1){
+		if(lvl <10){
+			if (lvl % 4 == 1){
 				tiles = new Object[2];
 				tiles = GetTilesPerLevelType(1, temp, tiles);
 			}
-			else if (lvl % 8 == 2){
+			else if (lvl % 4 == 2){
 				tiles = new Object[3];
 				tiles = GetTilesPerLevelType(2, temp, tiles);
 			}
-			else if (lvl % 8 == 3){
+			else if (lvl % 4 == 3){
 				tiles = new Object[4];
 				tiles = GetTilesPerLevelType(3, temp, tiles);
 			}
@@ -70,9 +70,9 @@ public class Levels_DB : MonoBehaviour {
 	}
 
 	public static string GetLevelName(int lvl){
-		if (lvl <4)
+		if (lvl <5)
 			return "Forest";
-		else if (lvl <8)
+		else if (lvl <9)
 			return "Desert";
 		else
 			return "Underworld";
@@ -123,11 +123,11 @@ public class Levels_DB : MonoBehaviour {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Minotaur", typeof(Transform)) as Transform);
-		} else if (lvl < 8) {
+		} else if (lvl < 9) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Desert/Centaur", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Desert/Minotaur", typeof(Transform)) as Transform);
-		} else if (lvl < 9) {
+		} else if (lvl < 10) {
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Cyclop", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/" + levelName + "/Centaur", typeof(Transform)) as Transform);
 			enemyPrefabs.Add (Resources.Load ("Prefabs/Units/Desert/Minotaur", typeof(Transform)) as Transform);
@@ -147,9 +147,9 @@ public class Levels_DB : MonoBehaviour {
 	}
 
 	public static int GetSceneLevel(int lvl){
-		if (lvl < 4)
+		if (lvl < 5)
 			return 3;
-		else if (lvl < 7)
+		else if (lvl < 9)
 			return 4;
 		else 
 			return 5;
@@ -194,9 +194,9 @@ public class Levels_DB : MonoBehaviour {
 
 	public static AudioClip GetLevelMusic(int lvl){
 
-		if (lvl < 4)
+		if (lvl < 5)
 			return (AudioClip)Resources.Load ("Audio/Rushing Wind");
-		else if (lvl <7)
+		else if (lvl <9)
 			return (AudioClip)Resources.Load ("Audio/Scorched Sands");
 		else
 			return (AudioClip)Resources.Load ("Audio/Forbidden Lands");
