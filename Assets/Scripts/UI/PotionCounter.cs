@@ -133,8 +133,12 @@ public class PotionCounter : MonoBehaviour {
 	}
 
 	public static void OnPassLevel(){
+		GameControl.AddActionAtPassLevel ();
+
 		instance.OnDisable ();
 		instance.transform.SetParent(null);
+
+		GameControl.CompleteActionAtPassLevel ();
 	}
 
 	public static void OnUnitDestroyed(Unit unit){

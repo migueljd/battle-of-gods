@@ -14,7 +14,7 @@ public class MapController : MonoBehaviour {
 
 	public static int level = 1;
 
-	public float rangeTunel = 0.2f;
+	public float rangeTunel = 0.3f;
 	
 	public string levelName = "Forest";
 
@@ -118,7 +118,7 @@ public class MapController : MonoBehaviour {
 				foreach(Tile neighbour in t.GetNeighbourList(true)){
 				
 					if(neighbour.tileNumber == 5){
-						unit = playerUnits[1];
+						unit = playerUnits[0];
 						
 						unit.tile.unit = null;
 						unit.tile = neighbour;
@@ -170,6 +170,7 @@ public class MapController : MonoBehaviour {
 
 	//this method is called when it's necessary to instantiate a new area, given a tile
 	public static void RevealArea(Tile tile){
+		Debug.Log ("Reveal Area called");
 		instance._RevealArea (tile);
 	}
 
@@ -202,7 +203,7 @@ public class MapController : MonoBehaviour {
 			return;
 		tilesPrefab = generatedTileList [0];
 		generatedTileList.RemoveAt (0);
-
+		Debug.Log (tile.revealed);
 		switch (tile.revealed) {
 			case 0:
 				first = (Transform) Instantiate(tilesPrefab, sourcePosition + firstVector, Quaternion.Euler(new Vector3(0,firstRotation*rotation,0)));
@@ -275,8 +276,8 @@ public class MapController : MonoBehaviour {
 	private void InitTiles(Transform tilesT, GridManager instance, List<Tile> added, float range, int rotation){
 		List<Tile> tileList = new List<Tile> ();
 
-//		int enemyCount = 0;
-		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
+		int enemyCount = 0;
+//		int enemyCount = Random.Range(tilesT.GetChild(0).GetComponent<Tile>().tile0.minEnemyCount,tilesT.GetChild(0).GetComponent<Tile>().tile0.maxEnemyCount+1);
 		for (int a = tilesT.childCount - 1; a >=0; a--) {
 
 			if(!tilesT.GetChild(a).name.Contains("Tile")){
@@ -428,14 +429,14 @@ public class MapController : MonoBehaviour {
 	private Vector3 findFirstVector(Tile tile){
 		
 		Quaternion firstRotation = Quaternion.Euler (0, (-60 * (tile.tileNumber - 1)) - 90, 0);
-		Vector3 firstVector = (firstRotation * new Vector3 (1, 0, 0) * height * 4 ) + new Vector3(0,-0.08f,0);	
+		Vector3 firstVector = (firstRotation * new Vector3 (1, 0, 0) * height * 4 ) + new Vector3(0,-0.002f,0);	
 
 		return firstVector;
 	}
 	
 	private Vector3 findSecondVector(Tile tile){
 		Quaternion secondRotation = Quaternion.Euler (0, (-60 * (tile.tileNumber - 1)), 0);
-		Vector3 secondVector = (secondRotation * new Vector3 (1, 0, 0) * line * 3) + new Vector3(0,-0.08f,0);
+		Vector3 secondVector = (secondRotation * new Vector3 (1, 0, 0) * line * 3) + new Vector3(0,-0.002f,0);
 		return secondVector;
 	}
 
@@ -460,7 +461,11 @@ public class MapController : MonoBehaviour {
 	}
 
 	public static void PassLevel(){
+		GameControl.AddActionAtPassLevel ();
+
 		level += 1;
+
+		GameControl.CompleteActionAtPassLevel ();
 	}
 
 	public static void HadesDied(){

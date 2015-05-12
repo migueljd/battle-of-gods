@@ -32,6 +32,8 @@ public class LoadingScreen : MonoBehaviour {
 	private static LoadingScreen instance;
 	private float timeToHide;
 
+	private bool addedActionAtPassLevel;
+
 	void Awake(){
 		instance = this;
 		staticSecondsToFadeIn = this.secondsToFadeIn;
@@ -48,13 +50,27 @@ public class LoadingScreen : MonoBehaviour {
 			HideLoadingScreen ();
 	}
 
+	void OnEnable(){
+		GameControl.onPassLevelE += OnPassLevel;
+	}
+
+	void OnDisable(){
+		GameControl.onPassLevelE -= OnPassLevel;
+	}
+
 	private void UpdateAlpha(){
 
 		if (fadeIn) {
 			float t = (Time.time - initialTime) / secondsToFadeIn;
 			foreach(Image i in fadeImages) i.color = new Color(i.color.r, i.color.g, i.color.b, Mathf.Lerp ( 0, 1, t));
-			if (t >= 1)
+			if (t >= 1){
 				fadeIn = false;
+				if(addedActionAtPassLevel){ 
+					GameControl.CompleteActionAtPassLevel();
+					addedActionAtPassLevel = false;
+				}
+			
+			}
 		} else if (fadeOut) {
 			float t = (Time.time - initialTime) / secondsToFadeOut;
 			foreach(Image i in fadeImages)
@@ -106,5 +122,13 @@ public class LoadingScreen : MonoBehaviour {
 			yield return null;
 		}
 		
+	}
+
+	public void OnPassLevel(){
+		GameControl.AddActionAtPassLevel ();
+
+		addedActionAtPassLevel = true;
+
+		FadeIn ();
 	}
 }

@@ -1278,6 +1278,7 @@ namespace TBTK{
 		//Method called on PassLevel of Game Control to save a few variables before passing
 
 		public static void PassLevel(){
+			GameControl.AddActionAtPassLevel ();
 			List<Unit> units = FactionManager.GetAllPlayerUnits ();
 			
 			foreach (Unit u in units) {
@@ -1290,7 +1291,7 @@ namespace TBTK{
 					HerculesHP = (int)HP;
 				}	
 			}
-
+			GameControl.CompleteActionAtPassLevel ();
 		}
 
 		public static void RestartGame(){

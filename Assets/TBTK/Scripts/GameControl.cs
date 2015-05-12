@@ -126,6 +126,8 @@ namespace TBTK{
 
 		private int actionsAtStart = 0;
 
+		private int actionAtPassLevel = 0;
+
 		public static float delayPerAction = 0.5f;
 
 		public bool gameStarted = false;
@@ -383,8 +385,6 @@ namespace TBTK{
 		public static IEnumerator PassLevel(){
 			if (!instance.levelPassed) {
 			
-				LoadingScreen.FadeIn();
-
 				instance.levelPassed = true;
 
 				isUnitChosen = false;
@@ -394,6 +394,8 @@ namespace TBTK{
 
 			
 				yield return new WaitForSeconds (LoadingScreen.staticSecondsToFadeIn + 0.2f);
+
+				while(instance.actionAtPassLevel != 0) yield return new WaitForSeconds(0.05f);
 
 				Application.LoadLevel (Levels_DB.GetSceneLevel (MapController.level));
 			}
@@ -431,6 +433,13 @@ namespace TBTK{
 			instance.actionsAtStart--;
 		}
 
+		public static void AddActionAtPassLevel(){
+			instance.actionAtPassLevel ++;
+		}
+		
+		public static void CompleteActionAtPassLevel(){
+			instance.actionAtPassLevel --;
+		}
 		
 		public static void ChooseSelectedUnit(){
 			if (!isUnitChosen && selectedUnit != null) {
