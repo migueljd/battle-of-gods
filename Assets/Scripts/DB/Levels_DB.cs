@@ -81,7 +81,7 @@ public class Levels_DB : MonoBehaviour {
 	public static int GetTileCount(int lvl){
 		switch (lvl) {
 		case 1:
-			return 100;
+			return 6;
 		case 2:
 			return 8;
 		case 3:

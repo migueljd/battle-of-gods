@@ -24,7 +24,7 @@ public class Startscreen : MonoBehaviour {
 
 		yield return new WaitForSeconds (4.0f);
 
-		Application.LoadLevel(3);
+		Application.LoadLevel(5);
 		yield return null;
 	}
 
