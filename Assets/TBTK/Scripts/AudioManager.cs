@@ -174,16 +174,10 @@ namespace TBTK {
 		}
 
 		private void AddMusic(AudioClip audio){
-			Debug.Log (instance.musicList.Count);
-			Debug.Log (audio.name);
-			if(instance.musicList.Count > 0) Debug.Log (instance.musicList [0].name);
 			if (instance.musicList.Count != 0 && !instance.musicList[0].Equals(audio)) {
-				Debug.Log("Already one song");
 				instance.musicSource.Stop();
 				instance.musicList[0] = null;
-				Debug.Log (instance.musicList[0]);
 
-				Debug.Log (musicList.Count);
 				instance.musicList.Add(audio);
 			}
 			else if(instance.musicList.Count == 0 ) instance.musicList.Add(audio);

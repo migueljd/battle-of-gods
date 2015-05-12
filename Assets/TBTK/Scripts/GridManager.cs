@@ -245,12 +245,18 @@ namespace TBTK{
 		private int touchEnded = 0;
 
 		private float touchStarted;
+
+		private bool moved = false;
 		void Update () {
 			#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 			if(Input.touchCount==1){
 				Touch touch=Input.touches[0];
 				if(touch.phase == TouchPhase.Began) {
 					touchStarted = Time.time;
+					moved = false;
+				}
+				if(touch.phase == TouchPhase.Moved){
+					moved = true;
 				}
 				touchEnded = 1;
 				cursorPosition=touch.position;
@@ -282,7 +288,8 @@ namespace TBTK{
 			
 			
 			//check if the curosr is hover over the grid and show the appropriate indicator
-			if (Input.touchCount == 0 && touchEnded == 1 && (Time.time - touchStarted  <=0.5f)) {
+			if (Input.touchCount == 0 && touchEnded == 1 && (Time.time - touchStarted  <=0.5f) && !moved) {
+				moved = false;
 				touchEnded = 0;
 				LayerMask mask = 1 << LayerManager.GetLayerTile ();
 				Ray ray = Camera.main.ScreenPointToRay (cursorPosition);

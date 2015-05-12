@@ -109,7 +109,6 @@ namespace TBTK{
 
 					if(!u.usedThisTurn && GameControl.HasGameStarted()){
 						GameControl.SelectUnit (u);
-						Debug.Log (u);
 						break;
 					}
 					else if(!GameControl.HasGameStarted()){
