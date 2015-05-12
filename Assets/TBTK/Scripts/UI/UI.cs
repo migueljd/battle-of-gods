@@ -41,6 +41,9 @@ namespace TBTK{
 
 		public GameObject cardback;
 
+		public static float timeSpeed;
+		public static bool soundOn;
+
 		void Awake(){
 			instance=this;
 			transform.position=Vector3.zero;
@@ -180,6 +183,7 @@ namespace TBTK{
 			instance.passTurnArrow.SetActive (false);
 
 		}
+
 
 		public static void ShowWikiArrow(){
 			if(MapController.level == 1) instance.wikiArrow.SetActive (true);

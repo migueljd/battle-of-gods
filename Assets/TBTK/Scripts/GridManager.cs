@@ -297,8 +297,7 @@ namespace TBTK{
 			
 			
 			//check if the curosr is hover over the grid and show the appropriate indicator
-			for(int a =0; a < 100; a ++)
-			if (Input.touchCount == 0 && touchEnded == 1 && (Time.time - touchStarted  <=0.5f) && !moved) {
+			if (Input.touchCount == 0 && touchEnded == 1 && (Time.time - touchStarted  <=0.5f) && !moved && !CardsHandManager.movingCard) {
 				moved = false;
 				touchEnded = 0;
 				LayerMask mask = 1 << 5;

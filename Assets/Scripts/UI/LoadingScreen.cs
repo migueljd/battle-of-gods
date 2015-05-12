@@ -106,7 +106,7 @@ public class LoadingScreen : MonoBehaviour {
 	public static void HideLoadingScreen(){
 		instance.levelText.rectTransform.SetParent(instance.parentPosition.rectTransform);
 		instance.levelText.transform.localScale = new Vector3 (1, 1, 1);
-		instance.levelText.fontSize = 30;
+		instance.levelText.fontSize = 70;
 		instance.StartCoroutine(instance.MoveLevelText());
 	}
 

@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 using TBTK;
 
+using Cards;
 
 public class HUDWikiButton : MonoBehaviour {
 
@@ -13,6 +14,8 @@ public class HUDWikiButton : MonoBehaviour {
 
 	public void ButtonPress(){
 		Time.timeScale = 0;
+	
+		CardsHandManager.movingCard = true;
 		wikiManager.gameObject.SetActive (true);
 		AudioManager.PlaySound (clickAudio);
 		UI.HideWikiArrow ();
