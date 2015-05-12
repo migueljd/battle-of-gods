@@ -12,7 +12,7 @@ public class MapController : MonoBehaviour {
 
 	public static MapController instance;
 
-	public static int level = 7;
+	public static int level = 1;
 
 	public float rangeTunel = 0.3f;
 	

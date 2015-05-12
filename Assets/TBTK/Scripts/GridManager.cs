@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 using TBTK;
 using Cards;
 
 namespace TBTK{
 	
-	public class GridManager : MonoBehaviour {
+	public class GridManager : MonoBehaviour, IPointerClickHandler {
 		
 		public delegate void HoverAttackableHandler(Tile tile);
 		public static event HoverAttackableHandler onHoverAttackableTileE;        //listen by UI only
@@ -247,6 +248,13 @@ namespace TBTK{
 		private float touchStarted;
 
 		private bool moved = false;
+
+		#region IPointerClickHandler implementation
+		public void OnPointerClick(PointerEventData eventData){
+
+		}
+		#endregion
+
 		void Update () {
 			#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
 			if(Input.touchCount==1){
@@ -254,6 +262,7 @@ namespace TBTK{
 				if(touch.phase == TouchPhase.Began) {
 					touchStarted = Time.time;
 					moved = false;
+					
 				}
 				if(touch.phase == TouchPhase.Moved){
 					moved = true;
@@ -263,10 +272,10 @@ namespace TBTK{
 				
 				//if(touch.phase==TouchPhase.Ended && targetMode) ClearTargetMode();
 				if(touch.phase!=TouchPhase.Began) return;
-
+				
 				int pointerID = touch.fingerId;
-
-
+				
+				
 				if(UIUtilities.IsCursorOnUI(pointerID)){
 					if(hoveredTile!=null) _ClearHoveredTile();
 					return;
@@ -288,58 +297,65 @@ namespace TBTK{
 			
 			
 			//check if the curosr is hover over the grid and show the appropriate indicator
+			for(int a =0; a < 100; a ++)
 			if (Input.touchCount == 0 && touchEnded == 1 && (Time.time - touchStarted  <=0.5f) && !moved) {
 				moved = false;
 				touchEnded = 0;
-				LayerMask mask = 1 << LayerManager.GetLayerTile ();
+				LayerMask mask = 1 << 5;
+
 				Ray ray = Camera.main.ScreenPointToRay (cursorPosition);
 				RaycastHit hit;
-				if (Physics.Raycast (ray, out hit, Mathf.Infinity, mask)) {
-					//Tile newTile=_GetTileOnPos(hit.point);
-				
-					Tile newTile = hit.collider.gameObject.GetComponent<Tile> ();
-				
-					if (newTile == null || !newTile.walkable) {
+
+				if (!Physics.Raycast (ray, out hit, Mathf.Infinity, mask)) {
+					mask = 1 << LayerManager.GetLayerTile ();
+					ray = Camera.main.ScreenPointToRay (cursorPosition);
+					if (Physics.Raycast (ray, out hit, Mathf.Infinity, mask)) {
+						//Tile newTile=_GetTileOnPos(hit.point);
+						
+						Tile newTile = hit.collider.gameObject.GetComponent<Tile> ();
+						
+						if (newTile == null || !newTile.walkable) {
+							if (hoveredTile != null)
+								_ClearHoveredTile ();
+							return;
+						} else {
+							if (hoveredTile != newTile) {
+								_NewHoveredTile (newTile);
+							}
+							hoveredTile = newTile;
+						}
+						
+						if (FactionManager.IsPlayerTurn () || GameControl.GetGamePhase () == _GamePhase.UnitDeployment) {
+							#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+							if (currentSelectedTile == hoveredTile) {
+								OnTileTouchDown ();
+							} else {
+								//						if(attackableTileList.Contains(currentSelectedTile))onHostileDeselectE ();
+								if (targetMode || attackableTileList.Contains (hoveredTile)) {
+									currentSelectedTile = hoveredTile;
+									if (attackableTileList.Contains (hoveredTile))
+										onHostileSelectE (hoveredTile.unit);
+								} else {
+									OnTileTouchDown ();
+								}
+							}
+							#else
+							//command has been issue on the specific tile, either left or right mouse click on the tile
+							if(Input.GetMouseButtonDown(0)){
+								
+								if(hoveredTile!=null ) _OnTileCursorDown(hoveredTile);
+							}
+							if(Input.GetMouseButtonDown(1)){
+								if(!targetMode && hoveredTile!=null) hoveredTile.OnTouchMouseDownAlt();
+							}
+							#endif
+						}
+						
+						//FogOfWar.InLOS(hoveredTile, grid.tileList[0], true);    //los function test
+					} else {
 						if (hoveredTile != null)
 							_ClearHoveredTile ();
-						return;
-					} else {
-						if (hoveredTile != newTile) {
-							_NewHoveredTile (newTile);
-						}
-						hoveredTile = newTile;
 					}
-				
-					if (FactionManager.IsPlayerTurn () || GameControl.GetGamePhase () == _GamePhase.UnitDeployment) {
-						#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-						if (currentSelectedTile == hoveredTile) {
-							OnTileTouchDown ();
-						} else {
-//						if(attackableTileList.Contains(currentSelectedTile))onHostileDeselectE ();
-							if (targetMode || attackableTileList.Contains (hoveredTile)) {
-								currentSelectedTile = hoveredTile;
-								if (attackableTileList.Contains (hoveredTile))
-									onHostileSelectE (hoveredTile.unit);
-							} else {
-								OnTileTouchDown ();
-							}
-						}
-						#else
-					//command has been issue on the specific tile, either left or right mouse click on the tile
-					if(Input.GetMouseButtonDown(0)){
-						
-						if(hoveredTile!=null ) _OnTileCursorDown(hoveredTile);
-					}
-					if(Input.GetMouseButtonDown(1)){
-						if(!targetMode && hoveredTile!=null) hoveredTile.OnTouchMouseDownAlt();
-					}
-						#endif
-					}
-				
-					//FogOfWar.InLOS(hoveredTile, grid.tileList[0], true);    //los function test
-				} else {
-					if (hoveredTile != null)
-						_ClearHoveredTile ();
 				}
 			}
 		}
