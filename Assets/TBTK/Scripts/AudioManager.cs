@@ -176,7 +176,7 @@ namespace TBTK {
 		private void AddMusic(AudioClip audio){
 			if (instance.musicList.Count != 0 && !instance.musicList[0].Equals(audio)) {
 				instance.musicSource.Stop();
-				instance.musicList[0] = null;
+				instance.musicList = new List<AudioClip>();
 
 				instance.musicList.Add(audio);
 			}

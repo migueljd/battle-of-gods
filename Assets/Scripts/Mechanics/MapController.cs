@@ -428,14 +428,14 @@ public class MapController : MonoBehaviour {
 	private Vector3 findFirstVector(Tile tile){
 		
 		Quaternion firstRotation = Quaternion.Euler (0, (-60 * (tile.tileNumber - 1)) - 90, 0);
-		Vector3 firstVector = (firstRotation * new Vector3 (1, 0, 0) * height * 4 ) + new Vector3(0,-0.06f,0);	
+		Vector3 firstVector = (firstRotation * new Vector3 (1, 0, 0) * height * 4 ) + new Vector3(0,-0.08f,0);	
 
 		return firstVector;
 	}
 	
 	private Vector3 findSecondVector(Tile tile){
 		Quaternion secondRotation = Quaternion.Euler (0, (-60 * (tile.tileNumber - 1)), 0);
-		Vector3 secondVector = (secondRotation * new Vector3 (1, 0, 0) * line * 3) + new Vector3(0,-0.06f,0);
+		Vector3 secondVector = (secondRotation * new Vector3 (1, 0, 0) * line * 3) + new Vector3(0,-0.08f,0);
 		return secondVector;
 	}
 
