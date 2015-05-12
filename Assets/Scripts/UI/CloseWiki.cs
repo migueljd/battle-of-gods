@@ -11,6 +11,7 @@ public class CloseWiki : MonoBehaviour {
 
 
 	public void ButtonPress(){
+		Debug.Log ("here");
 
 		CardsHandManager.movingCard = false;
 
@@ -18,7 +19,7 @@ public class CloseWiki : MonoBehaviour {
 			Time.timeScale = GameTimeControler.GetFastTime ();
 		else
 			Time.timeScale = 1;
-		transform.parent.gameObject.SetActive (false);
+		transform.parent.parent.gameObject.SetActive (false);
 		AudioManager.PlaySound (clickAudio);
 
 	}
