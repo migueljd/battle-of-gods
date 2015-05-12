@@ -146,11 +146,9 @@ namespace TBTK {
 		//called by ability button from UI, select an ability
 		public static string SelectAbility(int ID){ return instance._SelectAbility(ID); }
 		public string _SelectAbility(int ID){
-			Debug.Log ("it got in the select ability");
 			if(GameControl.selectedUnit.GetSelectedAbilityID()>=0) GameControl.selectedUnit.ClearSelectedAbility();
 			
 			if(selectedAbilityID>=0){
-				Debug.Log ("It's already different from 0");
 				if(selectedAbilityID==ID){	//if the same ability has been selected, deselect it
 					if(!requireTargetSelection) ActivateAbility(currentAbility);
 					ClearSelectedAbility();

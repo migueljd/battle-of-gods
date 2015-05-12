@@ -361,8 +361,12 @@ namespace Cards
 		}
 
 		public static void PassLevel(){
+			GameControl.AddActionAtPassLevel ();
+
 			instance.OnDisable ();
 			Disattach ();
+
+			GameControl.CompleteActionAtPassLevel ();
 		}
 
 		public static void RestartGame(){
