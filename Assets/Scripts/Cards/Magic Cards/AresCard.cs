@@ -22,7 +22,6 @@ namespace Cards
 		}
 		
 		public override void ActivateMagic(){
-			Debug.Log ("Activated");
 			//Animate somehow
 			List<Unit> enemies = FactionManager.GetAllHostileUnit (GameControl.selectedUnit.factionID);
 			foreach (Unit enemy in enemies) {
@@ -31,6 +30,7 @@ namespace Cards
 		}
 		
 		public override IEnumerator PlayParticle(Vector3 position){
+			Transform initialParent = this.transform.parent;
 			particles.enableEmission = true;
 			particles.transform.position = Camera.main.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 20));
 			particles.transform.rotation = Quaternion.Euler (new Vector3 (-90, 0, 0));
@@ -38,10 +38,13 @@ namespace Cards
 			AudioManager.PlaySound (audio);
 			particles.Play ();
 			float timeToEnd = Time.time + particles.duration;
+			Debug.Log (Time.time);
 			while(Time.time < timeToEnd) yield return null;
-			
+			Debug.Log (Time.time);
 			particles.Stop ();
-			particles.transform.parent = null;
+			particles.transform.parent = initialParent;
+
+			Debug.Log ("Play particles ended");
 
 		}
 		

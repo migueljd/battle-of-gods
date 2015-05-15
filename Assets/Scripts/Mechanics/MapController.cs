@@ -170,7 +170,6 @@ public class MapController : MonoBehaviour {
 
 	//this method is called when it's necessary to instantiate a new area, given a tile
 	public static void RevealArea(Tile tile){
-		Debug.Log ("Reveal Area called");
 		instance._RevealArea (tile);
 	}
 
@@ -203,7 +202,6 @@ public class MapController : MonoBehaviour {
 			return;
 		tilesPrefab = generatedTileList [0];
 		generatedTileList.RemoveAt (0);
-		Debug.Log (tile.revealed);
 		switch (tile.revealed) {
 			case 0:
 				first = (Transform) Instantiate(tilesPrefab, sourcePosition + firstVector, Quaternion.Euler(new Vector3(0,firstRotation*rotation,0)));

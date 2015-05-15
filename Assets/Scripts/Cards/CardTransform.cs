@@ -112,7 +112,6 @@ namespace Cards
 				GameControl.SelectUnit (GameControl.selectedUnit);
 
 			//Do some sort of animation then destroy this card
-			Debug.Log ("Setting parent null");
 			this.transform.SetParent (null);
 			this.transform.position = CardsHandManager.getInstance ().cardsLimbo;
 			transformCard.stopUpdating ();
