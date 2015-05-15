@@ -344,6 +344,7 @@ namespace Cards
 			if (won != null)
 				cardsInDiscard.removeCard (won);
 			else {
+				Debug.Log (won);
 				string cardName = won.name.Remove (won.name.Length - 6);
 				won = (Instantiate (Resources.Load ("Prefabs/Cards/" + cardName), cardsLimbo, Quaternion.identity) as GameObject).GetComponent<Card> ();
 			}
